@@ -1,5 +1,6 @@
 package learnSe.part1;
 //1.1java语言概述
+
 //1.java语言发展
 //    詹姆斯·高斯林（James Gosling）
 //    在Sun公司时--"绿色计划"--因为觉得使用C++有很多弊端，开发了一套语言--Oak（橡树）后改名为Java
@@ -62,5 +63,5 @@ package learnSe.part1;
 //            弊端：想要执行就必须放到配置路径下，不符合实际需求
 //        配置方式：
 //            系统变量中配置classpath		当前路径指的是   .
-public class Gaishu {
+public class Agaishu {
 }
