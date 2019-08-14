@@ -51,13 +51,193 @@ package learnSe.part1;
 //2.流程控制语句
 //    1.顺序结构
 //    2.选择结构
+//        1.if语句
+//            if () {
+//                if () {
+//
+//                } else {
+//
+//                }
+//            } else if () {
+//
+//            } else {
+//
+//            }
+//            1.可以跟多个else if ,最后的else可以省略
+//            2.可以嵌套
+//            3.语句体只有1句时，大括号可以省略,，但建议不省略，因为会有陷阱，如
+//                int x = 10;实际上是2句
+//                int x;
+//                x = 10;
+//            4.if语句和三目运算符
+//                1.三目运算符实现的，都可以采用if语句实现，反之不成立
+//                    因为三目运算符是一个运算符，运算符操作完是一定会有一个结果
+//                    而很多语句的执行并没有结果，比如输出语句，赋值语句等
+//                        (3>2)?System.out.println(3):System.out.println(3);    //报错
+//                        (3>2)?int a = 3: int b = 2;   //报错，原因都是没有结果
+//        2.switch语句
+//            1.格式
+//                switch(表达式) {
+//                case 值1：
+//                    语句体1;
+//                    break;
+//                case 值2：
+//                    语句体2;
+//                    break;
+//                …
+//                default：
+//                    语句体n+1;
+//                    break;
+//                }
+//            2.注意
+//                1.表达式可以是 byte short char int String enum，1.7以前不支持String类型
+//                2.default可以省略，但建议不省，可以对错误情况做出说明
+//                    default不放在最后也是最后不匹配才去执行，但建议放在最后
+//                3.最后一个break可以省略，但建议不省
+//                4.结束条件是break或者末尾的大括号，而不是执行完default		尤其注意break穿透
+//                5.switch在判断固定值时使用，if往往应用于区间
+//                6.注意多个case对应同一处理的情况，如下
+//                    switch (x) {
+//                    case 1:
+//                    case 2:
+//                    case 3:
+//                        System.out.println("123！");
+//                        break;
+//                    default:
+//                        break;
+//                    }
+//    3.循环结构  for,while,do...while
+//        1.for
+//            1.格式
+//                for(初始化表达式;条件表达式;循环后的操作表达式) {
+//                循环体;
+//                }
+//                for(接收数组元素的变量:循环对象-数组) {
+//                ...//语句
+//                }
+//
+//                例子：九九乘法表
+//                for (int i = 1; i <= 9; i++) {
+//                    for (int j = 1; j <= i; j++) {
+//                        System.out.print(j + " * " + i + " = " + (i*j) +"\t");
+//                    }
+//                System.out.println();
+//                }
+//                注意：
+//                    外循环控制行数，内循环控制列数
+//                    转义字符 "\t"制表符
+//                统计水仙花数的个数
+//                for(i=100;i<1000;i++) {
+//                    int x = i/100;
+//                    int y = (i-100*x)/10
+//                    int z = i-100*x-10*y
+//                    int count = 0;
+//                    if(i == x*x*x + y*y*y + z*z*z) {
+//                        count++;
+//                        System.out.println(i);
+//                    }
+//                }
+//            2.注意
+//                1.判断条件语句无论简单还是复杂结果是boolean类型
+//                2.循环体语句如果是一条语句，大括号可以省略，建议不省
+//        2.while
+//            1.格式
+//                初始化语句;
+//                while(判断条件语句) {
+//                    循环体语句;
+//                    控制条件语句;
+//                }
+//                不满足条件跳出循环
+//            2.例子
+//                求1-100之和
+//                int sum = 0;
+//                int i = 0;
+//                while(i<=100) {
+//                    sum = sum + i;
+//                    i++;
+//                }
+//        3.do while
+//            1.格式
+//                初始化语句;
+//                do {
+//                    循环体语句;
+//                    控制条件语句;
+//                }while(判断条件语句);
+//            2.例子
+//                1-100之和
+//                int sum = 0;
+//                int i = 0;
+//                do {
+//                    sum += i;
+//                    i++;
+//                }while (i>100);
+//        4.几种循环的区别
+//            1.do...while循环至少执行一次循环体
+//            2.for循环结束后，循环控制变量从内存中弹出，while循环的控制变量在while外声明，不随循环弹出，但这样的情况在开发中很少，几乎不用while和do while
+//        5.控制跳转语句
+//            1.break 在循环和switch中，终止整个循环
+//            2.continue	只在循环中，跳出当次循环
+//            3.另外，可以用return借由结束方法的方式结束循环
+//        6.死循环
+//            1.原因：循环控制变量出现问题，比如忘记处理循环控制变量了
+//            2.例子：while(true){...}
+//        7.控制跳转语句标号
+//            1.定义：用合法的标识符标记某个循环从而对其控制
+//            2.例子：
+//                outer:
+//                for (int i = 0; i < 5; i++) {
+//                    inner:
+//                    for (int j = 0; j <= i; j++) {
+//                        System.out.println(" *");
+//                        //一般来讲，都是用于跳出外循环，因为跳出内循环直接用break就行
+//                        break outer;
+//                    }
+//                }
+
 public class Cjibengainian {
     public static void main(String[] args) {
+//++
 //        int x = 4;
 //        int y = x++ + ++x + (x*10);
 //        System.out.println(y);      //4 + 6 + 6*10 = 70
-
-        int a = 2<<3;
-        System.out.println(a);
+//移位运算乘除效率高
+//        int a = 2<<3;
+//        System.out.println(a);
+//if标签最好不要省略大括号，有陷阱
+//        if (true)
+//            int i = 10;   //报错，int i = 10;实际上是两条语句
+//三目运算符操作后必须要有结果
+//        (3>2)?System.out.println(3):System.out.println(3);    //报错
+//        (3>2)?int a = 3: int b = 2;   //报错，原因都是没有结果
+//if,++,||
+//        int x = 1,y = 1;
+//        if(x++==1 || ++y==1)	//2 1
+//        {
+//            x =7;			//7 1
+//        }
+//        System.out.println("x="+x+",y="+y); //        x=7,y=1
+//九九乘法表
+//        for (int i = 1; i <= 9; i++) {
+//            for (int j = 1; j <= i; j++) {
+//                System.out.print(j + " * " + i + " = " + (i*j) +"\t");
+//            }
+//            System.out.println();
+//        }
+// do{...}while
+//        int sum = 0;
+//        int i = 0;
+//        do {
+//            sum += i;
+//            i++;
+//        }while (i>100);
+//标号
+        outer:
+        for (int i = 0; i < 5; i++) {
+            inner:
+            for (int j = 0; j <= i; j++) {
+                System.out.println(" *");
+                break outer;
+            }
+        }
     }
 }
