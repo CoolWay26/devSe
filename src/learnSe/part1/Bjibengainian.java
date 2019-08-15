@@ -102,7 +102,7 @@ import java.util.Map;
 //                    Map map = new HashMap();
 //                    map.put("b",b);
 //                    boolean bm = (boolean)(map.get("b"));
-//        2.引用数据类型
+//        2.引用数据类型      数组，对象等堆中的数据
 //****
 //7.数据类型转换
 //    1.默认转换  进行混合运算的时候,byte,short,char不会相互转换,都会自动类型提升为int类型
