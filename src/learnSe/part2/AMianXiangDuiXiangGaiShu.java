@@ -148,7 +148,9 @@ package learnSe.part2;
 //                Fu:这是Construtor！
 //                Zi:Construtor代码块！
 //                Zi:Construtor！
-//
+//            此处还需注意一点：
+//                static块之前若有其他static修饰的常量初始化，是要按声明顺序先执行常量初始化，而不是执行static块
+//                如果static块声明在前，那么就先执行static块的内容
 //8.继承    类之间的关系（所以千万不要为了功能去继承）
 //    1.好处、弊端
 //        好：复用性，维护性，多态的前提
@@ -352,6 +354,7 @@ class Father2A {
 }
 
 class SonA extends Father2A {
+    public static String test ;
     String name = "SonA!";
     int age = 20;
     String sonStr = "sonA!";
