@@ -170,7 +170,64 @@ package learnSe.part2;
 //9.重写    子父类出现了一模一样的方法
 //    1.作用
 //        子类继承父类，又可以改写原本功能，实现自己的想法
-
+//    2.注意
+//        1.父类中私有方法不能被重写（因为私有方法不能被继承）
+//        2.重写时访问权限不能更低（最好一致）
+//        3.静态方法不能被重写（因为静态方法存在各自的静态方法区）
+//        4.重写时，返回值类型可以不一样，但是重写后的返回值类型必须是原类型的子类型，比如原类型是Object，那么重写后可以是任意的Object的子类
+//    3.重写与重载的比较
+//        1.场景不同，重写是子父类之间，重载是同一个类中
+//        2.重写方法声明一致（返回值可以是子父类关系），重载是方法的参数列表不同（与返回值无关）
+//10.final关键字
+//    1.final修饰作用
+//        1.修饰类，类不能被继承
+//        2.修饰变量，变量不能称为自定义常量，只能被赋值一次，加载进常量池，不随方法弹栈
+//            1.修饰基本数据类型，值不能改变
+//            2.修饰引用数据类型，地址不能改变（其实就是引用型变量的值不能改变），但是地址所指的存储内容可以被改变
+//            3.必须在对象初始化完毕之前对自定义常量自行显式初始化（构造方法执行完毕之前--可以在构造方法中初始化）
+//        3.修饰方法，方法不能被重写
+//11.多态   同一个行为具有多个不同表现形式或形态的能力（动物吃饭--猫吃鱼，狗吃肉）
+//    1.前提
+//        继承，并且重写（不重写就没有多种形态的可能），父类引用指向子类对象（使用父类引用接收子类对象，才会有调用共有方法产生不同形态的现象）
+//    2.编译和运行
+//        class Father2A {
+//            String name = "Father!";
+//            int age = 40;
+//            public void show() {
+//                System.out.println("Father:show!");
+//            }
+//        }
+//        class SonA extends Father2A {
+//            String name = "SonA!";
+//            int age = 20;
+//            String sonStr = "sonA!";
+//            public void show() {
+//                System.out.println("SonA:show!");
+//            }
+//            public void showA() {
+//                System.out.println("SonA:showA!");
+//            }
+//        }
+//        使用多态时，编译检查会以父类为准，调用的成员变量和方法，都必须是父类有的
+//        因为使用的是父类的引用指向对象，只能使用父类拥有的属性和功能，这个变量也只知道父类有什么属性和功能，你问他要子类的东西，他肯定一脸懵比
+//        1.成员变量
+//            对于成员变量，编译看父类，运行也看父类，因为子类的成员变量已经被父类引用隐藏了（这很容易理解，因为使用引用型，）
+//                Father2A sonA = new SonA();     //向上转型
+//                System.out.print(sonA.age);     //输出40
+//                System.out.print(sonA.sonStr);  //编译报错
+//            但是可以进行强转，转换为子类对象，就可以使用子类的属性（向下转型）
+//                Father2A sonA = new SonA();             //向上转型
+//                System.out.print(((SonA)sonA).age);     //输出20
+//                System.out.print(((SonA)sonA).sonStr);  //正常输出
+//            注意(SonA)sonA.age这样写是不对的，编译器会认为是把sonA.age这个值强转成SonA,将一个int转为SonA显然是不对的
+//        2.成员方法
+//            对于成员方法，编译还是看父类，调用的方法必须是父类有的，但运行是优先看子类重写后的方法（这是多态的体现）
+//                Father2A sonA = new SonA();
+//                sonA.show();    //输出SonA:show!
+//                sonA.showA();   //编译报错
+//    3.好处和弊端
+//        好处：拓展性强，利于维护
+//        弊端：不能直接使用子类特有的属性（要向下转型后才能使用）
 
 public class AMianXiangDuiXiangGaiShu {
     public static void main(String[] args) {
@@ -191,6 +248,11 @@ public class AMianXiangDuiXiangGaiShu {
 //    }
 //理解三类代码块
 //        Zi2A demo = new Zi2A();
+//多态
+//        Father2A sonA = new SonA();
+//        System.out.print(((SonA)sonA).age);
+//        System.out.print(((SonA)sonA).sonStr);
+//        sonA.show();
     }
 }
 
@@ -280,3 +342,27 @@ public class AMianXiangDuiXiangGaiShu {
 //        System.out.println("Zi:Construtor！");
 //    }
 //}
+//多态
+class Father2A {
+    String name = "Father!";
+    int age = 40;
+    public void show() {
+        System.out.println("Father:show!");
+    }
+}
+
+class SonA extends Father2A {
+    String name = "SonA!";
+    int age = 20;
+    String sonStr = "sonA!";
+
+    public void show() {
+        System.out.println("SonA:show!");
+    }
+
+    public void showA() {
+        System.out.println("SonA:showA!");
+    }
+}
+
+
