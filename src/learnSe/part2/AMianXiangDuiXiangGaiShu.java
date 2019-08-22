@@ -88,6 +88,7 @@ package learnSe.part2;
 //            3.在堆内存创建对象
 //            4.给对象中属性默认初始化值（0，0.0，false，null等）这一步很重要，给对应的属性根据类型赋默认值
 //                如果有父类需要初始化，那么默认初始化之后，会先执行父类成员初始化
+//               （看成执行构造方法前要进行显式初始化，执行子类构造方法前要先执行父类构造方法，那么子父类成员的初始化顺序就好理解了）
 //            5.属性进行显示初始化（类成员变量定义时赋值-定义初始化）
 //            6.构造方法进栈,对对象中的属性赋值,构造方法弹栈（构造方法初始化）
 //            7.将对象的地址值赋值给变量de
@@ -302,7 +303,7 @@ public class AMianXiangDuiXiangGaiShu {
 //        System.out.print(((SonA)sonA).sonStr);
 //        sonA.show();
 //理解super和初始化顺序
-//        Son a = new Son();
+        Son a = new Son();
     }
 }
 
@@ -393,27 +394,27 @@ public class AMianXiangDuiXiangGaiShu {
 //    }
 //}
 //多态
-class Father2A {
-    String name = "Father!";
-    int age = 40;
-    public void show() {
-        System.out.println("Father:show!");
-    }
-}
-
-class SonA extends Father2A {
-    public static String test ;
-    String name = "SonA!";
-    int age = 20;
-    String sonStr = "sonA!";
-
-    public void show() {
-        System.out.println("SonA:show!");
-    }
-
-    public void showA() {
-        System.out.println("SonA:showA!");
-    }
-}
+//class Father2A {
+//    String name = "Father!";
+//    int age = 40;
+//    public void show() {
+//        System.out.println("Father:show!");
+//    }
+//}
+//
+//class SonA extends Father2A {
+//    public static String test ;
+//    String name = "SonA!";
+//    int age = 20;
+//    String sonStr = "sonA!";
+//
+//    public void show() {
+//        System.out.println("SonA:show!");
+//    }
+//
+//    public void showA() {
+//        System.out.println("SonA:showA!");
+//    }
+//}
 
 
