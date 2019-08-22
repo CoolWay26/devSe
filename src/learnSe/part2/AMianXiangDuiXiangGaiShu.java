@@ -171,6 +171,7 @@ package learnSe.part2;
 //    3.成员（变量和方法）就近原则，以子类为准，子类没有就去父类找
 //    4.super关键字
 //        可以使用super调用父类的非私有成员
+//        但实际上，super并不是指向父类对象，实际上，super和this是指向同一个对象，但是对应不同的class，每个class有自己的属性
 //        通过下面的例子理解super和子父类成员初始化的顺序
 //                class Father {
 //                    public int age = 40;
