@@ -303,7 +303,7 @@ public class AMianXiangDuiXiangGaiShu {
 //        System.out.print(((SonA)sonA).sonStr);
 //        sonA.show();
 //理解super和初始化顺序
-        Son a = new Son();
+//        Son a = new Son();
     }
 }
 
