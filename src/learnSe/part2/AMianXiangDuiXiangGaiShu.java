@@ -169,6 +169,49 @@ package learnSe.part2;
 //                注意：super()必须要写在构造方法第一行
 //        4.继承体现类之间的关系（学生 是 人）
 //    3.成员（变量和方法）就近原则，以子类为准，子类没有就去父类找
+//    4.super关键字
+//        可以使用super调用父类的非私有成员
+//        通过下面的例子理解super和子父类成员初始化的顺序
+//                class Father {
+//                    public int age = 40;
+//                    public Father() {
+//                        getAge();
+//                    }
+//                    public void getAge() {
+//                        System.out.println("Father:" + this.age);
+//                    }
+//                }
+//                class Son extends Father {
+//                    public int age = 20;
+//                    public Son() {
+//                        super();
+//                        super.getAge();
+//                        getAge();
+//                    }
+//                    public void getAge() {
+//                        System.out.println("Son:" + this.age);
+//                    }
+//                }
+//
+//                Son a = new Son();
+//                输出：
+//                        Son:0
+//                        Father:40
+//                        Son:20
+//        子类Son a = new Son();
+//        子类要创建对象，那么父类class和子类class先后加载进方法区，并进行默认初始化
+//        然后要先进行父类初始化（这是必然的，因为子类可能要用到父类的成员，或者我们理解成super()的优先级高于一切）
+//            显式初始化 Father.age = 40;（先显式初始化也是必然的，因为本类的变量很可能要被本类的其他成员调用，调用以后再显式初始化没有意义）
+//            构造方法初始化 getAge;//此时程序认为getAge已经被子类重写了，调用的其实是Son.getAge
+//                Son.getAge()      Son.age此时由于还没有执行到显式初始化和构造方法初始化，所以是默认初始化的0 ，输出 Son:0
+//                至此父类对象初始化完毕
+//        接着进行子类的初始化
+//            显式初始化 Son.age = 20;
+//            构造方法初始化调用super.getAge()//这里指定调用父类getAge，输出Father:40
+//            顺序执行getAge//调用子类重写后的getAge输出Son:20
+//        总结就是：
+//            会先进行父类子类的默认初始化，然后进行父类初始化，再进行子类初始化
+//            （不要生硬的认为一定是子类先进行显式初始化才会执行构造方法初始化才会调用super(),但对于某个类的对象，一定是默认-显式-构造方法这样的初始化顺序）
 //9.重写    子父类出现了一模一样的方法
 //    1.作用
 //        子类继承父类，又可以改写原本功能，实现自己的想法
@@ -255,6 +298,8 @@ public class AMianXiangDuiXiangGaiShu {
 //        System.out.print(((SonA)sonA).age);
 //        System.out.print(((SonA)sonA).sonStr);
 //        sonA.show();
+//理解super和初始化顺序
+//        Son a = new Son();
     }
 }
 
