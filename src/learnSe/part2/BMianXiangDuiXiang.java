@@ -132,13 +132,41 @@ package learnSe.part2;
 //                    内部类并不是直接使用局部变量，而是通过自己的构造备份到内部，表面上看是一个变量，实际上并不是
 //                    假如局部内部类对该变量做了修改，那么实际上该局部变量在局部内部类外的值不会改变，这就很尴尬，加上final就可以阻止这样的事发生
 //                而final加载进常量池，就能解决以上问题，对于jdk8，会默认加上final，不需要显式处理
-//    4.匿名内部类 内部类的简化写法
+//    4.匿名局部内部类 内部类的简化写法
 //        1.格式    跳过命名，直接继承一个类或是实现一个接口（可以是具体类也可以是抽象类）
 //            new 类名或者接口名(){
 //                重写方法;
 //            }.方法名();
-//            后面可以直接跟.方法名调用对象的成员方法
+//            后面可以直接跟.方法名调用对象的成员方法（这也是我理解的目的）
 //            所以其实，本质上是子类（实现类）匿名对象
+//            class Outer {
+//                //内部类实现接口重写方法，这样可以通过该内部类调用重写的方法
+//                class Inner implements ForInner {
+//                    @Override
+//                    public void showName() {
+//                        System.out.println(name);
+//                    }
+//                }
+//
+//                public void showInner() {
+//                    //匿名局部内部类直接重写和调用
+//                    new ForInner() {
+//                        @Override
+//                        public void showName() {
+//                            System.out.println(name);
+//                        }
+//                    }.showName();
+//                }
+//                    //调用toShow()方法时，匿名内部类作为参数传递（重写showName()方法），也可以实现功能
+//                    public void toShow(ForInner forInner) {
+//                        forInner.showName();
+//                    }
+//            }
+//
+//            interface ForInner {
+//                String name = "InnerClass";
+//                void showName();
+//            }
 
 public class BMianXiangDuiXiang {
 //    private String namePri = "Pri";
@@ -200,33 +228,65 @@ public class BMianXiangDuiXiang {
 //}
 
 //成员内部类
-class OuterClass {
-    private String name = "OuterName";
-    class InnerClass {
-        private String name = "InnerName";
-        public void showOuterName() {
-            String name = "name";
-            System.out.println(name);
-            System.out.println(this.name);
-            System.out.println(OuterClass.this.name);//通过外部类的引用直接访问外部类成员（包括私有的）
-        }
-    }
-    static class StaticInnerClass {
-        private String name = "InnerName";
-        public void showOuterName() {
-            String name = "name";
-            System.out.println(name);
-            System.out.println(this.name);
-        }
-    }
-    public void show() {
-        final int age = 10;
-        class inner {
-            public void showAge() {
-                System.out.println(age);
-            }
-        }
-    }
-}
+//class OuterClass {
+//    private String name = "OuterName";
+//    class InnerClass {
+//        private String name = "InnerName";
+//        public void showOuterName() {
+//            String name = "name";
+//            System.out.println(name);
+//            System.out.println(this.name);
+//            System.out.println(OuterClass.this.name);//通过外部类的引用直接访问外部类成员（包括私有的）
+//        }
+//    }
+//    static class StaticInnerClass {
+//        private String name = "InnerName";
+//        public void showOuterName() {
+//            String name = "name";
+//            System.out.println(name);
+//            System.out.println(this.name);
+//        }
+//    }
+//    public void show() {
+//        final int age = 10;
+//        class inner {
+//            public void showAge() {
+//                System.out.println(age);
+//            }
+//        }
+//    }
+//}
+
+//匿名局部内部类
+//class Outer {
+//    //内部类实现接口重写方法，这样可以通过该内部类调用重写的方法
+//    class Inner implements ForInner {
+//        @Override
+//        public void showName() {
+//            System.out.println(name);
+//        }
+//    }
+//
+//    public void showInner() {
+//        //匿名局部内部类直接重写和调用
+//        new ForInner() {
+//            @Override
+//            public void showName() {
+//                System.out.println(name);
+//            }
+//        }.showName();
+//    }
+//
+//    //调用toShow()方法时，匿名内部类作为参数传递（重写showName()方法），也可以实现功能
+//    public void toShow(ForInner forInner) {
+//        forInner.showName();
+//    }
+//}
+//
+//interface ForInner {
+//    String name = "InnerClass";
+//    void showName();
+//}
+
 
 
