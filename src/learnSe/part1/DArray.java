@@ -150,10 +150,10 @@ package learnSe.part1;
 //            }
 
 
-public class Dshuzu {
+public class DArray {
     public static void main (String[] args) {
-        int[] intArr = {1,2,3};
-        Test ts = new Test();
+//        int[] intArr = {1,2,3};
+//        Test ts = new Test();
 //        ts.getAll(intArr);
 //        int max = ts.getMaxValue(intArr);
 //        System.out.println(max);
@@ -162,95 +162,95 @@ public class Dshuzu {
 //        String result = ts.getOneDay(0);
 //        System.out.print(result);
 
-        int[][] arr = {{1,2},{3,4,5},{6,7,8,9}};
-        ts.getAllDouble(arr);
+//        int[][] arr = {{1,2},{3,4,5},{6,7,8,9}};
+//        ts.getAllDouble(arr);
     }
 }
 
-class Test {
-//方法重载
-//    public int sum(int a, int b) {
-//        int sum = a + b;
-//        return sum;
+//class Test {
+////方法重载
+////    public int sum(int a, int b) {
+////        int sum = a + b;
+////        return sum;
+////    }
+////    public float sum(int a, float b) {
+////        float sum = a + b;
+////        return sum;
+////    }
+////数组遍历
+//    public void getAll(int[] arr) {
+//        if (arr != null) {
+////            for (int a : arr) {
+////                System.out.print(a + " ");
+////            }
+//
+//        for (int i = 0;i<arr.length-1;i++) {
+//            System.out.print(arr[i] + ",");
+//        }
+//        System.out.print(arr[arr.length-1]);
+//        }
 //    }
-//    public float sum(int a, float b) {
-//        float sum = a + b;
-//        return sum;
-//    }
-//数组遍历
-    public void getAll(int[] arr) {
-        if (arr != null) {
-//            for (int a : arr) {
-//                System.out.print(a + " ");
+////数组最值
+//    public int getMaxValue(int[] arr) {
+//        if (arr != null) {
+//            int max = arr[0];
+//            for (int temp : arr) {
+//                if (temp > max) {
+//                    max = temp;
+//                }
 //            }
-
-        for (int i = 0;i<arr.length-1;i++) {
-            System.out.print(arr[i] + ",");
-        }
-        System.out.print(arr[arr.length-1]);
-        }
-    }
-//数组最值
-    public int getMaxValue(int[] arr) {
-        if (arr != null) {
-            int max = arr[0];
-            for (int temp : arr) {
-                if (temp > max) {
-                    max = temp;
-                }
-            }
-            return max;
-        }
-        return -1;
-    }
-//数组反转
-    public void reverseArr(int[] arr) {
-        if (arr != null) {
-            int temp;
-            for (int i = 0;i<arr.length/2;i++) {
-                temp = arr[i];
-                arr[i] = arr[arr.length-1-i];
-                arr[arr.length-1-i] = temp;
-            }
-        }
-    }
-//查表法
-    public String getOneDay(int index) {
-        if (index >= 0) {
-            String[] arr = {"表0位置","表1位置","表2位置"};
-            return arr[index];
-        }else {
-            return "索引有误！";
-        }
-    }
-//查找元素索引
-    public int getIndex(int[] arr, int value) {
-        if (arr != null) {
-            for (int i = 0;i<arr.length;i++) {
-                if (value == arr[i]) {
-                    return i;
-                }
-            }
-        }
-        return -1;
-    }
-//二维数组遍历
-    public void getAllDouble(int[][] arr) {
-        for (int[] arrValue : arr) {
-            for (int value : arrValue) {
-                System.out.print(value + " ");
-            }
-            System.out.println();
-        }
-
-        for (int i = 0;i<arr.length;i++){
-            for (int j = 0;j<arr[i].length;j++) {
-                if (j==arr[i].length-1) {
-                    System.out.print(arr[i][j] + "\n");
-                }else {
-                    System.out.print(arr[i][j] + " ");
-                }
-            }
-        }
-    }
-}
+//            return max;
+//        }
+//        return -1;
+//    }
+////数组反转
+//    public void reverseArr(int[] arr) {
+//        if (arr != null) {
+//            int temp;
+//            for (int i = 0;i<arr.length/2;i++) {
+//                temp = arr[i];
+//                arr[i] = arr[arr.length-1-i];
+//                arr[arr.length-1-i] = temp;
+//            }
+//        }
+//    }
+////查表法
+//    public String getOneDay(int index) {
+//        if (index >= 0) {
+//            String[] arr = {"表0位置","表1位置","表2位置"};
+//            return arr[index];
+//        }else {
+//            return "索引有误！";
+//        }
+//    }
+////查找元素索引
+//    public int getIndex(int[] arr, int value) {
+//        if (arr != null) {
+//            for (int i = 0;i<arr.length;i++) {
+//                if (value == arr[i]) {
+//                    return i;
+//                }
+//            }
+//        }
+//        return -1;
+//    }
+////二维数组遍历
+//    public void getAllDouble(int[][] arr) {
+//        for (int[] arrValue : arr) {
+//            for (int value : arrValue) {
+//                System.out.print(value + " ");
+//            }
+//            System.out.println();
+//        }
+//
+//        for (int i = 0;i<arr.length;i++){
+//            for (int j = 0;j<arr[i].length;j++) {
+//                if (j==arr[i].length-1) {
+//                    System.out.print(arr[i][j] + "\n");
+//                }else {
+//                    System.out.print(arr[i][j] + " ");
+//                }
+//            }
+//        }
+//    }
+//}

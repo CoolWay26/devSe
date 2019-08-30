@@ -278,7 +278,7 @@ package learnSe.part2;
 //        好处：拓展性强，利于维护
 //        弊端：不能直接使用子类特有的属性（要向下转型后才能使用）
 
-public class AMianXiangDuiXiangGaiShu {
+public class AObjectOriented {
     public static void main(String[] args) {
 //匿名对象
 //        showString(new NoNameClass());

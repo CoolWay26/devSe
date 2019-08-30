@@ -194,7 +194,7 @@ package learnSe.part1;
 //                    }
 //                }
 
-public class Cjibengainian {
+public class CBasicConcept {
     public static void main(String[] args) {
 //++
 //        int x = 4;
@@ -231,13 +231,13 @@ public class Cjibengainian {
 //            i++;
 //        }while (i>100);
 //标号
-        outer:
-        for (int i = 0; i < 5; i++) {
-            inner:
-            for (int j = 0; j <= i; j++) {
-                System.out.println(" *");
-                break outer;
-            }
-        }
+//        outer:
+//        for (int i = 0; i < 5; i++) {
+//            inner:
+//            for (int j = 0; j <= i; j++) {
+//                System.out.println(" *");
+//                break outer;
+//            }
+//        }
     }
 }

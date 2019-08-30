@@ -168,7 +168,7 @@ package learnSe.part2;
 //                void showName();
 //            }
 
-public class BMianXiangDuiXiang {
+public class BObjectOriented {
 //    private String namePri = "Pri";
 //    String name = "";
 //    protected String namePro = "Pro";

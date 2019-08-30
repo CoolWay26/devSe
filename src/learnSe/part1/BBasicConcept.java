@@ -136,7 +136,7 @@ import java.util.Map;
 //        正数的补码与其原码相同；负数的补码是在其反码的末位加1。
 //        补码运算时，如果符号位发生变化，是溢出
 
-public class Bjibengainian {
+public class BBasicConcept {
     public static void main(String[] args) {
         Types ty = new Types();
         ty.show();

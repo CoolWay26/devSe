@@ -63,5 +63,5 @@ package learnSe.part1;
 //            弊端：想要执行就必须放到配置路径下，不符合实际需求
 //        配置方式：
 //            系统变量中配置classpath		当前路径指的是   .
-public class Agaishu {
+public class ABasicConcept {
 }
