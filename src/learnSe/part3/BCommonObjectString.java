@@ -1,6 +1,8 @@
 package learnSe.part3;
+import java.util.HashMap;
+import java.util.Scanner;
 //3.1常见对象
-
+//
 //4.String类
 //    1.概述
 //        1.首先要区别直接赋值String和new String
@@ -45,6 +47,8 @@ package learnSe.part3;
 //        4.拼接
 //            concat()
 //        5.其他
+//            toUpperCase()//转大写
+//            toLowerCase()//转小写
 //            String replace(char/String old, new)	//替换
 //            trim()	//去除两端空格
 //            int compareTo(String str) //按位字典顺序比较，输出按码表值作差的值，相同的是0，长短不一致的，空格算作0，如果比较到较短字符最后一位都相同，那么返回length的差
@@ -63,7 +67,11 @@ package learnSe.part3;
 //            String str3 = "ab";
 //            String str4 = str3 + "c";   //str3==str4    false
 //            // 字符串+串联底层是通过StringBuilder，StringBuffer完成的，返回的str4实际上已经是sb.toString()（和new类似）,sb的地址和常量池中的地址肯定不一致
-
+//    5.基本操作
+//        1.遍历    length()  charAt()
+//            基于遍历的任意数组转字符串（纯粹的遍历拼接），字符串反转（先转为数组再逆序拼接）
+//        2.统计    HashMap   toCharArray()
+//        3.手写trim()    统计前后空格的个数，再使用subString()
 public class BCommonObjectString {
     public static void main(String[] args) {
 //区别String 和 new String()，常量优化机制和 + 串联String的区别
@@ -90,24 +98,98 @@ public class BCommonObjectString {
 
 //成员方法
 //        equals()
-        boolean bool1 = str1.equals(str14);             //true
-        boolean bool2 = str1.equalsIgnoreCase(str14);   //true
-        boolean bool3 = str1.contains(str13);           //true
-        boolean bool4 = str1.isEmpty();
+//        boolean bool1 = str1.equals(str14);             //true
+//        boolean bool2 = str1.equalsIgnoreCase(str14);   //true
+//        boolean bool3 = str1.contains(str13);           //true
+//        boolean bool4 = str1.isEmpty();
+//
+//        int len = str1.length();
+//        char ch = str1.charAt(0);
+//        int index = str1.indexOf("st", 0);
+//        int index2 = str1.lastIndexOf("str", 2);
+//        String strSub = str1.substring(0,2);
+//
+//        byte[] bt = str1.getBytes();
+//        char[] cr = str1.toCharArray();
+//        String strValue = String.valueOf(bt);
+//
+//        String con = str1.concat(str2);
+//        String rep = str1.replace("str","str2");
+//        int com = str1.compareTo(str13);
+//        String strTrim = str1.trim();
 
-        int len = str1.length();
-        char ch = str1.charAt(0);
-        int index = str1.indexOf("st", 0);
-        int index2 = str1.lastIndexOf("str", 2);
-        String strSub = str1.substring(0,2);
+        StringTools tools = new StringTools();
+//        tools.traverse("traverse!");
+//        tools.countChar();
+        tools.myTrim();
+    }
+}
 
-        byte[] bt = str1.getBytes();
-        char[] cr = str1.toCharArray();
-        String strValue = String.valueOf(bt);
 
-        String con = str1.concat(str2);
-        String rep = str1.replace("str","str2");
-        int com = str1.compareTo(str13);
-        String strTrim = str1.trim();
+//操作
+class StringTools {
+    //遍历
+    public void traverse(String str) {
+        if (!str.isEmpty()) {
+            for (int i = 0; i < str.length() - 1; i++) {
+                System.out.print(str.charAt(i) + " ");
+            }
+            System.out.println(str.charAt(str.length() - 1));
+        }
+    }
+    //统计
+    public void countChar() {
+        Scanner sc = new Scanner(System.in);
+        System.out.println("请输入任意字符串，按回车结束");
+        String str = sc.nextLine();
+        HashMap<Character, Integer> countMap = new HashMap<Character, Integer>();
+
+        //直接遍历str
+//        if (!str.isEmpty()) {
+//            for (int i = 0; i < str.length(); i++) {
+//                if (countMap.containsKey(str.charAt(i))) {
+//                    int countTemp = countMap.get(str.charAt(i)) + 1;
+//                    countMap.put(str.charAt(i), countTemp);
+//                } else {
+//                    countMap.put(str.charAt(i), 1);
+//                }
+//            }
+//        }
+        //转为数组进行遍历，代码更清晰
+        char[] chars = str.toCharArray();
+        if (chars.length != 0) {
+            for (char charTemp : chars) {
+                if (countMap.containsKey(charTemp)) {
+                    int countTemp = countMap.get(charTemp) + 1;
+                    countMap.put(charTemp, countTemp);
+                } else {
+                    countMap.put(charTemp, 1);
+                }
+            }
+        }
+        if (countMap.size() != 0) {
+            System.out.println(countMap);//hashMap重写了toString()方法，输出{key=value...}
+        }
+    }
+
+    //手写trim()
+    public void myTrim() {
+        Scanner sc = new Scanner(System.in);
+        System.out.println("请输入任意字符串，按回车结束");
+        String str = sc.nextLine();
+
+        if (!str.isEmpty()) {
+            int start = 0;
+            int end = str.length() - 1;
+            while (start <= end && str.charAt(start) == ' ') {
+                start++;//为空格则继续看下一个字符
+            }
+            while (start <= end && str.charAt(end) == ' ') {
+                end--;//为空则继续看前一个字符
+            }
+            //API决定substring方法是可以写成"sss".substring(3,3)，这样并不越界，但是"sss".substring(4,4)就越界了
+            //左闭右开，end + 1
+            System.out.println(str.substring(start, end + 1));
+        }
     }
 }
