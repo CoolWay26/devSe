@@ -49,7 +49,7 @@ import java.util.Scanner;
 //        5.其他
 //            toUpperCase()//转大写
 //            toLowerCase()//转小写
-//            String replace(char/String old, new)	//替换
+//            String replace(char/String old, new)	//替换，返回另一个字符串，当前的字符串并没有变化
 //            trim()	//去除两端空格
 //            int compareTo(String str) //按位字典顺序比较，输出按码表值作差的值，相同的是0，长短不一致的，空格算作0，如果比较到较短字符最后一位都相同，那么返回length的差
 //            int compareToIgnoreCase(String str)	//忽略大小写
