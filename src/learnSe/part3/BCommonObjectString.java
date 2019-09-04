@@ -39,7 +39,7 @@ import java.util.Scanner;
 //            String subString(int start, int end)	//左闭右开区间
 //        3.转换
 //            byte[] getBytes()	//字符串转为字节数组
-//            根据平台的编码集	GBK码表1个中文2个字节，特点：第一个字节肯定是负数
+//              根据平台的编码集	GBK码表1个中文2个字节，特点：第一个字节肯定是负数
 //            char[] toCharArray()	//字符串转字符数组
 //            static String valueOf(char[] chs)	//字符数组转为字符串
 //            注意：String类的valueOf()可以将任意类型数据转为字符串
