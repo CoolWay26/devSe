@@ -52,7 +52,9 @@ public class ECommonObjectSort {
     //选择排序
     public int[] selectSort(int[] arr) {
         if (arr.length>0) {
+            //外循环选择第一个数
             for (int i = 0; i<arr.length-1;i++) {
+                //内循环选择第二个数
                 for (int j = i+1; j<arr.length;j++) {
                     if (arr[i]>arr[j]) {
                         changeExchange(arr,i);
@@ -67,6 +69,7 @@ public class ECommonObjectSort {
 
     //快速排序
     public void quickSort(int[] array, int left, int right) {
+        //递归判断是否已经全部的数都参与了比较
         if(left > right) {
             return;
         }
@@ -109,7 +112,9 @@ public class ECommonObjectSort {
             int min = 0;
             int max = arr.length - 1;
             int mid = (min + max) / 2;
+            //判断中值是否是目标值
             while (arr[mid] != value) {
+                //根据目标值所在位置确定下一个min,max,mid的位置
                 if (arr[mid] > value) {
                     max = mid;
                 } else {
