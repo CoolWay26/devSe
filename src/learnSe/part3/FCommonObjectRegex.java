@@ -65,6 +65,11 @@ package learnSe.part3;
 //        2.
 //            在定义正则表达式时，\1指的是第一组，仍要注意需要转义
 //            而在匹配字符串时，$1指的是匹配上的字符串中第一组的部分
+//        3.
+//            注意：在匹配时，有多少组不是根据子串来分，仍然是按照正则表达式的左括号来分，且可以被数量词影响
+//            比如，(.)+是指若干组，但是(.)\\1+就只是指第一组重复若干次，实际上只有一组
+//            每个匹配上的子串中，按照正则表达式分组
+//                (.)+是可以完整的匹配任意字符组成的字符串的，每个字符都是一组
 //    5.Pattern和Matcher的概述
 //        典型的调用顺序：
 //        //获取一个Pattern对象，是正则表达式的一个编译表示
@@ -83,9 +88,9 @@ package learnSe.part3;
 //            matcher 对象有很多方法可以进行操作
 //                索引方法  index从0开始，左闭右开（或者理解成匹配索引在匹配到不符合的字符才会结束）
 //                    public int start()  返回上一次匹配的初始索引
-//                    public int start(int group) 返回上次匹配操作期间，由给定组所捕获的子序列的初始索引
+//                    public int start(int group) 返回上次匹配操作期间，由给定组所捕获的子序列的初始索引（其实就是某个子串中第group组的初始索引）
 //                    public int end()    返回最后匹配字符之后的偏移量
-//                    public int end(int group)   返回在以前的匹配操作期间，由给定组所捕获子序列的最后字符之后的偏移量
+//                    public int end(int group)   返回在以前的匹配操作期间，由给定组所捕获子序列的最后字符之后的偏移量（其实就是某个子串中第group组的末尾索引）
 //                研究方法
 //                    public boolean lookingAt()  尝试从第一个字符开始匹配，虽不要求整个字符串都符合正则，但必须从第一个字符开始符合正则才返回true
 //                    public boolean matches()  尝试将整个区域与模式匹配，和lookingAt()对比
@@ -140,19 +145,20 @@ public class FCommonObjectRegex {
 //        String[] res = des.split(regex);
 //        System.out.println(Arrays.toString(res));   //[sd, fg, hj, k]
         //matcher
-//        String regex = "(.)\\1+";   //第一组的词重复至少一次
-//        String des = "sdqqfgkkkhjppppkll";
-//        Pattern pattern = Pattern.compile(regex);
-//        Matcher matcher = pattern.matcher(des);
-//        int count = 0;
-//        while (matcher.find()) {
-//            //索引
-//            count ++;
-//            System.out.println("count:" + count);
-//            System.out.println("start:" + matcher.start());
-//            System.out.println("end:" + matcher.end());
-//            System.out.println();
-//        }
+        String regex = "(.)\\1+";   //第一组的词重复至少一次
+        String des = "sdqqfgkkkhjppppkll";      //这只有组1，不是以子串分组，是以正则表达式的左括号分组，组的数量也是可以被数量词修饰的
+        Pattern pattern = Pattern.compile(regex);
+        Matcher matcher = pattern.matcher(des);
+        int count = 0;
+        while (matcher.find()) {
+            //索引
+            count ++;
+            System.out.println("count:" + count);
+            System.out.println("groupEnd:" + matcher.end(1)); //count不能作为group值，因为分组只有一个，count却是随着匹配的子串数量增加
+            System.out.println("start:" + matcher.start());
+            System.out.println("end:" + matcher.end());
+            System.out.println();
+        }
         //研究
 //        String des2 = "qq";
 //        Pattern pattern = Pattern.compile(regex);
