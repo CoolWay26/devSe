@@ -101,7 +101,7 @@ package learnSe.part3;
 //                    public String group(i)  在字符串符合正则时，可以调用group(i)捕获具体的组对应的子串
 //                替换方法
 //                    public Matcher appendReplacement(StringBuffer sb, String replacement)   实现非终端添加和替换步骤（匹配到的子序列替换成replacement），然后添加到一个StringBuffer对象中
-//                    public StringBuffer appendTail(StringBuffer sb)     实现终端添加和替换步骤，只要存在正则子序列，就将整个字符串追加到参数StringBuffer对象中
+//                    public StringBuffer appendTail(StringBuffer sb)     实现终端添加和替换步骤，只要存在正则子序列，就将整个字符串追加到参数StringBuffer对象中（调用一次加一次，不是按子序列个数加）
 //                    public String replaceAll(String replacement)        替换模式与给定替换字符串相匹配的输入序列的每个子序列
 //                    public String replaceFirst(String replacement)      替换模式与给定替换字符串匹配的输入序列的第一个子序列
 //                    public static String quoteReplacement(String s)     返回指定字符串的字面替换字符串。这个方法返回一个字符串，就像传递给Matcher类的appendReplacement 方法一个字面字符串一样工作
@@ -145,20 +145,21 @@ public class FCommonObjectRegex {
 //        String[] res = des.split(regex);
 //        System.out.println(Arrays.toString(res));   //[sd, fg, hj, k]
         //matcher
-        String regex = "(.)\\1+";   //第一组的词重复至少一次
-        String des = "sdqqfgkkkhjppppkll";      //这只有组1，不是以子串分组，是以正则表达式的左括号分组，组的数量也是可以被数量词修饰的
-        Pattern pattern = Pattern.compile(regex);
-        Matcher matcher = pattern.matcher(des);
-        int count = 0;
-        while (matcher.find()) {
-            //索引
-            count ++;
-            System.out.println("count:" + count);
-            System.out.println("groupEnd:" + matcher.end(1)); //count不能作为group值，因为分组只有一个，count却是随着匹配的子串数量增加
-            System.out.println("start:" + matcher.start());
-            System.out.println("end:" + matcher.end());
-            System.out.println();
-        }
+//        String regex = "(.)\\1+";   //第一组的词重复至少一次
+//        String des = "sdqqfgkkkhjppppkll";      //这只有组1，不是以子串分组，是以正则表达式的左括号分组，组的数量也是可以被数量词修饰的
+//        Pattern pattern = Pattern.compile(regex);
+//        Matcher matcher = pattern.matcher(des);
+//        int count = 0;
+//        while (matcher.find()) {
+//            //索引
+//            count ++;
+//            System.out.println("count:" + count);
+//            System.out.println("groupCount:" + matcher.groupCount());
+//            System.out.println("groupEnd:" + matcher.end(1)); //count不能作为group值，因为分组只有一个，count却是随着匹配的子串数量增加
+//            System.out.println("start:" + matcher.start());
+//            System.out.println("end:" + matcher.end());
+//            System.out.println();
+//        }
         //研究
 //        String des2 = "qq";
 //        Pattern pattern = Pattern.compile(regex);
@@ -169,15 +170,18 @@ public class FCommonObjectRegex {
 //        System.out.println("lookingAt():" + matcher.lookingAt());
 //        System.out.println("lookingAt():" + matcher1.lookingAt());
         //替换
-//        String regex = "(.)\\1+";   //第一组的词重复至少一次
-//        String des = "sdqqfgkkkhjppppkasa";
-//        StringBuffer sb = new StringBuffer();
-//        Pattern pattern = Pattern.compile(regex);
-//        Matcher matcher = pattern.matcher(des);
-//        while (matcher.find()) {
-//            matcher.appendTail(sb);
-//            System.out.println(sb.toString());
-//        }
+        String regex = "(.)\\1+";   //第一组的词重复至少一次
+        String des = "sdqqfgkkkhjppppkasa";
+        StringBuffer sb = new StringBuffer();
+        StringBuffer sb1 = new StringBuffer();
+        Pattern pattern = Pattern.compile(regex);
+        Matcher matcher = pattern.matcher(des);
+        while (matcher.find()) {
+            matcher.appendTail(sb);
+            matcher.appendReplacement(sb1,"---");
+            System.out.println(sb.toString());
+            System.out.println(sb1.toString());
+        }
     }
 
 
