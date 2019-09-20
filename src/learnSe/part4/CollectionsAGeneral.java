@@ -31,9 +31,9 @@ package learnSe.part4;
 //            指定索引插入元素时，只需要插入元素记住该索引前后单元的地址，就插入成功
 //            删除也是，拿出一个元素，前后索引修改记忆的前后单元的地址
 //4.Collection集合
-//    1.基本功能
+//    1.基本功能    所有集合都有的方法
 //        boolean add(E e)			//增加
-//        boolean remove(Object o)	//删除
+//        boolean remove(Object o)	//删除    boolean remove(int index)
 //        void clear()				//清空
 //        boolean contains(Object o)	//判断是否包含
 //        boolean isEmpty()			//判断是否为空
@@ -42,13 +42,64 @@ package learnSe.part4;
 //        boolean addAll(Collection c)		//添加所有元素
 //        boolean removeAll(Collection c)		//删除的是交集
 //        boolean containsAll(Collection c)	//判断是否包含c中的每个元素（重复的也算包含）
-//        boolean retainAll(Collection c)		//判断C是否包含调用者集合
+//        boolean retainAll(Collection c)		//判断C是否包含调用者集合（是否被包含）
 //            retain是保留的意思，调用者list1与list2做交集，结果集赋值给list1，如果list1被改变返回true，否则返回false（其实就是看交集是不是和调用者一样，交集肯定=小的那个）
+//5.迭代器
+//    用来访问集合的元素
+//        c1.iterator()   返回迭代器的引用
+//        it.hasNext()    判断集合中是否仍有元素可以迭代
+//        it.next()       返回迭代的下一个元素
+//            it.next()会移动指针到下一个位置,因为指针的移动，所以显然要谨慎调用next()，每调用一次都会移动指针，可能会导致取到的数据和预想不一样
+//            ArrayList c1 = new ArrayList();
+//            Iterator it = c1.iterator();
+//            while(it.hasNext()) {
+//                System.out.println(it.next());
+//            }
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Iterator;
+
 public class CollectionsAGeneral {
     public static void main(String[] args) {
-        Collection c = new ArrayList();
+        ArrayList<Integer> c1 = new ArrayList();
+        ArrayList<Integer> c2 = new ArrayList();
+        //Collection基本功能
+        c1.add(1);
+        c1.remove(new Integer(1));
+        c1.add(1);
+        c1.remove(0);
+        c1.clear();
+        boolean bo1 = c1.contains(new Integer(1));
+        boolean bo2 = c1.isEmpty();
+        int size = c1.size();
+
+        c1.addAll(c2);
+        c1.removeAll(c2);
+        boolean bo3 = c1.retainAll(c2);
+
+        //Collection遍历
+        c1.add(1);
+        c1.add(2);
+        c1.add(3);
+        //toArray()转为数组进行遍历
+//        Object[] objArr = c1.toArray();
+//        for (Object obj : objArr) {
+//            System.out.println((Integer)obj);
+//        }
+        //迭代器
+//        Iterator it = c1.iterator();
+//        while(it.hasNext()) {
+//            System.out.println(it.next());
+//        }
+        //增强for循环，需要判空
+        if (!c1.isEmpty()) {
+            for (Integer integer : c1) {
+                System.out.println(integer);
+            }
+        }
+
+
+
     }
 }
