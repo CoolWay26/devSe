@@ -32,8 +32,8 @@ package learnSe.part4;
 //            删除也是，拿出一个元素，前后索引修改记忆的前后单元的地址
 //4.Collection集合
 //    1.基本功能    所有集合都有的方法
-//        boolean add(E e)			//增加
-//        boolean remove(Object o)	//删除    boolean remove(int index)
+//        boolean add(E e)			//增加    可以自动装箱
+//        boolean remove(Object o)	//删除    boolean remove(int index)   不能自动装箱
 //        void clear()				//清空
 //        boolean contains(Object o)	//判断是否包含
 //        boolean isEmpty()			//判断是否为空
@@ -62,26 +62,29 @@ import java.util.Iterator;
 
 public class CollectionsAGeneral {
     public static void main(String[] args) {
-        ArrayList<Integer> c1 = new ArrayList();
-        ArrayList<Integer> c2 = new ArrayList();
-        //Collection基本功能
-        c1.add(1);
-        c1.remove(new Integer(1));
-        c1.add(1);
-        c1.remove(0);
-        c1.clear();
-        boolean bo1 = c1.contains(new Integer(1));
-        boolean bo2 = c1.isEmpty();
-        int size = c1.size();
-
-        c1.addAll(c2);
-        c1.removeAll(c2);
-        boolean bo3 = c1.retainAll(c2);
-
-        //Collection遍历
-        c1.add(1);
-        c1.add(2);
-        c1.add(3);
+//        ArrayList<Integer> c1 = new ArrayList();
+//        ArrayList<Integer> c2 = new ArrayList();
+//        //Collection基本功能
+//        c1.add(1);
+//        c1.remove(new Integer(1));
+//        c1.add(1);
+//        c1.remove(0);
+//        c1.clear();
+//        //是否包含
+//        boolean bo1 = c1.contains(new Integer(1));
+//        //判空
+//        boolean bo2 = c1.isEmpty();
+//        //元素个数
+//        int size = c1.size();
+//
+//        c1.addAll(c2);
+//        c1.removeAll(c2);
+//        boolean bo3 = c1.retainAll(c2);
+//
+//        //Collection遍历
+//        c1.add(1);
+//        c1.add(2);
+//        c1.add(3);
         //toArray()转为数组进行遍历
 //        Object[] objArr = c1.toArray();
 //        for (Object obj : objArr) {
@@ -93,11 +96,13 @@ public class CollectionsAGeneral {
 //            System.out.println(it.next());
 //        }
         //增强for循环，需要判空
-        if (!c1.isEmpty()) {
-            for (Integer integer : c1) {
-                System.out.println(integer);
-            }
-        }
+//        if (!c1.isEmpty()) {
+//            for (Integer integer : c1) {
+//                System.out.println(integer);
+//            }
+//        }
+
+
 
 
 
