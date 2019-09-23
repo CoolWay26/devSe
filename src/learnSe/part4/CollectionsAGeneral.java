@@ -35,7 +35,7 @@ package learnSe.part4;
 //        boolean add(E e)			//增加    可以自动装箱
 //        boolean remove(Object o)	//删除    boolean remove(int index)   不能自动装箱
 //        void clear()				//清空
-//        boolean contains(Object o)	//判断是否包含
+//        boolean contains(Object o)	//判断是否包含    contains方法底层是equals()
 //        boolean isEmpty()			//判断是否为空
 //        int size()					//获取元素个数
 //        注意：集合都重写了自己的toString()方法
