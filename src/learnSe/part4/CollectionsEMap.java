@@ -38,7 +38,14 @@ package learnSe.part4;
 //5.TreeMap
 //6.练习
 //    1.统计字符串中每个字符出现的频率
-
+//7.HashTable
+//    HashMap和Hashtable的区别
+//        1.
+//            Hashtable是JDK1.0版本出现的,是线程安全的,效率低
+//            HashMap是JDK1.2版本出现的,是线程不安全的,效率高
+//        2.
+//            Hashtable不可以存储null键和null值
+//            HashMap可以存储null键和null值
 import org.junit.Test;
 import java.util.*;
 
