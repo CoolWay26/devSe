@@ -20,7 +20,7 @@ package learnSe.part3;
 //            \D 非数字 ：[^0-9]
 //            \s 空白字符 ：[\t\n\r\f]   space(空白)
 //            \S 非空白字符 ：[^\s]
-//            \w 单词字符：[a-zA-Z_0-9]      注意这个包括_和0-9     word（单词）
+//            \w 单词字符：[a-zA-Z_0-9]      注意这个包括_和0-9     word（单词）可以匹配汉字等各种字符
 //            \W 非单词字符 ：[^\w]
 //        3.数量词   没有数量词的字符类只能匹配单个字符
 //            X? X，一次或一次也没有
@@ -102,8 +102,8 @@ package learnSe.part3;
 //                替换方法
 //                    public Matcher appendReplacement(StringBuffer sb, String replacement)   实现非终端添加和替换步骤（匹配到的子序列替换成replacement），然后添加到一个StringBuffer对象中
 //                    public StringBuffer appendTail(StringBuffer sb)     实现终端添加和替换步骤，只要存在正则子序列，就将整个字符串追加到参数StringBuffer对象中（调用一次加一次，不是按子序列个数加）
-//                    public String replaceAll(String replacement)        替换模式与给定替换字符串相匹配的输入序列的每个子序列
-//                    public String replaceFirst(String replacement)      替换模式与给定替换字符串匹配的输入序列的第一个子序列
+//                    public String replaceAll(String replacement)        替换被匹配的的每个子序列
+//                    public String replaceFirst(String replacement)      替换被匹配的的第一个子序列
 //                    public static String quoteReplacement(String s)     返回指定字符串的字面替换字符串。这个方法返回一个字符串，就像传递给Matcher类的appendReplacement 方法一个字面字符串一样工作
 //        PatternSyntaxException  PatternSyntaxException 是一个非强制异常类，它表示一个正则表达式模式中的语法错误
 //                PatternSyntaxException 类的方法     PatternSyntaxException 类提供了下面的方法来帮助我们查看发生了什么错误（catch到异常以后使用这些方法输出异常信息）
