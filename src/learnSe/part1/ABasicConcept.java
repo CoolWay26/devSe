@@ -1,6 +1,14 @@
 package learnSe.part1;
 //1.1java语言概述
-
+//知识点
+//记忆
+//    1.JAVA跨平台原理
+//    2.JRE和JDK
+//    3.path环境变量的作用
+//了解
+//    1.JDK安装目录
+//
+//
 //1.java语言发展
 //    詹姆斯·高斯林（James Gosling）
 //    在Sun公司时--"绿色计划"--因为觉得使用C++有很多弊端，开发了一套语言--Oak（橡树）后改名为Java

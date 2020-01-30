@@ -1,6 +1,14 @@
 package learnSe.part1;
 //1.3基本概念（Ⅱ）
-//
+//知识点
+//记忆
+//    1.算术运算符（整数相除，负数取模，自增自减和拓展运算符自动强转）
+//    2.关系运算符（结果一定是boolean型）
+//    3.逻辑运算符（&&||短路）
+//    4.位运算符（^异或加密，移位补零）
+//    5.三目运算符（和if_else区别，运算符一定要有结果）
+//    6.流程控制语句（switch注意点）
+//了解
 //1.运算符   操作常量和变量的符号
 //    1.分类
 //        1.算术运算符 +,-,*,/,%,++,--
@@ -20,7 +28,7 @@ package learnSe.part1;
 //                    问哪句会报错,为什么
 //                    byte b = 10;
 //                    b++;            //如果按b = b + 1运算，b+1的结果默认转换为int，再赋值给byte类型的b会报错，但++运算符将自增结果自动强转成了原本的byte类型
-//                    b = b + 1;		//这里报错
+//                    b = b + 1;	  //这里报错
 //        2.赋值运算符 =,+=,-=,*=,/=,%=
 //            1.拓展赋值运算符   +=,-=,*=,/=,%= 左右两边运算后赋值    a += b;即 a = a + b;
 //                同自增自减运算符一样，会做自动强转
@@ -193,7 +201,6 @@ package learnSe.part1;
 //                        break outer;
 //                    }
 //                }
-
 public class CBasicConcept {
     public static void main(String[] args) {
 //++
@@ -239,5 +246,31 @@ public class CBasicConcept {
 //                break outer;
 //            }
 //        }
+        switch (3) {
+            case 1:
+                System.out.println("matching");
+                break;
+            default:
+                System.out.println("not matching");
+            case 3:
+                System.out.println("matching");
+        }
     }
+
+//    public void test() {
+//        //下面的语句执行，因为3匹配不上，所以会执行default输出not matching，但因为漏了break，导致后续代码会重复执行，不论case是否匹配上，即会接着输出matching
+//        //not matching
+//        //matching
+//        switch (3) {
+//            case 1:
+//                System.out.println("matching");
+//                break;
+//            default:
+//                System.out.println("not matching");
+//
+//            case 2:
+//                System.out.println("matching");
+//                break;
+//        }
+//    }
 }
