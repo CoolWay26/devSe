@@ -7,7 +7,7 @@ package learnSe.part1;
 //    3.逻辑运算符（&&||短路）
 //    4.位运算符（相当于乘除，^异或加密，移位补零）
 //    5.三目运算符（?:;和if_else区别，运算符一定要有结果）
-//    6.流程控制语句（switch注意点）
+//    6.流程控制语句（switch注意点--break穿透，打印形状-九九乘法表|三角|菱形，控制跳转语句--break整个|continue当次|return结束方法，标号--标记循环）
 //了解
 //1.运算符   操作常量和变量的符号
 //    1.分类
@@ -152,6 +152,27 @@ package learnSe.part1;
 //                注意：
 //                    外循环控制行数，内循环控制列数
 //                    转义字符 "\t"制表符
+//                //打印菱形，正三角拼倒三角
+//                //正三角
+//                for (int m = 0; m <= 4; m++) {
+//                      for (int s=m;s<4;s++){
+//                          System.out.print(" ");
+//                      }
+//                  for (int i = 0; i <= m; i++) {
+//                      System.out.print("* ");
+//                  }
+//                  System.out.println();
+//                }
+//                //倒三角
+//                for (int n = 4; n > 0; n--) {
+//                  for (int s= n;s<=4;s++){
+//                      System.out.print(" ");
+//                  }
+//                  for (int i = 0; i < n; i++) {
+//                      System.out.print("* ");
+//                  }
+//                  System.out.println();
+//                }
 //                统计水仙花数的个数
 //                for(i=100;i<1000;i++) {
 //                    int x = i/100;
@@ -264,15 +285,15 @@ public class CBasicConcept {
 //                break outer;
 //            }
 //        }
-        switch (3) {
-            case 1:
-                System.out.println("matching");
-                break;
-            default:
-                System.out.println("not matching");
-            case 3:
-                System.out.println("matching");
-        }
+//        switch (3) {
+//            case 1:
+//                System.out.println("matching");
+//                break;
+//            default:
+//                System.out.println("not matching");
+//            case 3:
+//                System.out.println("matching");
+//        }
     }
 
 //    public void test() {
