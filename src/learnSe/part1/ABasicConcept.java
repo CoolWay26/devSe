@@ -2,9 +2,9 @@ package learnSe.part1;
 //1.1java语言概述
 //知识点
 //记忆
-//    1.JAVA跨平台原理
+//    1.JAVA跨平台原理（class文件-虚拟机）
 //    2.JRE和JDK
-//    3.path环境变量的作用
+//    3.path环境变量的作用（任意位置访问path下的可执行文件）
 //了解
 //    1.JDK安装目录
 //
