@@ -1,5 +1,11 @@
 package learnSe.part3;
 //3.1常见对象
+//知识点
+//记忆
+//    1.规则
+//    2.匹配方式
+//    3.Pattern和Matcher调用方式P.compile(regex)  p.matcher(str)，m.find()，m.group()
+//    4.练习，数字字符串排序，叠词切割
 //
 //1.正则表达式
 //    参考：https://www.runoob.com/java/java-regular-expressions.html  https://www.cnblogs.com/dirtyman/articles/2689367.html
@@ -35,7 +41,8 @@ package learnSe.part3;
 //                2. 本来是特殊含义的字符，加上转义字符后，取消特殊含义表示为普通字符
 //            正则中的转义问题：（根本原因是某些字符在字符串中或者正则表达式中有特殊含义，每一层有特殊含义，就要转义一次）
 //                由于字符串中\表示转义，所以编写正则字符串时，直接使用\明显不合法，想要获取一个普通的\就要写成\\
-//                而对于正则规则，\也有其特殊含义，所以需要再次转义，就需要写成\\\\
+//                而对于正则规则，\也有其特殊含义，所以如果你需要得到一个普通的\字符，就需要再次转义，就需要写成\\\\
+//                但如果你本来就要的是一个特殊含义的\，比如你需要一个\d去匹配数字，你就不需要在正则规则中再转义了，写成\\d即可
 //            对于\\.表示的是字符.（会进行两步解释）（要匹配字符.直接写.是不行的，因为对于正则表达式.有特殊含义）
 //                第一步：\\被编译器解释为\  （转义）
 //                第二步：\.被正则表达式引擎解释为.（转义，否则会根据正则规则解释）
@@ -45,7 +52,10 @@ package learnSe.part3;
 //                        第二步正则解释：想要获得一般的字符需要再次转义，否则会按正则规则解释（\对于正则有特殊含义）
 //        5.边界匹配器 使用()定义
 //            ^   行的开头，请在正则表达式的开始处使用^。例如：^(abc)表示以abc开头的字符串
-//                    注意编译的时候要设置参数MULTILINE，如 Pattern p = Pattern.compile(regex,Pattern.MULTILINE);
+//                    如果设置了 RegExp 对象的 Multiline 属性，^ 还会与"\n"或"\r"之后的位置匹配
+//                      Pattern.compile(regex,flag);
+//                      不同的flag代表不同的匹配方式，设置为Pattern.MULTILINE即为多行匹配，^和$会与"\n"或"\r"之后的位置匹配
+//                      如 Pattern p = Pattern.compile(regex,Pattern.MULTILINE);
 //            $   行的结尾，请在正则表达式的结束处使用。例如：(^bca).*(abc$)表示以bca开头以abc结尾的行。
 //            \b  单词边界。例如\b(abc)表示单词的开始或结束包含有abc,（abcjj、jjabc 都可以匹配）
 //            \B  非单词边界。例如\B(abc)表示单词的中间包含有abc,(jjabcjj匹配而jjabc、abcjj不匹配)
@@ -78,6 +88,8 @@ package learnSe.part3;
 //        Matcher m = p.matcher("aaaaab");        //String
 //        //看是否匹配
 //        boolean b = m.matches();
+//        上面的调用可以一步完成
+//        boolean b = Pattern.matches(regex, content);
 //            Pattern 类：
 //                pattern 对象是一个正则表达式的编译表示，Pattern 类没有公共构造方法
 //                要创建一个 Pattern 对象，你必须首先调用其公共静态编译方法compile()，它返回一个 Pattern 对象
@@ -92,13 +104,13 @@ package learnSe.part3;
 //                    public int end()    返回最后匹配字符之后的偏移量
 //                    public int end(int group)   返回在以前的匹配操作期间，由给定组所捕获子序列的最后字符之后的偏移量（其实就是某个子串中第group组的末尾索引）
 //                研究方法
+//                    public boolean find()   尝试查找下一个匹配的子序列，匹配器指向的索引会发生改变，如果找到，可以用group()获取当前子序列
+//                    public boolean find(int start）  重置此匹配器，然后尝试查找匹配该模式、从指定索引开始的输入序列的下一个子序列
+//                    public String group(i)  在字符串符合正则时，可以调用group(i)捕获具体的组对应的子串
 //                    public boolean lookingAt()  尝试从第一个字符开始匹配，虽不要求整个字符串都符合正则，但必须从第一个字符开始符合正则才返回true
 //                    public boolean matches()  尝试将整个区域与模式匹配，和lookingAt()对比
-//                    public boolean find()   尝试查找下一个匹配的子序列，匹配器指向的索引会发生改变
-//                    public boolean find(int start）  重置此匹配器，然后尝试查找匹配该模式、从指定索引开始的输入序列的下一个子序列
 //                    public int groupCount() 查看表达式有多少个分组。groupCount 方法返回一个 int 值，表示matcher对象当前有多少个捕获组
 //                                        特殊的组（group(0)）总是代表整个表达式，该组不包括在 groupCount 的返回值中
-//                    public String group(i)  在字符串符合正则时，可以调用group(i)捕获具体的组对应的子串
 //                替换方法
 //                    public Matcher appendReplacement(StringBuffer sb, String replacement)   实现非终端添加和替换步骤（匹配到的子序列替换成replacement），然后添加到一个StringBuffer对象中
 //                    public StringBuffer appendTail(StringBuffer sb)     实现终端添加和替换步骤，只要存在正则子序列，就将整个字符串追加到参数StringBuffer对象中（调用一次加一次，不是按子序列个数加）
@@ -112,8 +124,8 @@ package learnSe.part3;
 //                    public String getPattern()  获取错误的正则表达式模式
 //                    public String getMessage()  返回多行字符串，包含语法错误及其索引的描述、错误的正则表达式模式和模式中错误索引的可视化指示
 
-import java.util.Arrays;
-import java.util.regex.Matcher;
+    import java.util.Arrays;
+    import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class FCommonObjectRegex {
@@ -183,6 +195,34 @@ public class FCommonObjectRegex {
             System.out.println(sb1.toString());
         }
     }
+
+//练习
+    //给定字符串中的数字排序成新字符串  先转为数组，再转为int数组，再排序，再转为字符串
+    private static void sortStringArr(String s) {
+        if (!s.isEmpty()) {
+            String regex = " ";
+            String[] tempStr = s.split(regex);
+            int[] tempInt = new int[tempStr.length];
+            int i = 0;
+            for(String str : tempStr) {
+                tempInt[i] = Integer.parseInt(str);
+                i++;
+            }
+            Arrays.sort(tempInt);
+            System.out.println(Arrays.toString(tempInt));
+        }
+    }
+    //查找叠词
+    private static void findSome(String str) {
+        String regex = "(.)\\1+";
+        Pattern pattern = Pattern.compile(regex);
+        Matcher matcher = pattern.matcher(str);
+        while (matcher.find()) {
+            System.out.println(matcher.group());
+        }
+    }
+
+
 
 
 }

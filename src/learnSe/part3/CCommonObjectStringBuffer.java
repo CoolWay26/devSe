@@ -1,6 +1,12 @@
 package learnSe.part3;
 //3.1常见对象
-//
+//知识点
+//记忆
+//    1.StringBuffer
+//        线程安全，可变
+//        构造方法
+//        成员方法append,delete,deleteCharAt,insert,replace;substring
+//了解
 //5.StringBuffer，StringBuilder
 //    1.概述
 //        StringBuffer线程安全的可变字符序列（底层加锁-线程安全synchronized）

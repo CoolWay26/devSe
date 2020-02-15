@@ -1,6 +1,10 @@
 package learnSe.part3;
-
-import java.util.Scanner;
+//知识点
+//记忆
+//    1.Objejct类（超类，方法hashCode(),equals()）
+//了解
+//    1.Scanner类
+//
 //3.1常见对象
 //
 //1.API
@@ -11,10 +15,10 @@ import java.util.Scanner;
 //        类层次结构的根类（所有类都直接或者间接的继承自该类）所以该类的非私有成员，所有的类都有
 //    2.构造方法  public Object()
 //    3.hashCode()
-//        public native int hashCode()    返回该对象的哈希码值
+//        public native int hashCode()    返回该对象的哈希码值，是一个数值
 //        默认情况下，会根据对象的地址值计算（因此不同对象的hashCode()一般来说不会相同；但是相同对象的hashCode()肯定相同）
 //    4.getClass()
-//        public final Class getClass()   返回此 Object 的运行时类
+//        public final Class getClass()   返回此对象的运行时类
 //        Class类是用来描述类的属性
 //    5.toString()
 //        对于引用型变量，默认返回    类名@16进制哈希值，即getClass().getName() + "@" + Integer.toHexString(hashCode())
@@ -24,7 +28,7 @@ import java.util.Scanner;
 //        ==号和equals方法的区别
 //            1.本质不同： ==是一个比较运算符，equals()是一个方法
 //            2.使用场景不同：==可以比较基本和引用数据类型，equals()只能比较引用型
-//        这显然没什么意义，所以要进行重写（改成比较对象的属性值）
+//        这显然没什么意义，所以要进行重写（改成比较对象的属性值），重写equals()就一定要重写hashCode()，在Set集合会讲到
 
 
 //3.Scanner类

@@ -2,6 +2,15 @@ package learnSe.part3;
 import java.util.HashMap;
 import java.util.Scanner;
 //3.1常见对象
+//知识点
+//记忆
+//        1.String类
+//          直接赋值和new String区别
+//          常量池和常量优化机制
+//          常用方法
+//          转换，注意点
+//          几个练习很重要（遍历，统计，去空格，按要求输出）
+//了解
 //
 //4.String类
 //    1.概述
@@ -14,25 +23,45 @@ import java.util.Scanner;
 //                String str2 = "xxx";    //str1和str2指向同一个对象（常量池中的）
 //                String str3 = new String("xxx");
 //                String str4 = new String("xxx");    //str3和str4指向堆中不同的两个对象，但这两个对象都复制了同一个对象（常量池中的）的副本
+//                每个字符串常量一旦创建，就不会改变，对str重新赋值是使其重新指向常量池中的另一个字符串常量
+//                而new的时候，会拷贝常量池中常量的副本到堆中
 //    2.构造方法  可以通过构造将转为字符串对象
-//        1.字节数组（byte[] arr）转字符串对象  public String(byte[] bytes) public String(byte[] bytes, int index, int length)
-//        2.字符数组（char[] arr）转字符串对象  public String(char[] value) public String(char[] value, int index, int count)
+//        1.字节数组（byte[] arr）转字符串对象  public String(byte[] bytes) public String(byte[] bytes, int index, int length)从index开始转length个
+//        2.字符数组（char[] arr）转字符串对象  public String(char[] value) public String(char[] value, int index, int count)从index开始转count个
 //        3.字符串常量转为字符串对象  public String(String str)
+//            char[] chArr = {'a','b','c','d'};
+//            String str = new String(chArr,0,2);
+//            System.out.println(str);  //ab
+//            byte[] byArr = {97,98,99};
+//            String str2 = new String(byArr,0,2);
+//            System.out.println(str2); //ab
+//            System.out.println(str==str2);        //false，两个副本的地址不一致
+//            System.out.println(str.equals(str2)); //true，String的equals方法重写过
 //    3.成员方法
 //        1.判断
 //            equals()	    判断值是否相等，String类重写了equals()方法，由地址比较变为值的比较
+//            contains()	判断大字符串是否包含小字符串
+//            isEmpty()		判断是否为空（通过length判断）
 //            如果是字符串常量和字符串变量比较，通常为了防止NullPointException会用常量调用方法，如"abc".equals(str);
 //            equalsIgnoreCase()  忽略大小写判断值是否相等
-//            contains()	    判断大字符串是否包含小字符串
 //            startsWith()	判断是否以某字符串开头
-//            endsWith()	    判断是否以某字符串结尾
-//            isEmpty()		判断是否为空（通过length判断）
+//            endsWith()	判断是否以某字符串结尾
+//                String str1 = "String";
+//                String str11 = "String";
+//                String str12 = "Strin" + "g";
+//                String str13 = "Strin";
+//                String str14 = str13 + "g";
+//                String str2 = new String("String");
+//                System.out.println(str1==str11);  //输出true    常量池机制，指向同一个常量池中的字符串常量
+//                System.out.println(str1==str12);  //输出true    常量优化机制，常量之间的运算存在常量优化机制，虚拟机可以判断结果是什么样的常量
+//                System.out.println(str1==str14);  //输出false   变量参与运算，会在堆中创建一个StringBuffer或者StringBuilder对象，通过append()方法拼接，结果返回一个String对象-对象在堆中存储
+//                System.out.println(str1==str2);   //输出false   new的String对象是拷贝了常量池中常量的副本到堆中
 //        2.获取
 //            int length()	获取长度
 //            char charAt(int index)	获取index处的字符
-//            int indexOf(int ch)	ch第一次出现的索引
+//            int indexOf(int ch)	    ch第一次出现的索引，找不到返回-1  注意：参数是int类型，传入char会自动转为int，所以可以传char
 //            int indexOf(String str)	str第一次出现的索引
-//            int indexOf(int ch, int fromIndex)	ch从指定位置开始第一次出现的索引
+//            int indexOf(int ch, int fromIndex)	    ch从指定位置开始第一次出现的索引
 //            int indexOf(String str, int fromIndex)	strch从指定位置开始第一次出现的索引
 //            lastIndexOf()类似，从后往前检索（最后一次出现的索引）
 //            String subString(int start)
@@ -42,7 +71,7 @@ import java.util.Scanner;
 //              根据平台的编码集	GBK码表1个中文2个字节，特点：第一个字节肯定是负数
 //            char[] toCharArray()	//字符串转字符数组
 //            static String valueOf(char[] chs)	//字符数组转为字符串
-//            注意：String类的valueOf()可以将任意类型数据转为字符串
+//            注意：String类的静态方法valueOf()可以将任意类型数据转为字符串
 //            对象也可以，输出调用toString()方法的结果
 //        4.拼接
 //            concat()
@@ -128,7 +157,7 @@ public class BCommonObjectString {
 
 //操作
 class StringTools {
-    //遍历
+    //遍历    方法一，通过length()判断，charAt()遍历（这种方法最直接简单）
     public void traverse(String str) {
         if (!str.isEmpty()) {
             for (int i = 0; i < str.length() - 1; i++) {
@@ -137,12 +166,12 @@ class StringTools {
             System.out.println(str.charAt(str.length() - 1));
         }
     }
-    //统计
+    //统计    方法一：转为char[]，用HashMap存储统计结果；注意点：计数map指定泛型
     public void countChar() {
         Scanner sc = new Scanner(System.in);
         System.out.println("请输入任意字符串，按回车结束");
         String str = sc.nextLine();
-        HashMap<Character, Integer> countMap = new HashMap<Character, Integer>();
+        HashMap<Character, Integer> countMap = new HashMap<Character, Integer>();//养成给定泛型的好习惯，否则下面通过key取value时会取出Object类型
 
         //直接遍历str
 //        if (!str.isEmpty()) {
@@ -172,7 +201,12 @@ class StringTools {
         }
     }
 
-    //手写trim()
+    //手写trim()：统计目标字符串首尾第一个不为空格的index，然后subString()
+    //trim()是String类已有的方法， "  sabc  ".trim()
+    //注意：while循环过程中，为了防止全为空格的字符串，要保证start<=end，可以相等，原因如下
+    //举例：对于'   '三个空格的字符串，0-1-2，start循环找到2以后仍然为空格，start变为3发现start>end,中止，end循环此时也不满足条件，则最终取subString(3,3)不越界
+    //API决定substring方法是可以写成"sss".substring(3,3)，这样并不越界，但是"sss".substring(4,4)就越界了
+    //注意：subString()左闭右开;最终的start,end是首尾不为空格的index,都要被subString()取到，所以右标要取到end+1处
     public void myTrim() {
         Scanner sc = new Scanner(System.in);
         System.out.println("请输入任意字符串，按回车结束");
@@ -192,4 +226,67 @@ class StringTools {
             System.out.println(str.substring(start, end + 1));
         }
     }
+
+    //将一个字符串首字符变为大写，其余变为小写 concat(),subString()
+    //取出首字母变为大写，同后续字串变为小写拼接
+    public static void changeFirstLetter(String str) {
+        if (!str.isEmpty()) {
+            String strTemp = str.substring(0,1).toUpperCase().concat(str.substring(1).toLowerCase());
+            System.out.println(strTemp);
+        }
+    }
+
+    //数组转为字符串
+    //循环数组按要求存入StringBuffer
+    public static void changeArrToString(int[] arr) {
+        if (arr.length>0) {
+            StringBuffer sbTemp = new StringBuffer("{");
+            for (int i : arr) {
+                sbTemp.append(i).append(",");
+            }
+            sbTemp.deleteCharAt(sbTemp.length()-1).append("}");
+            System.out.println(sbTemp.toString());
+        }
+    }
+
+    //反转字符串
+    //传入StringBuffer直接调用stringBuffer()的reverse()方法；变为数组，反向遍历存入StringBuffer()
+    public static void reverseString(String str) {
+        if (!str.isEmpty()) {
+//            StringBuffer sb = new StringBuffer(str);
+//            System.out.println(sb.reverse().toString());
+
+            //数组反向遍历存入StringBuffer()
+            char[] chars = str.toCharArray();
+            StringBuffer sb = new StringBuffer();
+            for (int i = chars.length - 1; i >= 0; i--) {
+                sb.append(chars[i]);
+            }
+            System.out.println(sb.toString());
+        }
+    }
+
+    //大串中小串出现的次数
+    public static void searchString(String bigStr, String smallStr) {
+        if (bigStr.length() > smallStr.length()) {
+            int count = 0;
+            while (bigStr.indexOf(smallStr) != -1) {
+                count++;
+                bigStr = bigStr.substring(bigStr.indexOf(smallStr) + smallStr.length());
+            }
+            System.out.println(count);
+        }
+
+        //原则上，循环中要用StringBuffer操作字符串，否则会产生很多无用的String常量
+        if (bigStr.length() > smallStr.length()) {
+            int count = 0;
+            StringBuffer sb = new StringBuffer(bigStr);
+            while (sb.indexOf(smallStr) != -1) {
+                count++;
+                sb.delete(0,sb.indexOf(smallStr) + smallStr.length());
+            }
+            System.out.println(count);
+        }
+    }
+
 }

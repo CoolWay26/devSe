@@ -1,32 +1,44 @@
 package learnSe.part3;
-import org.junit.Test;
 
-import java.math.BigDecimal;
-import java.math.BigInteger;
-import java.text.SimpleDateFormat;
-import java.util.Arrays;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.Random;
-import java.util.concurrent.CancellationException;
 //3.1常见对象
+//知识点
+//记忆
+//    1.Arrays类   成员方法toString,sort,binarySearch
+//    2.包装类以Integer为例
+//        形式Character，Integer
+//        构造方法：将String或者对应类型数据转为包装类
+//        成员方法：转换Integer.parseInt("1")    String.valueOf(1)   包装类和String的转换用的是static方法
+//        自动装箱拆箱：byte范围自动装箱不会新建对象，手动装箱（new）仍然会新建对象
+//    3.System类
+//        gc
+//        垃圾回收    特点，垃圾标准，触发主GC的条件，编码要注意的4点
+//    4.SimpleDateFormat类 格式化Date()对象为String，或者把String转为Date  pattern规则   format(Date date)  parse(String str)
+//            判断人活了多少天
+//    5.Calendar类 日历类 Calendar.getInstance() set(int year,int month,int date) add(Calendar.DATE, 10) get(int field)
+//            判断闰年（如果不用Calendar：不是100的倍数是4的倍数，是100的倍数是400的倍数）
+////了解
+//    1.Math类 成员方法max min random[0.0, 1.0)
+//    2.Random类   种子，nextInt可以给定上限
+//    3.BigInteger类   大数运算add()...
+//    4.BigDecimal类   浮点运算add()...
+//    5.Date类 时刻  getTime()   setTime(long time)
 //
 //
 //6.Arrays类   针对数组操作的工具类，成员方法都是static
 //    1.成员方法
 //        public static String toString(int[] a)          转字符串  [aa, ab, ac]
 //        public static void sort(int[] a)                排序      字典顺序
-//        public static int binarySearch(int[] a,int key) 二分查找  返回索引
+//        public static int binarySearch(int[] a,int key) 二分查找，找到则返回索引，找不到则返回-插入点-1
 //7.基本类型包装类
 //    1.目的
 //        将基本类型封装成包装类，可以定义更多的属性和方法操作数据
 //        byte 			Byte                char			Character
 //        short			Short
-//        int				Integer
+//        int			Integer
 //        long			Long
 //        float			Float
-//        double			Double
-//        boolean			Boolean
+//        double		Double
+//        boolean		Boolean
 //    2.以Integer为例
 //        1.构造方法
 //            public Integer(int value)
@@ -48,7 +60,7 @@ import java.util.concurrent.CancellationException;
 //            自动装箱：把基本类型转换为包装类类型  Integer inte1 = 100;    底层实际上还是使用了构造方法
 //            自动拆箱：把包装类类型转换为基本类型  int i = inte1;          底层使用了integer.intValue()
 //            注意：
-//                自动装箱，Integer -128至127之间，同样大小不会新建对象
+//                自动装箱，Integer -128至127之间，同样大小不会新建对象，会从常量池获取（这是byte的范围，原码这么操作的）
 //                手动装箱，一定会新建对象
 //8.Math类     执行数学运算
 //    1.成员方法      static      关注返回值类型
@@ -69,7 +81,7 @@ import java.util.concurrent.CancellationException;
 //        public int nextInt(int n)   给定上限，左闭右开
 //10.System类  不能实例化
 //    1.成员方法
-//        public static void gc() 运行垃圾回收器，当垃圾回收器确定了垃圾对象，会调用Object类的finalize()方法回收垃圾
+//        public static void gc() 建议执行垃圾回收器进行回收，当垃圾回收器确定了垃圾对象，会调用Object类的finalize()方法回收垃圾
 //            System.gc();
 //        public static void exit(int status) 终止运行java虚拟机
 //            System.exit();
@@ -96,7 +108,7 @@ import java.util.concurrent.CancellationException;
 //            7.处于循环中的垃圾也是垃圾，也可能被回收
 //            8.保证已经去除监听器+引用变量赋null可以让垃圾回收器视之为垃圾
 //            9.finalize()：
-//                垃圾回收器在收集垃圾空间时，会调用对象的finalize()方法（但是并不是这个方法收集垃圾，这个方法是回收内存意外的系统资源）
+//                垃圾回收器在收集垃圾空间时，会调用对象的finalize()方法（但是并不是这个方法收集垃圾，这个方法是回收内存以外的系统资源）
 //                每个对象只能执行一次finalize()，用来回收内存以外的系统资源，在调用finalize()时，意味着本来已经死了的对象会"复苏"一次
 //                即使finalize()方法执行时产生Exception，垃圾（占用的内存）仍然会被回收，系统也不会报告这个异常
 //                finalize()方法可以重载，但是必须具备初始finalize()方法特点才会被垃圾回收器调用
@@ -164,13 +176,13 @@ import java.util.concurrent.CancellationException;
 //            yyyy;yy     年       1970;70
 //            MM;M        月       09;9（即使pattern是M，10还是10，位数不足则前面补0）
 //            dd;d        天/月    09;9(同上，不足补0)
-//                DDD;DD;D    天/年    001;01;1(同上，不足补0)
+//            DDD;DD;D    天/年    001;01;1(同上，不足补0)
 //            HH;H        小时     0-23
-//                kk;k        小时     1-24
-//                KK;K        小时     0-11（AM,PM）
-//                hh;h        小时     1-12（AM,PM）
+//            kk;k        小时     1-24
+//            KK;K        小时     0-11（AM,PM）
+//            hh;h        小时     1-12（AM,PM）
 //            ss;s        秒
-//                SS;S        毫秒
+//            SS;S        毫秒
 //15.Calendar类    抽象类，无法自己创建对象
 //参考  https://www.runoob.com/java/java-date-time.html
 //    1.概述    日历类     操作特定的瞬间，通过Calendar类，可以获取特定瞬间的某一部分，比如此时的小时，分钟等等
@@ -179,7 +191,8 @@ import java.util.concurrent.CancellationException;
 //        public final void set(int year,int month,int date)    //设置年月日
 //        public void set(int field,int value)  //设置指定的字段值
 //            类似的还有add(Calendar.DATE, 10);  //给指定字段增加，没有减的方法，但是加负的就是减
-//        public int get(int field)	//传入对应字段，获取对应字段值    注意：Calendar.DAY_OF_WEEK是从周日开始算的（1）
+//        public int get(int field)	//传入对应字段，获取对应字段值
+//        注意：Calendar.DAY_OF_WEEK是从周日开始算的（1）    Calendar.MONTH是0~11
 //        可以利用Calendar类巧妙的判断闰年（月份天数-1）
 class DCommonObjectOther {
     public static void main(String[] args) {
@@ -290,5 +303,14 @@ class DCommonObjectOther {
 //        } else {
 //            return "not leap year";
 //        }
+//    }
+//
+//    private static void getDaysFromBirthday(String str) throws ParseException {
+//        SimpleDateFormat sdf = new SimpleDateFormat("yyyy年M月d日");
+//        Date dateBir = sdf.parse(str);
+//        Date dateNow = new Date();
+//        long time = dateNow.getTime()-dateBir.getTime();
+//        long day = time/1000/60/60/24;
+//        System.out.println(day);
 //    }
 //}
