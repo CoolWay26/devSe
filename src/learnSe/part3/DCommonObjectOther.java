@@ -1,5 +1,4 @@
 package learnSe.part3;
-
 //3.1常见对象
 //知识点
 //记忆
@@ -76,9 +75,11 @@ package learnSe.part3;
 //        public Random()     随机种子
 //        public Random(long seed)    给定种子，每次重启程序，会生成同之前一致的数；如果两个Random实例的种子相同，相同调用后生成的数也相同（通常种子会是根据当前时间计算出的值DateTime.Now.Millisecend()，保证种子不会相同，这样看起来更像是真的随机）
 //                      种子决定的是起始位置，其实，如果对同一个实例一直不停的调用，N次以后，总归是会出现重复循环的情况
-//    2.成员方法
-//        public int nextInt()
-//        public int nextInt(int n)   给定上限，左闭右开
+//    2.成员方法  生成指定类型的随机数
+//        public int nextInt()        生成一个int范围内的随机数，正负都可以
+//        public int nextInt(int n)   给定上限，左闭右开，即生成[0,n)
+//        nextBoolean()               true false
+//        nextDouble()                [0.0,1.0)  其他范围要依据这个范围进行运算操作来生成
 //10.System类  不能实例化
 //    1.成员方法
 //        public static void gc() 建议执行垃圾回收器进行回收，当垃圾回收器确定了垃圾对象，会调用Object类的finalize()方法回收垃圾
@@ -194,8 +195,10 @@ package learnSe.part3;
 //        public int get(int field)	//传入对应字段，获取对应字段值
 //        注意：Calendar.DAY_OF_WEEK是从周日开始算的（1）    Calendar.MONTH是0~11
 //        可以利用Calendar类巧妙的判断闰年（月份天数-1）
-class DCommonObjectOther {
-    public static void main(String[] args) {
+import org.junit.Test;
+import java.util.Random;
+public class DCommonObjectOther {
+//    public static void main(String[] args) {
 //        String[] strArr = {"ac","ab","aa"};
 //        Arrays.sort(strArr);
 //        Arrays.binarySearch(strArr,"ab");
@@ -288,6 +291,21 @@ class DCommonObjectOther {
 //        //获取
 //        System.out.println(cd1.get(Calendar.DAY_OF_WEEK));
 
+//    }
+
+    @Test
+    public void randomTest() {
+        Random rd = new Random();
+//        System.out.println(rd.nextBoolean());
+//        for (int i = 0; i < 10; i++) {
+//            System.out.println(rd.nextInt());
+//        }
+//        for (int i = 0; i < 10; i++) {
+//            System.out.println(rd.nextInt(20));
+//        }
+//        for (int i = 0; i < 10; i++) {
+//            System.out.println(rd.nextDouble());
+//        }
     }
 }
 
