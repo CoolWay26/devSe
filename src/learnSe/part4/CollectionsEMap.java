@@ -1,10 +1,26 @@
 package learnSe.part4;
 //4.1集合框架
 //  Map集合
+//知识点
+//记忆
+//    1.键的唯一性，Hash,Tree数据结构是针对键而言
+//    2.单双列集合关系，单列集合底层是双列
+//    3.Map集合基本功能 put remove clear containsKey containsValue size
+//    4.Map集合遍历
+//        键找值
+//        键值对
+//    5.TreeMap
+//        对键排序，如果键是自定义对象，同TreeSet集合的比较方式一样
+//    6.练习
+//        1.统计字符出现次数
+//了解
+//    1.LinkedHashMap
+//    2.HashTable   线程安全，效率低，键值都不能为null
 //1.概述
 //    1.键值对
 //        1.不能包含重复的键，每个键最多只能映射一个值
 //        2.如果使用自定义对象作为键，需要重写hashCode()和equals()来保证键的唯一性
+//        3.存储是无序的
 //    2.集合子类命名是通过 数据结构+父类，HashMap,TreeMap数据结构都是针对键而言；Collection集合的数据结构是针对元素
 //    3.单列和双列集合的关系
 //        单列集合的底层是双列集合（单列集合隐藏了值列，只展示了键列），这样的好处是，用一种算法就能生成两种集合
@@ -27,11 +43,11 @@ package learnSe.part4;
 //        Collection<V> values():获取集合中所有值的集合
 //        Set<K> keySet():获取集合中所有键的集合
 //        V get(Object key):根据键获取值
-//3.遍历
+//3.遍历  注意给定泛型
 //    1.键找值
 //        Set<String> keySet = hashMap.keySet();
-//        遍历key集合，get(key)取值
-//    2.键值对
+//        遍历key集合，hashMap.get(key)取值
+//    2.键值对 获取的entrySet中存的是Map.Entry<>键值对
 //        Set<Map.Entry<String,Integer>> entrySet = hashMap.entrySet();
 //        遍历entrySet集合，getKey(),getValue()取值
 //4.LinkedHashMap 底层是链表实现的可以保证怎么存就怎么取 Linked有序    Hash唯一  Map双列
@@ -57,6 +73,7 @@ public class CollectionsEMap {
         System.out.println(str);
     }
 
+    @Test
     public void traverseMap() {
         HashMap<String, Integer> hashMap = new HashMap<>();
         hashMap.put("一",1);
@@ -101,14 +118,10 @@ public class CollectionsEMap {
         HashMap<Character, Integer> hashMap = new HashMap<>();
         for (Character ch : chars) {
             if (hashMap.containsKey(ch)) {
-                if (hashMap.get(ch) != null) {
-                    int count = hashMap.get(ch) + 1;
-                    hashMap.put(ch,count);
-                }else {
-                    hashMap.put(ch,1);
-                }
-            }else {
-                hashMap.put(ch,1);
+                int count = hashMap.get(ch) + 1;
+                hashMap.put(ch, count);
+            } else {
+                hashMap.put(ch, 1);
             }
         }
         System.out.println(hashMap);

@@ -1,15 +1,23 @@
 package learnSe.part4;
 //4.1集合框架
 //      List集合、三个子类
-//6.List  围绕索引拓展功能  特点：有序、可重复、有索引
+//知识点
+//记忆
+//    1.List特有成员方法  指定索引处add remove get set
+//    2.并发修改异常    通常不在迭代过程中增删元素 ListIterator
+//    3.LinkedList特有  addFirst addLast removeFirst removeLast getFirst getLast
+//    4.练习  List集合遍历    对ArraysList去重   用LinkedList模拟栈结构
+//了解
+//    1.ListIterator  hasPrevious previous 当前索引处set add remove
+//6.List  围绕索引拓展功能  特点：有索引、有序、可重复
 //    1.List特有功能
 //        void add(int index,E element)    指定索引位置添加元素
-//                            boolean remove(Object o)         删除某元素
-//                            E remove(int index)               删除指定索引位置元素，并返回该元素
-//                                add()会自动装箱，但是remove() 由于要存在重载函数，输入int会被当成索引，所以无法自动装箱
-//        E get(int index)                  获取
+//        boolean remove(Object o)         删除某元素
+//        E remove(int index)              删除指定索引位置元素，并返回该元素
+//          add()会自动装箱，但是remove() 由于要存在重载函数，输入int会被当成索引，所以无法自动装箱
+//        E get(int index)                 获取
 //            显然可以通过get(int index)    方法遍历
-//        E set(int index,E element)        修改
+//        E set(int index,E element)       修改
 //    2.并发修改异常    ConcurrentModificationException并发修改异常
 //        原因：在迭代的时候进行了集合的增删改操作，但是迭代器并不知道（每次迭代前会进行结构性变化的检查，modCount和expectedModCount是否相等）
 //        解决：迭代器修改元素    ListIterator具有add()等方法，可以双向迭代list集合（因为有索引）
@@ -33,7 +41,7 @@ package learnSe.part4;
 //                System.out.println(en.nextElement());   //获取集合中的元素
 //            }
 //    4.ArrayList类
-//        1.利用迭代器去重
+//        1.利用迭代器遍历和去重
 //    5.LinkedList
 //        1.特有功能  （链表的融入） 首尾增删
 //            1.public void addFirst(E e)及addLast(E e)
@@ -55,10 +63,8 @@ package learnSe.part4;
 //                线程不安全，效率高
 //    7.栈和队列
 //        1.栈：先进后出    队列：先进先出
-//        2.LinkedList模拟堆栈
+//        2.LinkedList模拟栈
 
-
-import java.util.*;
 
 public class CollectionsBList {
     public static void main(String[] args) {
@@ -128,17 +134,45 @@ public class CollectionsBList {
 
     }
 
+    //遍历使用索引遍历，迭代器遍历，增强for循环遍历
+//    public void getAllElement(List list) {
+//        if (list != null && list.size() != 0) {
+//            //        索引遍历
+//            for (int i = 0; i<list.size();i++) {
+//                System.out.println(list.get(i));
+//            }
+//
+//            //迭代器遍历
+//            ListIterator lit = list.listIterator();
+//            while (lit.hasNext()) {
+//                System.out.println(lit.next());
+//            }
+//
+//            //增强for
+//            for (Object obj : list) {
+//                System.out.println(obj);
+//            }
+//        }
+//
+//    }
+
     //迭代器去重方法
 //    private static ArrayList getSingle(ArrayList list) {
 //        ArrayList newList = new ArrayList();
 //        ListIterator listIt = list.listIterator();
 //        while (listIt.hasNext()) {
 //            String thisVal = (String)listIt.next();
-//            if (!newList.contains(thisVal)) {
+//            if (!newList.contains(thisVal)) { //由于contains底层依赖着equals方法，假如List集合中存的是自定义的对象，那么要重写该对象类的equals()方法
 //                newList.add(thisVal);
 //            }
 //        }
 //        return newList;
+//    }
+
+    //重写equals()方法的示例
+//    public boolean equals(Object obj) {
+//        Student newStu = (Student)obj;
+//        return this.name == newStu.name;
 //    }
 
 

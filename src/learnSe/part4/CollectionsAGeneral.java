@@ -1,17 +1,23 @@
 package learnSe.part4;
 //4.1集合框架
-//
+//知识点
+//记忆
+//    1.集合体系  List和Set，有无索引-是否有序-能否重复
+//    2.数组和链表的特点
+//    3.Collection基本功能    add remove contains--底层依赖equals() size toArray containsAll retainAll
+//了解
+//    1.迭代器 获取集合中的数据    其实还可以toArray()再获取，开发中我们通常使用增强for
 //1.集合概述  数组长度固定，超过长度需要重新定义数组（System.arraycopy()）
 //    区别于数组：
 //        数组可以存引用数据类型、基本数据类型；集合只能存引用数据类型
 //        数组长度固定；集合长度可变
 //2.集合继承体系
 //    Collection（根接口）
-//        List（有序，可重复，有索引）
+//        List（有索引，有序，可重复）
 //            ArrayList（数组实现）
 //            LinkedList（链表实现）
 //            Vector（数组实现）
-//        Set（无序，不可重复，无索引）
+//        Set（无索引，无序，不可重复）
 //            HashSet（哈希算法）
 //            TreeSet（二叉树算法）
 //3.数据结构之数组和链表
@@ -35,21 +41,23 @@ package learnSe.part4;
 //        boolean add(E e)			//增加    可以自动装箱
 //        boolean remove(Object o)	//删除    boolean remove(int index)   不能自动装箱
 //        void clear()				//清空
-//        boolean contains(Object o)	//判断是否包含    contains方法底层是equals()
+//        boolean contains(Object o)//判断是否包含    contains方法底层是equals()
 //        boolean isEmpty()			//判断是否为空
-//        int size()					//获取元素个数
-//        注意：集合都重写了自己的toString()方法
+//        int size()				//获取元素个数
+//        注意：集合都重写了自己的toString()方法，所以sout集合的时候，会打印元素
 //        boolean addAll(Collection c)		//添加所有元素
-//        boolean removeAll(Collection c)		//删除的是交集
+//        boolean removeAll(Collection c)	//删除的是交集
 //        boolean containsAll(Collection c)	//判断是否包含c中的每个元素（重复的也算包含）
-//        boolean retainAll(Collection c)		//判断C是否包含调用者集合（是否被包含）
+//        boolean retainAll(Collection c)	//判断C是否包含调用者集合（是否被包含）
 //            retain是保留的意思，调用者list1与list2做交集，结果集赋值给list1，如果list1被改变返回true，否则返回false（其实就是看交集是不是和调用者一样，交集肯定=小的那个）
-//5.迭代器   用来访问集合的元素
+//        Object[] toArray()    //转为数组 因为获取的是Object类，所以需要强转才能获取各个引用型变量
+//        toArray(T[] a)        //也可以给给定参数限制生成数组的类型，这是因为方法定义时给定了泛型
+//5.迭代器   用来访问集合的元素 开发中通常使用增强for去获取
 //    1.迭代器的由来  是一种设计模式
 //        迭代器是对集合进行遍历,每一个集合内部的存储结构都是不同的,所以每一个集合存和取都是不一样
 //        那么就需要在每一个类中定义 hasNext() 和 next() 方法,这样做是可以的,但是会让整个集合体系过于臃肿，所以抽取除了迭代器接口
 //        然后在每个类的内部,定义自己迭代方式
-//    2.基本方法
+//    2.基本方法    获取迭代器的iterator()是Collection的方法
 //        c1.iterator()   返回迭代器的引用
 //        it.hasNext()    判断集合中是否仍有元素可以迭代
 //        it.next()       返回迭代的下一个元素
@@ -59,10 +67,6 @@ package learnSe.part4;
 //            while(it.hasNext()) {
 //                System.out.println(it.next());
 //            }
-
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Iterator;
 
 public class CollectionsAGeneral {
     public static void main(String[] args) {
@@ -106,9 +110,7 @@ public class CollectionsAGeneral {
 //            }
 //        }
 
-
-
-
-
     }
 }
+
+

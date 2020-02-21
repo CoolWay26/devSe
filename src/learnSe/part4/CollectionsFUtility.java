@@ -1,6 +1,12 @@
 package learnSe.part4;
 //4.1集合框架
 //  Collections工具类
+//知识点
+//记忆
+//    1.工具类，意味着方法全静态，这样的类没有创建对象的必要，通过私有构造方法限制其他类中创建该类对象
+//    2.sort(List<T> list)  binarySearch(List<?> list,T key)  reverse(List<?> list)  max(Collection<?> coll)  shuffle(List<?> list)
+//    3.练习    模拟斗地主
+//了解
 //1.方法
 //    public static <T> void sort(List<T> list)   字典顺序
 //    public static <T> int binarySearch(List<?> list,T key)  二分查找
@@ -16,6 +22,15 @@ import org.junit.Test;
 import java.util.ArrayList;
 import java.util.Collections;
 public class CollectionsFUtility {
+
+    //1.生成一副扑克
+    //    color和num数组，String拼接color.concat(num)存入poker集合，最后存入大小王
+    //2.洗牌
+    //    Collections.shuffle()洗牌
+    //3.发牌
+    //    留三张底牌，剩下的牌索引从3开始
+    //    根据索引，%3==0，1，2发给三个人手牌的集合
+    //4.看牌
     public void poker() {
         //生成一副扑克
         String[] num = {"A", "2", "3", "4", "5", "6", "7", "8", "9", "10", "J", "Q", "K"};
