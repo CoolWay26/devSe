@@ -18,38 +18,51 @@ package learnSe.part4;
 //    public static void shuffle(List<?> list)    随机置换（类似洗牌）
 //2.练习    模拟扑克洗牌发牌
 import org.junit.Test;
-
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashMap;
+
 public class CollectionsFUtility {
 
     //1.生成一副扑克
-    //    color和num数组，String拼接color.concat(num)存入poker集合，最后存入大小王
+    //    定义一个List存索引，从0开始，定义一个HashMap存索引对应的牌，这样做是为了方便发牌后的手牌排序
+    //    color和num数组，color.concat(num)对应牌面，最后单独加上大小王，每生成一张，index++，存入hashMap
     //2.洗牌
-    //    Collections.shuffle()洗牌
+    //    Collections.shuffle(list)洗牌
     //3.发牌
     //    留三张底牌，剩下的牌索引从3开始
     //    根据索引，%3==0，1，2发给三个人手牌的集合
-    //4.看牌
+    //4.发牌后排序
+    //    Collections.sort(shoupai);
+    //5.看牌
+    //    通过手牌的index，去map中读取对应牌面
+    @Test
     public void poker() {
         //生成一副扑克
-        String[] num = {"A", "2", "3", "4", "5", "6", "7", "8", "9", "10", "J", "Q", "K"};
+        String[] num = {"3", "4", "5", "6", "7", "8", "9", "10", "J", "Q", "K","A", "2" };
         String[] color = {"方片", "梅花", "红桃", "黑桃"};
-        ArrayList<String> poker = new ArrayList<>();
-        for (String s1 : color) {
-            for (String s2 : num) {
-                poker.add(s1.concat(s2));
+        ArrayList<Integer> poker = new ArrayList<>();
+        HashMap<Integer, String> hm = new HashMap<>();
+        Integer index = 0;
+        for (String s1 : num) {
+            for (String s2 : color) {
+                poker.add(index);
+                hm.put(index, s2.concat(s1));
+                index++;
             }
         }
-        poker.add("小王");
-        poker.add("大王");
+        poker.add(index);
+        hm.put(index, "小王");
+        index++;
+        poker.add(index);
+        hm.put(index, "大王");
         //洗牌
         Collections.shuffle(poker);
         //发牌
-        ArrayList<String> player1 = new ArrayList<>();
-        ArrayList<String> player2 = new ArrayList<>();
-        ArrayList<String> player3 = new ArrayList<>();
-        ArrayList<String> dipai = new ArrayList<>();
+        ArrayList<Integer> player1 = new ArrayList<>();
+        ArrayList<Integer> player2 = new ArrayList<>();
+        ArrayList<Integer> player3 = new ArrayList<>();
+        ArrayList<Integer> dipai = new ArrayList<>();
         if (!poker.isEmpty()) {
             for (int i = 0; i < poker.size(); i++) {
                 if (i == 0 || i == 1 || i == 2) {
@@ -64,14 +77,19 @@ public class CollectionsFUtility {
             }
         }
         //看牌
-        System.out.println(dipai);
-        System.out.println(player1);
-        System.out.println(player2);
-        System.out.println(player3);
+        lookPoker(player1, hm);
+        System.out.println("\n");
+        lookPoker(player2, hm);
+        System.out.println("\n");
+        lookPoker(player3, hm);
+        System.out.println("\n");
+        lookPoker(dipai, hm);
     }
 
-    @Test
-    public void pokerTest() {
-        poker();
+    private void lookPoker(ArrayList<Integer> player, HashMap<Integer, String> hm) {
+        Collections.sort(player);
+        for (Integer i : player) {
+            System.out.println(hm.get(i));
+        }
     }
 }
