@@ -8,7 +8,7 @@ package learnSe.part5;
 //    3.finally在return前执行
 //了解
 //    1.自定义异常
-//
+//    2.注意事项    重写  如何选择两种处理方式
 //
 //1.try catch finally
 //    1.简介
