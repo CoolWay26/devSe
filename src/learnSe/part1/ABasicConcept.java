@@ -46,7 +46,7 @@ package learnSe.part1;
 //        安装路径不要有中文或者特殊符号如空格等
 //            举例：我的JDK安装路径	* D:\develop\Java\jdk1.7.0_72
 //        安装jdk的坑：
-//            提示安装JRE，建议安装上，且不能和JDK安装目录相同，否则配置jdk后使用时可能会出现plesae ensure JAVA_HOME point to JDK rather JRE
+//            提示安装JRE，建议安装上，且不能和JDK安装目录相同，即JRE不能安装在JDK包下，否则配置jdk后使用时可能会出现plesae ensure JAVA_HOME point to JDK rather JRE
 //            在同一台机器上安装多个版本jdk，修改环境变量不生效，因为在安装JDK时，自动将java.exe、javaw.exe、javaws.exe三个可执行文件复制到了C:\Windows\System32目录，由于这个目录在WINDOWS环境变量中的优先级高于JAVA_HOME设置的环境变量优先级
 //    验证安装是否成功：
 //        在bin目录下打开命令行测试java	javac
