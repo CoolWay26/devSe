@@ -1,4 +1,7 @@
 package learnSe.part1;
+
+import org.junit.Test;
+
 //1.3基本概念（Ⅱ）
 //知识点
 //记忆
@@ -14,8 +17,8 @@ package learnSe.part1;
 //        1.算术运算符 +,-,*,/,%,++,--
 //            1.+ 正号,加法运算,字符串连接符
 //            2./ 整数相除只能得到整数,浮点数运算得到小数，所以想得到小数结果，参与运算的值就要有小数，如10/3.0
-//            3.% 负数模运算先忽略符号计算，结果符号再与被模数保持一致      (-10)%3==-1;
-//                结果与被模数保持一致
+//            3.% 负数模运算先忽略符号计算，结果符号再与被模数（左边）保持一致      (-10)%3==-1;
+//                强调：结果与被模数保持一致，10%(-3)=1
 //            4.++和--
 //                单独使用：放在操作数的前面和后面效果一样。(这种用法是我们比较常见的)
 //                参与运算使用：
@@ -53,8 +56,8 @@ package learnSe.part1;
 //            2.左右移位相当于乘除2	位运算比乘除运算更高效，对于加减差别不明显
 //                最有效率的算出2 * 8的结果（2<<3）
 //                <<:左移		低位补0
-//                >>:右移		高位补原最高位
-//                >>>:无符号右移 	高位补0
+//                >>:右移		高位补原最高位，即符号位
+//                >>>:无符号右移 	高位默认补0，即忽略符号位的情况
 //        6.三元运算符 (关系表达式) ? 表达式1 : 表达式2;
 //            对于if_else和三目运算符，针对java编译器来说，三目运算符效率要更高，因为jvm解析class文件时少一个指令
 //            但针对汇编的编译器而言，if_else的指令要少两个，效率反而更高
@@ -296,20 +299,130 @@ public class CBasicConcept {
 //        }
     }
 
-//    public void test() {
-//        //下面的语句执行，因为3匹配不上，所以会执行default输出not matching，但因为漏了break，导致后续代码会重复执行，不论case是否匹配上，即会接着输出matching
-//        //not matching
-//        //matching
-//        switch (3) {
-//            case 1:
-//                System.out.println("matching");
-//                break;
-//            default:
-//                System.out.println("not matching");
-//
-//            case 2:
-//                System.out.println("matching");
-//                break;
-//        }
-//    }
+    //算术运算符
+    @Test
+    public void yunSuanFu_1() {
+//        //整数相除只能得到整数
+//        int i = 10;
+//        int j = 3;
+//        System.out.println(i/j);    //输出为3
+//        //%运算结果的符号取决于左边
+//        System.out.println(10%3);
+//        System.out.println(10%-3);
+//        System.out.println(-10%3);
+//        System.out.println(-10%-3);
+        // ++,--自增自减运算符的特点
+//        int x = 4;
+//        int y = (x++)+(++x)+(x*10);
+//        System.out.println(x + ";" + y);    //4 + 6 + 6*10 = 70
+//        byte b = 10;
+//        b++;        //自动转换，不会报错
+//        b = b + 1;  //会报错
+        //拓展运算符+=，-+，*=，/=
+//        short s = 1;
+//        s += 1;   //自动转换，不会报错
+    }
+    //关系运算符
+    @Test
+    public void yunSuanFu_2() {
+        //结果一定是boolean类型
+        int i = 5;
+        int j = 10;
+        if (i >= 10) {
+            System.out.println(1);
+        } else {
+            System.out.println(2);
+        }
+    }
+
+    //逻辑运算符
+    @Test
+    public void yunSuanFu_3() {
+        //&&和&的区别，短路效果
+        int i = 0;
+        int j = 1;
+        if (1>2 && i<j) {
+            System.out.println(1);
+        }
+    }
+
+    //位运算符
+    @Test
+    public void yunSuanFu_4() {
+//        //^用来加密，一个数据对另一个数据位异或两次，该数本身不变
+//        int x = 2;
+//        int y = 4;
+//        x = x^y^y;
+//        System.out.println(x);  //2
+
+//        //移位运算，移位相当于乘除2，左移==*2，且这样计算的效率最高
+//        int z = 1<<4;
+//        System.out.println(z);
+        //无符号右移，注意操作的是补码，结果和预想中有所不同
+        int a = (-8)>>>4;
+        System.out.println(a);  //268435455
+    }
+
+    //三目运算符
+    @Test
+    public void yunSuanFu_5() {
+        //三目运算符和if语句最大的区别在于，运算符一定要有一个结果，而不能是类似sout的语句，if可以没有结果而只是进行一些操作
+        //找出最大数
+        int x = 1;
+        int y = 2;
+        int z = 3;
+        int res = (x>y)?(x>z?x:z):(y>z?y:z);
+        System.out.println(res);
+    }
+
+    //if语句
+    @Test
+    public void ifTest() {
+        //尽量不要省略最后一个else
+    }
+
+    //switch语句
+    @Test
+    public void switch_1() {
+        //break穿透，牢记switch语句的结束条件是break或者末尾的大括号，而不是执行完default，所以理论上最后一个break可以省略，显然习惯上不应当省略
+        //deafault不放在最后也是最后不匹配才去执行，但我们应当把default放在最后
+        //表达式可以是 byte short char int String enum（枚举）
+        //下面的语句执行，因为3匹配不上，所以会执行default输出not matching，但因为漏了break，导致后续代码会重复执行，不论case是否匹配上，即会接着输出matching
+        switch (3) {
+            case 1:
+                System.out.println("matching");
+                break;
+            default:
+                System.out.println("not matching");
+
+            case 2:
+                System.out.println("matching");
+                break;
+        }
+
+        //多个case对应同一处理
+        int x = 1;
+        switch (x) {
+            case 1:
+            case 2:
+            case 3:
+                System.out.println(1);
+                break;
+            default:
+                System.out.println(66);
+        }
+    }
+
+    //循环
+    @Test
+    public void xun_for() {
+        //99乘法表
+        for (int x=1;x<=9;x++) {
+            for (int y=1;y<=x;y++) {
+                System.out.print(y + " * " + x + " = " + (x*y) + "\t");
+            }
+            System.out.println();
+        }
+
+    }
 }

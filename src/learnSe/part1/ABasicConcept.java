@@ -1,4 +1,7 @@
 package learnSe.part1;
+
+import org.junit.Test;
+
 //1.1java语言概述
 //知识点
 //记忆
@@ -72,4 +75,8 @@ package learnSe.part1;
 //        配置方式：
 //            系统变量中配置classpath		当前路径指的是   .
 public class ABasicConcept {
+    @Test
+    public void hello ()   {
+        System.out.println("Hello World");
+    }
 }

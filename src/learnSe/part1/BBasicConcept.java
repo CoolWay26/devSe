@@ -23,7 +23,7 @@ package learnSe.part1;
 //            /*注释*/
 //        3.文档注释
 //        说明书的制作过程
-//            通过javadoc命令生成说明书
+//            通过javadoc命令生成说明书，以下三个是编写中必用的文档注释
 //            @author(提取作者内容)
 //            @version(提取版本内容)
 //            @param 参数名称//形式参数的变量名称@return 函数运行完返回的数据
@@ -50,7 +50,7 @@ package learnSe.part1;
 //        1.方法和程序块之间加空行--让程序看起来清晰
 //        2.大括号要对齐，成对，注意缩进
 //        3.左大括号前面有空格
-//        4.并排语句之间加空格,例如for语句
+//        4.并排语句之间加空格,例如for语句           for (int i; s; s++) {}
 //        5.运算符两侧加空格
 //4.常量    程序执行过程中值不可以改变
 //    1.分类
@@ -71,7 +71,7 @@ package learnSe.part1;
 //    2.分类：
 //        1.基本数据类型（4类8种）
 //            整数型（一个字节8位，有一位符号位）
-//                byte 占一个字节  -128到127
+//                byte 占一个字节  -2^7到2^7-1    -128~127
 //                short 占两个字节  -2^15~2^15-1  Short.MAX_VALUE=32767   MIN_VALUE = -32768
 //                int 占四个字节 -2^31~2^31-1   Integer.MAX_VALUE=2147483647
 //                long 占八个字节 -2^63~2^63-1   Long.MAX_VALUE=9223372036854775807
@@ -120,7 +120,7 @@ package learnSe.part1;
 //        2.引用数据类型      数组，类，接口，枚举
 //****
 //7.数据类型转换
-//    1.默认转换  运算的时候,byte,short,char不会相互转换,都会自动类型提升为int类型，即使是两个byte类型的数运算，也会提升为int
+//    1.默认转换  运算的时候byte,short,char不会相互转换,都会自动类型提升为int类型，即使是两个byte类型的数运算，也会提升为int
 //    2.强制转换
 //        格式 b = (byte)(a + b); 	目标类型加括号
 //        注意事项    如果超出了被赋值的数据类型的取值范围得到的结果会与你期望的结果不同，会截断
@@ -164,6 +164,8 @@ package learnSe.part1;
 //        正数的补码与其原码相同；负数的补码是在其反码的末位加1。
 //        补码运算时，如果符号位发生变化，是溢出
 
+import org.junit.Test;
+
 import java.util.HashMap;
 import java.util.Map;
 public class BBasicConcept {
@@ -176,7 +178,51 @@ public class BBasicConcept {
         map.put("b",b);
         boolean bm = (boolean)(map.get("b"));
     }
+
+    @Test
+    public void zhushi() {
+//        //单行注释可以嵌套//嵌套
+//        /*多行注释不能嵌套/*
+//        因为识别到第一个结束标志后面的就失效了*/
+//         */
+    }
+    @Test
+    public void biao_Zhi$Fu() {
+        //规则：大小写字母，数字，_和$，不能以数字开头
+        System.out.println(2*2*2*2*2*2*2);
+        for (int i = 0; i>1; i++) {
+
+        }
+    }
+
+    @Test
+    public void charZhongWen() {
+//        java使用Unicode编码，一个中文字符占2字节，可以用char存储
+        char ch = '中';
+        System.out.println(ch);
+    }
+
+    @Test
+    public void jinZhi() {
+        int er = 0b100;
+        int ba = 0100;
+        int sl = 0x100;
+        System.out.println(er + ";" + ba + ";" + sl);
+    }
+
+    @Test
+    public void dataTypeChange() {
+        //byte,short,char和int进行运算时，会自动转换为int
+        byte bt = 2;
+        short st = 4;
+        char ch = '1';
+        int bt2 = bt + st;
+        int i = 8;
+        System.out.println(bt+st+ch);
+    }
 }
+
+
 
 class Types {
     public void show() {
@@ -186,4 +232,6 @@ class Types {
         float maxFloat = Float.MAX_VALUE;
         System.out.println(maxLong);
     }
+
+
 }
