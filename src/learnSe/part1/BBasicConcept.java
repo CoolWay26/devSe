@@ -220,6 +220,13 @@ public class BBasicConcept {
         int i = 8;
         System.out.println(bt+st+ch);
     }
+
+    @Test
+    public void fuDianShu_1() {
+        float a = 1;
+        float b = 1;
+        System.out.println(a-b);    //0.0
+    }
 }
 
 

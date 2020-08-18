@@ -156,6 +156,8 @@ package learnSe.part1;
 //            }
 
 
+import org.junit.Test;
+
 public class DArray {
     public static void main (String[] args) {
 //        int[] intArr = {1,2,3};
@@ -172,6 +174,35 @@ public class DArray {
 //        ts.getAllDouble(arr);
     }
 
+    @Test
+    public void erWeiShuZuTest() {
+        //方式一
+        int[][] arr1 = new int[3][3];
+        //方式二
+        int[][] arr2= new int[3][];
+        //方式三
+        int[][] arr3 = {{0},{0, 1},{0, 1, 2}};
+
+
+        arr1[0] = new int[]{0};
+        arr1[1] = new int[]{0, 1};
+        arr1[2] = new int[]{0, 1, 2};
+//        System.out.println(arr1);       //[[I@520a3426
+//        System.out.println(arr1[0]);    //[I@18eed359
+//        System.out.println(arr1[0][0]); //0
+        for (int i = 0; i <= arr1.length - 1; i++) {
+            System.out.print("{");
+            for (int j = 0; j <= arr1[i].length - 1; j++) {
+                if (j == arr1[i].length - 1) {
+                    System.out.println(arr1[i][j] + "}");
+                } else {
+                    System.out.print(arr1[i][j] + ", ");
+                }
+            }
+            System.out.println();
+        }
+
+    }
 }
 
 //class Test {
