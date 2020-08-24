@@ -173,8 +173,8 @@ package learnSe.part2;
 //            1.每一个构造方法的第一条语句默认都是：super()--这样意味着子类初始化之前要进行父类初始化   Object类是最顶层的父类
 //                实际上，执行顺序为：
 //                    父类static,子类static（class文件加载进内存时执行）
-//                    父类显式初始化，父类构造代码块，父类构造方法
-//                    父类显式初始化，子类构造代码块，子类构造方法
+//                    父类显式初始化，父类构造代码块，父类构造方法（父类初始化）
+//                    子类显式初始化，子类构造代码块，子类构造方法（子类初始化）
 //            2.子类会继承父类中的数据，可能还会使用父类的数据，所以必须要进行父类数据的初始化
 //            3.父类没有无参构造方法,子类怎么办--显式加上super(...)
 //                注意：super()必须要写在构造方法第一行
@@ -292,6 +292,8 @@ package learnSe.part2;
 //        好处：拓展性强，利于维护
 //        弊端：不能直接使用子类特有的属性（要向下转型后才能使用）
 
+import org.junit.Test;
+
 public class AObjectOriented {
     public static void main(String[] args) {
 //匿名对象
@@ -319,8 +321,59 @@ public class AObjectOriented {
 //理解super和初始化顺序
 //        Son a = new Son();
     }
+
+    @Test
+    public void chuShiHua() {
+        Son son1 = new Son();
+//        Son:0
+//        Father:40
+//        Son:20
+    }
+
+    @Test
+    public void duoTai() {
+        Father2A fa = new SonA();
+        System.out.println(fa.age);
+        fa.show();
+
+        SonA sonA = (SonA)fa;
+        System.out.println(sonA.age);
+        sonA.show();
+//        40
+//        SonA:show!
+//        20
+//        SonA:show!
+//        要理解这里就一定要理解继承，
+//        子类并不是把父类的非私有成员直接复制为自己的成员，字符类应当看作两个有交集的集合，
+//        父类的引用只能指向自己的成员变量，子类引用也只能指向自己的成员变量
+    }
 }
 
+class Father {
+    public int age = 40;
+
+    public Father() {
+        getAge();
+    }
+
+    public void getAge() {
+        System.out.println("Father:" + this.age);
+    }
+}
+
+class Son extends Father {
+    public int age = 20;
+
+    public Son() {
+        super();
+        super.getAge();
+        getAge();
+    }
+
+    public void getAge() {
+        System.out.println("Son:" + this.age);
+    }
+}
 
 
 //定义学生类
@@ -408,27 +461,27 @@ public class AObjectOriented {
 //    }
 //}
 //多态
-//class Father2A {
-//    String name = "Father!";
-//    int age = 40;
-//    public void show() {
-//        System.out.println("Father:show!");
-//    }
-//}
-//
-//class SonA extends Father2A {
-//    public static String test ;
-//    String name = "SonA!";
-//    int age = 20;
-//    String sonStr = "sonA!";
-//
-//    public void show() {
-//        System.out.println("SonA:show!");
-//    }
-//
-//    public void showA() {
-//        System.out.println("SonA:showA!");
-//    }
-//}
+class Father2A {
+    String name = "Father!";
+    int age = 40;
+    public void show() {
+        System.out.println("Father:show!");
+    }
+}
+
+class SonA extends Father2A {
+    public static String test ;
+    String name = "SonA!";
+    int age = 20;
+    String sonStr = "sonA!";
+
+    public void show() {
+        System.out.println("SonA:show!");
+    }
+
+    public void showA() {
+        System.out.println("SonA:showA!");
+    }
+}
 
 

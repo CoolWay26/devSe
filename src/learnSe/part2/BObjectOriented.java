@@ -133,6 +133,22 @@ package learnSe.part2;
 //            }
 //        重写的时候声明权限只能更大-public不能更低-private，最好一致
 //    public:完全公开访问权限
+//    这里的访问，指的是类不能出现对应的对象，方法不能被调用，即使是如下情况也不行
+//        class Oute {
+//            private class Inne {
+//
+//                public void sh() {
+//                    System.out.println("11");
+//                }
+//            }
+//
+//            public Inne getIn() {
+//                return new Inne();        //即使有这样的方法，由于Inne已经被private，所以在Oute这个类之外，也不能Inne inne = new Oute().getInne();
+//            }
+//        }
+
+import org.junit.Test;
+
 //5.其他修饰符
 //    状态修饰符：static，final
 //    抽象修饰符：abstract
@@ -200,7 +216,7 @@ package learnSe.part2;
 //                    final int age = 10;
 //                    class inner {
 //                        public void showAge() {
-//                            System.out.println(age);
+//                            System.out.println(age);  //局部内部类只能访问其所在方法中的final变量，jdk8以后默认为final，不需要显示定义
 //                        }
 //                    }
 //                }
@@ -294,8 +310,78 @@ public class BObjectOriented {
 //        innerClass.showOuterName();
 //        staticInnerClass.showOuterName();
     }
+
+    //一般内部类练习
+    @Test
+    public void yiBan() {
+        Outer1 outer1 = new Outer1();
+        outer1.outerShow();
+        //在Outer1外部类之外需要如下创建inner1对象才能访问inner1的方法
+        Outer1.Inner1 inner1 = new Outer1().new Inner1();
+        inner1.show();
+    }
+
+    //私有内部类练习
+    @Test
+    public void siYou() {
+        Outer1 outer1 = new Outer1();
+        //只能通过定义外部类的public方法操作private内部类的成员，而不能在Outer1类之外直接获取和访问private内部类
+        outer1.runPrivateInnerClassShow();
+    }
+
+    //静态内部类练习
+    @Test
+    public void staticClass() {
+        Outer1.StaticInnerClass staticInnerClass = new Outer1.StaticInnerClass();
+        staticInnerClass.showOuterName();
+    }
+
+    //匿名内部类面试题
+    @Test
+    public void niMingNeiBuLei() {
+        Outer.method().show();
+    }
+
 }
 
+
+class Outer1 {
+    class Inner1 {
+        int num = 1;
+        public void show() {
+            System.out.println("inner1");
+        }
+    }
+
+    //内部类private以后，无法在Outer1以外使用，但可以定义public方法去访问内部类的成员，注意只是访问内部类的成员，并不能将内部类对象返回
+    private class Inner2 {
+        int num = 2;
+        public void show() {
+            System.out.println("inner2");
+        }
+    }
+
+    //静态内部类当作静态成员
+    static class StaticInnerClass {
+        private String name = "InnerName";
+
+        public void showOuterName() {
+            String name = "name";
+            System.out.println(name);
+            System.out.println(this.name);
+        }
+    }
+    public void runPrivateInnerClassShow() {
+        Inner2 inner2 = new Inner2();
+        inner2.show();
+    }
+
+    public void outerShow() {
+        //需要创建内部类对象才能访问内部类的方法
+        Inner1 inner1 = new Inner1();
+        inner1.show();
+    }
+}
 
 //abstract class Father2B1 {
 //    public abstract void show();
@@ -310,6 +396,27 @@ public class BObjectOriented {
 //        System.out.println("Son2B1!");
 //    }
 //}
+
+//匿名内部类面试题start
+interface Inter { void show(); }
+class Outer { //补齐代码,在控制台输出”HelloWorld”
+    //如下是补充的代码
+    public static Inter method() {
+        return new Inter() {
+          public void show() {
+              System.out.println("HelloWorld");
+          }
+        };
+    //如上是补充的代码
+    }
+}
+//class OuterDemo {
+//        public static void main(String[] args) {
+//            Outer.method().show();
+//        }
+//}
+//匿名内部类面试题end
+
 
 
 
