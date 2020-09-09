@@ -124,6 +124,8 @@ package learnSe.part3;
 //                    public String getPattern()  获取错误的正则表达式模式
 //                    public String getMessage()  返回多行字符串，包含语法错误及其索引的描述、错误的正则表达式模式和模式中错误索引的可视化指示
 
+    import org.junit.Test;
+
     import java.util.Arrays;
     import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -196,33 +198,47 @@ public class FCommonObjectRegex {
         }
     }
 
-//练习
-    //给定字符串中的数字排序成新字符串  先转为数组，再转为int数组，再排序，再转为字符串
-    private static void sortStringArr(String s) {
-        if (!s.isEmpty()) {
-            String regex = " ";
-            String[] tempStr = s.split(regex);
-            int[] tempInt = new int[tempStr.length];
-            int i = 0;
-            for(String str : tempStr) {
-                tempInt[i] = Integer.parseInt(str);
-                i++;
-            }
-            Arrays.sort(tempInt);
-            System.out.println(Arrays.toString(tempInt));
-        }
-    }
-    //查找叠词
-    private static void findSome(String str) {
-        String regex = "(.)\\1+";
-        Pattern pattern = Pattern.compile(regex);
+
+    @Test
+    public void regexTest() {
+        //找到字符串中的数字，排序后输出
+        //正则匹配
+        String str = "1sada5sdasda23sadasd44asdasdasfa5asdasva9";
+        Pattern pattern = Pattern.compile("\\d");
         Matcher matcher = pattern.matcher(str);
+        //StringBuffer缓冲，目的是计算int数组应该的长度
+        StringBuffer sbTemp = new StringBuffer();
         while (matcher.find()) {
-            System.out.println(matcher.group());
+            sbTemp.append(matcher.group());
+        }
+        if (sbTemp.length() > 0) {
+            int[] intTemp = new int[sbTemp.length()];
+            for (int i = 0; i < sbTemp.length(); i++) {
+                //循环StringBuffer赋值给int[]
+                intTemp[i] = Integer.parseInt(sbTemp.substring(i, i + 1));
+            }
+            //排序
+            Arrays.sort(intTemp);
+            //输出
+            System.out.println(Arrays.toString(intTemp));
         }
     }
 
+    @Test
+    public void regexTest2() {
+        //找到给定字符串中所有的叠词
+        String str = "";
+        Pattern pattern = Pattern.compile("(.)\\1+");
+        Matcher matcher = pattern.matcher(str);
+        StringBuilder stringBuilder = new StringBuilder();
 
-
+        while (matcher.find()) {
+            stringBuilder.append(matcher.group());
+        }
+        if (stringBuilder.length() > 0) {
+            System.out.println(stringBuilder.toString());
+        }
+        System.out.println("一共有" + stringBuilder.length() + "个叠词");
+    }
 
 }

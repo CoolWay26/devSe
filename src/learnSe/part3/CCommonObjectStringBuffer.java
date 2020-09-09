@@ -6,6 +6,9 @@ package learnSe.part3;
 //        线程安全，可变
 //        构造方法
 //        成员方法append,delete,deleteCharAt,insert,replace;substring
+//          append任意类型数据追加到字符串缓冲区（自动转型）
+//        StringBuffer和StringBuilder区别
+//        StringBuffer作为形式参数传递时操作会改变原来的值
 //了解
 //5.StringBuffer，StringBuilder
 //    1.概述
@@ -48,40 +51,73 @@ package learnSe.part3;
 //                new StringBuffer(String str)
 //                append();
 
+import org.junit.Test;
+
 public class CCommonObjectStringBuffer {
     public static void main(String[] args) {
-//        StringBuffer sbf = new StringBuffer();
-        StringBuffer sbf = new StringBuffer("StringDemo");
-//length和capacity
-//        int len = sbf.length();
-//        int cap = sbf.capacity();
-//        System.out.println("length:" + len + "\ncapacity:" + cap);
-//增
-//        sbf.append("str");
-//        sbf.insert(0,"str");
-//删
-//        sbf.deleteCharAt(0);
-//        sbf.delete(10,10);
-//替换
-//        sbf.replace(0,1,"0-1");
-//反转
-//        sbf.reverse();
-        char[] charArr = {'s','t','r','i','n','g'};
-        System.out.println(new String(SbDemo.reverserCharArr(charArr)));
-        System.out.println(sbf);
-    }
-}
-
-class SbDemo {
-    //手写数组的reverse()
-    public static char[] reverserCharArr(char[] arr) {
-        char[] result = {};
-        if (arr.length != 0) {
-            //这里注意，1.StirngBuffer构造并不能直接接收数组    2.数组没有进行toString()的重写
-            StringBuffer sb = new StringBuffer(new String(arr));
-            result = sb.reverse().toString().toCharArray();
-        }
-        return result;
     }
 
+
+    //构造方法
+    @Test
+    public void con() {
+        //capacity
+        StringBuffer sb1 = new StringBuffer();
+        System.out.println(sb1.capacity()); //16
+        StringBuffer sb2 = new StringBuffer("111");
+        System.out.println(sb2.capacity()); //19
+        StringBuffer sb3 = new StringBuffer(10);
+        System.out.println(sb3.capacity());//10
+    }
+
+    //crud
+    @Test
+    public void crud() {
+        //append
+        StringBuffer sb = new StringBuffer();
+        sb.append(1);
+        sb.append('2');
+        sb.append("str");
+        sb.append(3.14);
+        System.out.println(sb.toString());
+        //delete
+        sb.deleteCharAt(0);
+        sb.delete(0,2);
+        System.out.println(sb.toString());
+        //replace
+        sb.replace(0,2,"strReplace");
+        System.out.println(sb);
+        //reverse
+        System.out.println(sb.reverse());
+        //subString
+        System.out.println(sb.substring(1));
+        System.out.println(sb.substring(0,2));
+    }
+
+    //String和StringBuffer转换
+    @Test
+    public void change() {
+        //String-->StringBuffer
+        StringBuffer sb = new StringBuffer("str");
+        sb.append("str");
+        //StringBuffer-->String
+        String str0 = new String(sb);
+        String str1 = sb.toString();
+        //强调subString()返回的是一个String
+        String str2 = sb.substring(0);
+    }
+
+    //StringBuffer作为形式参数传递后进行操作会改变原本的值，String作为形参传递不会改变
+    @Test
+    public void xingCan() {
+        StringBuffer sb = new StringBuffer("str111222");
+        changeBuffer(sb);
+        System.out.println(sb.toString());
+    }
+    public void changeBuffer(StringBuffer sb) {
+        sb.append("333");
+        sb.delete(0,3);
+        sb.replace(0,3,"xxx");
+        sb.reverse();
+    }
 }

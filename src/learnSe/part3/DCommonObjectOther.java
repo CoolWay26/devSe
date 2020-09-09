@@ -4,8 +4,8 @@ package learnSe.part3;
 //记忆
 //    1.Arrays类   成员方法toString,sort,binarySearch
 //    2.包装类以Integer为例
-//        形式Character，Integer
-//        构造方法：将String或者对应类型数据转为包装类
+//        形式Integer
+//        构造方法：将String或者int型转为包装类
 //        成员方法：转换Integer.parseInt("1")    String.valueOf(1)   包装类和String的转换用的是static方法
 //        自动装箱拆箱：byte范围自动装箱不会新建对象，手动装箱（new）仍然会新建对象
 //    3.System类
@@ -17,7 +17,7 @@ package learnSe.part3;
 //            判断闰年（如果不用Calendar：不是100的倍数是4的倍数，是100的倍数是400的倍数）
 ////了解
 //    1.Math类 成员方法max min random[0.0, 1.0)
-//    2.Random类   种子，nextInt可以给定上限
+//    2.Random类   给定种子的效果，nextInt可以给定上限
 //    3.BigInteger类   大数运算add()...
 //    4.BigDecimal类   浮点运算add()...
 //    5.Date类 时刻  getTime()   setTime(long time)
@@ -134,9 +134,8 @@ package learnSe.part3;
 //11.BigInteger类  大数运算    不可变的任意精度的整数
 //    1.概述
 //        1.BigInteger不是基本数据类型之一，它其实更像String，这个类的取值范围原则上是没有上限的，取决于你的计算机的内存
-//        2.
 //    2.构造方法
-//        1.public BigInteger(String val)
+//        1.public BigInteger(String val)//注意参数是String类型
 //    3.成员方法  大数加减乘除不能使用+、-、*、/这些运算符号     注意，运算的参数是BigInteger，不是String
 //        1.public BigInteger add(BigInteger val)		+
 //        2.public BigInteger subtract(BigInteger val)	-
@@ -165,7 +164,7 @@ package learnSe.part3;
 //        2.public void setTime(long time)    给该时间对象设置毫秒值
 //        3.public String toString( ) 把此 Date 对象转换为以下形式的 String： dow mon dd hh:mm:ss zzz yyyy 其中： dow 是一周中的某一天 (Sun, Mon, Tue, Wed, Thu, Fri, Sat)    ZZZ是时间标准
 //14.SimpleDateFormat类
-//    1.概述    日期格式化
+//    1.概述    日期格式化     date和String的转化
 //        是DateFormat抽象类的实现类
 //    2.构造方法
 //        public SimpleDateFormat()
@@ -190,126 +189,164 @@ package learnSe.part3;
 //    2.成员方法
 //        public static Calendar getInstance()	//通过getInstance()获取默认的Calendar子类对象，默认是当前时刻
 //        public final void set(int year,int month,int date)    //设置年月日
-//        public void set(int field,int value)  //设置指定的字段值
+//        public void set(int field,int val   ue)  //设置指定的字段值
 //            类似的还有add(Calendar.DATE, 10);  //给指定字段增加，没有减的方法，但是加负的就是减
 //        public int get(int field)	//传入对应字段，获取对应字段值
 //        注意：Calendar.DAY_OF_WEEK是从周日开始算的（1）    Calendar.MONTH是0~11
 //        可以利用Calendar类巧妙的判断闰年（月份天数-1）
+
 import org.junit.Test;
+
+import java.math.BigInteger;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Arrays;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.Random;
-public class DCommonObjectOther {
-//    public static void main(String[] args) {
-//        String[] strArr = {"ac","ab","aa"};
-//        Arrays.sort(strArr);
-//        Arrays.binarySearch(strArr,"ab");
-//        System.out.println(Arrays.toString(strArr));
+public class  DCommonObjectOther {
+    public static void main(String[] args) {
+    }
 
-        //String转int
-//        Integer int1 = new Integer("1");
-//        Integer int2 = new Integer(2);
-//        int int3 = Integer.parseInt("-111",2);
-//        int int4 = Integer.parseInt("1");
-//        System.out.println(int1);
+    //Arrays工具类
+    @Test
+    public void arraysTest() {
+        int[] arr = {3,2,1,4};
+        Arrays.sort(arr);
+        System.out.println(Arrays.binarySearch(arr, 1));
+        System.out.println(Arrays.toString(arr));
+    }
 
-        //int转String
-//        String str1 = Integer.toString(1);
-//        String str2 = int1.toString();
-//        String str3 = String.valueOf(int1);
-
+    //基本类型包装类
+    @Test
+    public void baoZhuangInteger() {
+        //构造方法
+        Integer in1 = new Integer("1");
+        Integer in11 = new Integer(1);
+        //成员方法，String和int类型转化
+        //int-->String
+        String str1 = String.valueOf(1);
+        String str2 = new Integer(1).toString();
+        String str3 = Integer.toString(1);
+        //String转为int
+        int int1 = new Integer("1").intValue();
+        int int12 = Integer.parseInt("1");
         //自动装箱拆箱
-//        Integer inte1 = 100;
-//        int i = inte1;
-        //自动装箱，-128--127之间，同样大小不会新建对象
-//        Integer i5 = 127;
-//        Integer i6 = 127;
-//        System.out.println(i5 == i6);   //true
-//        System.out.println(i5.equals(i6));  //true
-//        System.out.println("-----------");
-//        //手动装箱，一定新建对象
-//        Integer i1 = new Integer(97);
-//        Integer i2 = new Integer(97);
-//        System.out.println(i1 == i2);   //fasle
-//        System.out.println(i1.equals(i2));  //true
+        Integer in21 = 127;
+        int int3 = in21;
+            //byte范围自动装箱同样大小不会新建对象，从常量池直接获取
+        Integer in22 = 127;
+        Integer in23 = 128;
+        Integer in24 = 128;
+        System.out.println(in21==in22); //true
+        System.out.println(in23==in24); //false
+        System.out.println(in23.equals(in24));  //true
+    }
 
-        //Math
-//        double ceilValue = Math.ceil(1.1);  //2.0
-//        double floorValue = Math.floor(1.1);    //1.0
+    //Math
+    @Test
+    public void math() {
+        //绝对值
+        System.out.println(Math.abs(-11));
+        //幂，返回值为double
+        System.out.println(Math.pow(2,3));
+        //开方，返回值为double
+        System.out.println(Math.sqrt(4));
+        //随机数，返回值为double
+        System.out.println(Math.random());
+    }
 
-        //Math.random()
-//        double d1 = Math.random();
-//        int i2 = (int)(d1*10);
-//        double i3 = Math.random();
-
-
-        //Random
-//        Random rd1 = new Random(1);
-//        Random rd2 = new Random(1);
-//        int i4 = rd1.nextInt(5);
-//        int i5 = rd2.nextInt(5);
-//        int i6 = rd1.nextInt(5);
-
-        //System
-//        long startTime = System.currentTimeMillis();
-//        long endTime = System.currentTimeMillis();
-//        long subTime = startTime - endTime;
-//        System.out.println(startTime + "\n" + endTime + "\n" + subTime);
-
-        //BigInteger
-//        BigInteger bi1 = new BigInteger("10");
-//        BigInteger bi2 = new BigInteger("11");
-//        bi1 = bi1.add(bi2);
-//        bi1 = bi1.subtract(bi2);
-//        System.out.println(bi1);
-
-        //BigDecimal
-//        BigDecimal bd1 = new BigDecimal("1.0"); //1.0
-//        BigDecimal bd2 = new BigDecimal(1.0);   //1
-//        BigDecimal bd3 = new BigDecimal("1.2"); //1.2
-//        BigDecimal bd4 = new BigDecimal(1.2);   //1.1999999999999999555910790149937383830547332763671875
-//        System.out.println(bd3 + "\n" + bd4);
-        //Date
-//        Date d1 = new Date(0);  //Thu Jan 01 08:00:00 CST 1970
-//        System.out.println(d1);
-//        Date d2 = new Date();
-//        System.out.println(d2);
-//        System.out.println(d2.getTime());
-//        d2.setTime(100);
-//        System.out.println(d2.getTime());
-        //SimpleDateFormat
-//        SimpleDateFormat sdf = new SimpleDateFormat("yy年M月d日D H:m:s");
-//        String thisTime =  sdf.format(new Date());
-//        System.out.println(thisTime);
-
-        //Calendar类
-//        Calendar cd1 = Calendar.getInstance();
-//        System.out.println(cd1.toString()); //并不会输出什么格式化的Stirng
-//        //设置
-//        cd1.set(2019,9,10);
-//        cd1.set(Calendar.MONTH, 10);
-//        //增加
-//        cd1.add(Calendar.DAY_OF_MONTH, 9);
-//        //获取
-//        System.out.println(cd1.get(Calendar.DAY_OF_WEEK));
-
-//    }
-
+    //Random
     @Test
     public void randomTest() {
         Random rd = new Random();
-//        System.out.println(rd.nextBoolean());
-//        for (int i = 0; i < 10; i++) {
-//            System.out.println(rd.nextInt());
-//        }
-//        for (int i = 0; i < 10; i++) {
-//            System.out.println(rd.nextInt(20));
-//        }
-//        for (int i = 0; i < 10; i++) {
-//            System.out.println(rd.nextDouble());
-//        }
+        //nextInt的种子，伪随机
+        Random rdInt = new Random(100);
+        for (int i=0;i<10;i++) {
+            //nextInt给定参数为随机数上限（不包括）
+            System.out.println(rdInt.nextInt(100));
+        }
     }
+
+    //System
+    @Test
+    public void sysTest() {
+        //垃圾回收机制
+        System.gc();
+        //总结垃圾回收机制的几个特点
+//            1.无法人为控制，随机事件对随机垃圾对象进行回收
+//            2.判断对象为垃圾的标准，没有任何引用（关联）
+//            3.垃圾对象在被回收前会运行finalize()来解放内存以外的系统资源，垃圾对象会复苏，产生异常，但是虚拟机会进行忽略
+//            4.触发主GC的条件，如何避免
+//                1.不要显式System.gc()，虽然是建议，但一般都会运行
+//                2.循环中使用StringBuffer而不是直接操作String
+//                3.能使用基本类型就不用包装类
+    }
+
+    //精确运算
+    @Test
+    public void big() {
+        BigInteger bi1 = new BigInteger("2222222222222");
+        BigInteger bi2 = new BigInteger("3333333333333");
+        System.out.println(bi1.add(bi2));
+    }
+
+    //Date类
+    @Test
+    public void dateTest() {
+        //构造
+        Date date = new Date();
+        Date date1 = new Date(10000);
+
+        //设置距1970.1.1的毫秒值
+        date1.setTime(10001);
+        //获取
+        System.out.println(date1.getTime());
+        System.out.println(date1.toString());
+    }
+
+    //Date和String转换，格式化
+    @Test
+    public void simpleDateTest() {
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy年MM月dd日 HH:mm:ss");
+        Date date = new Date();
+        //格式化date生成String
+        String dateStr = sdf.format(date);
+        try {
+            //String转为date
+            Date date1 = sdf.parse(dateStr);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+    }
+
+    //Calendar日历类
+    @Test
+    public void calendarTest() {
+        Calendar caTest = Calendar.getInstance();
+        caTest.set(2020,2,28);
+        caTest.add(Calendar.DAY_OF_MONTH,1);
+        System.out.println(caTest.get(Calendar.MONTH)+1 + "月" + caTest.get(Calendar.DAY_OF_MONTH) + "日");
+    }
+
+    public static void getLeapYear(int year) {
+        if (year > 0 ) {
+            Calendar calendar = Calendar.getInstance();
+            calendar.set(year,1,28);
+            calendar.add(Calendar.DAY_OF_MONTH, 1);
+            if (calendar.get(Calendar.MONTH) == 1) {
+                System.out.println("闰年");
+            } else {
+                System.out.println("平年");
+            }
+        } else {
+            System.out.println("年份有误");
+        }
+    }
+
 }
 
-//class CalendarDemo {
+class CalendarDemo {
 //
 //    public String getLeapYear(int year) {
 //        Calendar calDemo = Calendar.getInstance();
@@ -323,7 +360,7 @@ public class DCommonObjectOther {
 //        }
 //    }
 //
-//    private static void getDaysFromBirthday(String str) throws ParseException {
+//    public void getDaysFromBirthday(String str) throws ParseException {
 //        SimpleDateFormat sdf = new SimpleDateFormat("yyyy年M月d日");
 //        Date dateBir = sdf.parse(str);
 //        Date dateNow = new Date();
@@ -331,4 +368,6 @@ public class DCommonObjectOther {
 //        long day = time/1000/60/60/24;
 //        System.out.println(day);
 //    }
-//}
+
+
+}

@@ -1,8 +1,11 @@
 package learnSe.part3;
+
+import java.util.Arrays;
+
 //3.1常见对象
 //知识点
 //记忆
-//    冒泡选择排序，二分查找（记住思想）
+//    冒泡，选择排序，二分查找（记住思想）
 //
 //1.冒泡排序
 //    相邻比较，每进行一次完整的冒泡，找出一个最大的，剩下的值继续进行冒泡，所以
@@ -34,16 +37,18 @@ public class ECommonObjectSort {
     public int[] bubbleSort(int[] arr) {
         //判空
         if (arr.length > 0) {
-            //外循环控制冒泡次数（arr.length个数，进行arr.length-1次）
-            for (int j = 0; j < arr.length - 1; j++)
-                //内循环进行每次的冒泡比较（arr.length个数，比较arr.length-1次）
-                for (int i = 0; i < arr.length - 1 - j; i++) {
-                    if (arr[i] > arr[i + 1]) {
-                        changeExchange(arr,i);
+            //外循环决定冒泡次数，和每次的冒泡逻辑没有关系
+            for (int i = 0; i < arr.length - 1; i++) {
+                for (int j = 0; j < arr.length - 1 - i; j++) {
+                    if (arr[j] > arr[j + 1]) {
+                        //数组是引用型变量，作为形参传递更改也有效
+                        changeExchange(arr, j);
                     }
                 }
+            }
             return arr;
         } else {
+            System.out.println("数组为空");
             return arr;
         }
     }
@@ -52,18 +57,15 @@ public class ECommonObjectSort {
     public int[] selectSort(int[] arr) {
         if (arr.length>0) {
             //外循环选择第一个数
-            for (int i = 0; i<arr.length-1;i++) {
-                //内循环选择第二个数
-                for (int j = i+1; j<arr.length;j++) {
-                    if (arr[i]>arr[j]) {
-                        changeExchange(arr,i);
+            for (int i = 0;i<arr.length-1;i++) {
+                for (int j = i+1;j<=arr.length-1;j++) {
+                    if (arr[i] > arr[j]) {
+                        changeExchange(arr, i, j);
                     }
                 }
             }
-            return arr;
-        }else {
-            return arr;
         }
+        return arr;
     }
 
     //快速排序
@@ -107,23 +109,24 @@ public class ECommonObjectSort {
 
     //二分查找
     public int binarySearch(int[] arr, int value) {
-        if (arr.length > 0) {
-            int min = 0;
-            int max = arr.length - 1;
-            int mid = (min + max) / 2;
-            //判断中值是否是目标值
+
+        if (arr.length>0) {
+            //核心思想，先排序，然后每次比较中位数
+            Arrays.sort(arr);
+            int start = 0;
+            int end = arr.length-1;
+            int mid = (start + end)/2;
             while (arr[mid] != value) {
-                //根据目标值所在位置确定下一个min,max,mid的位置
-                if (arr[mid] > value) {
-                    max = mid;
+                if (value < arr[mid]) {
+                    end = mid;
                 } else {
-                    min = mid;
+                    start = mid;
                 }
 
-                if (min > max) {
+                if (start > end) {
                     return -1;
                 } else {
-                    mid = (min + max) / 2;
+                    mid = (start + end)/2;
                 }
             }
             return mid;
@@ -137,4 +140,12 @@ public class ECommonObjectSort {
         arr[i] = arr[i+1];
         arr[i+1] = temp;
     }
+
+    private void changeExchange(int[] arr, int i ,int j) {
+        int temp = arr[i];
+        arr[i] = arr[j];
+        arr[j] = temp;
+    }
+
+
 }

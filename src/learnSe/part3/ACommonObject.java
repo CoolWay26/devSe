@@ -1,7 +1,7 @@
 package learnSe.part3;
 //知识点
 //记忆
-//    1.Objejct类（超类，方法hashCode(),equals()）
+//    1.Objejct类（超类，方法hashCode(),equals(),toString(),getClass()）
 //了解
 //    1.Scanner类
 //

@@ -1,6 +1,7 @@
 package learnSe.part3;
+import org.junit.Test;
+
 import java.util.HashMap;
-import java.util.Scanner;
 //3.1常见对象
 //知识点
 //记忆
@@ -9,7 +10,7 @@ import java.util.Scanner;
 //          常量池和常量优化机制
 //          常用方法
 //          转换，注意点
-//          几个练习很重要（遍历，统计，去空格，按要求输出）
+//          几个练习很重要（遍历，统计，去空格，按要求输出）,注意手写trim()时处理到全空格的String的特殊情况
 //了解
 //
 //4.String类
@@ -94,7 +95,7 @@ import java.util.Scanner;
 //            String str2 = "a" + "b" + "c";  //str1和str2是同一个字符串常量    str1==str2  true，这是java的常量优化机制，常量先拼接再去看常量池
 //            但是这里也有一个坑
 //            String str3 = "ab";
-//            String str4 = str3 + "c";   //str3==str4    false
+//            String str4 = str3 + "c";   //str1==str4    false
 //            // 字符串+串联底层是通过StringBuilder，StringBuffer完成的，返回的str4实际上已经是sb.toString()（和new类似）,sb的地址和常量池中的地址肯定不一致
 //    5.基本操作
 //        1.遍历    length()  charAt()
@@ -103,62 +104,135 @@ import java.util.Scanner;
 //        3.手写trim()    统计前后空格的个数，再使用subString()
 public class BCommonObjectString {
     public static void main(String[] args) {
-//区别String 和 new String()，常量优化机制和 + 串联String的区别
-        String str1 = "String";
-        String str11 = "String";
-        String str12 = "Strin" + "g";
-        String str13 = "Strin";
-        String str14 = str13 + "g";
-        String str2 = new String("String");
-//        System.out.println(str1==str11); //输出true
-//        System.out.println(str1==str12); //输出true
-//        System.out.println(str1==str14); //输出false
-//        System.out.println(str1==str2); //输出false
+    }
 
-//构造方法
+    //基础知识点
+    @Test
+    public void jiBen() {
+        String str = "abc";
+        String str0 = "abc";
+        String str1 = "ab";
+        String str2 = str1 + "c";
+        String str3 = "a" + "b" + "c";
+        String str4 = new String("abc");
+        //常量池机制
+        System.out.println(str==str0);//true
+        //常量优化机制，只针对常量
+        System.out.println(str==str3);//true
+        //String变量的拼接与常量不同，是通过StringBuilder或StringBuffer实现，str2获取的是sb.toString()
+        System.out.println(str==str2);//false
+        //String类重写了equals()，比较的是具体值
+        System.out.println(str.equals(str2));//true
+        //区别String 和 new String()，new创建的String对象在堆中，不在常量池中
+        System.out.println(str==str4);//false
+    }
+
+    //构造方法
+    @Test
+    public void conTest() {
         //字节数组
-//        byte[] arrBytes = {97,98,99};
-//        String str21 = new String(arrBytes);
-//        System.out.println(str21);//输出abc
-//        //字符数组
-//        char[] arrChars = {'a','b','c'};
-//        String str22 = new String(arrChars);
-//        System.out.println(str22);//输出abc
+        byte[] arrBytes = {97, 98, 99};
+        String str210 = new String(arrBytes);
+        String str211 = new String(arrBytes, 0, 2);
+        System.out.println(str210);//abc
+        System.out.println(str211);//ab
+        //字符数组
+        char[] arrChars = {'a', 'b', 'c'};
+        String str220 = new String(arrChars);
+        String str221 = new String(arrChars, 0, 2);
+        System.out.println(str220);//abc
+        System.out.println(str221);//ab
+        //字符串
+        String str23 = new String("abc");
+        System.out.println(str23);
+    }
 
-//成员方法
-//        equals()
-//        boolean bool1 = str1.equals(str14);             //true
-//        boolean bool2 = str1.equalsIgnoreCase(str14);   //true
-//        boolean bool3 = str1.contains(str13);           //true
-//        boolean bool4 = str1.isEmpty();
-//
-//        int len = str1.length();
-//        char ch = str1.charAt(0);
-//        int index = str1.indexOf("st", 0);
-//        int index2 = str1.lastIndexOf("str", 2);
-//        String strSub = str1.substring(0,2);
-//
-//        byte[] bt = str1.getBytes();
-//        char[] cr = str1.toCharArray();
-//        String strValue = String.valueOf(bt);
-//
-//        String con = str1.concat(str2);
-//        String rep = str1.replace("str","str2");
-//        int com = str1.compareTo(str13);
-//        String strTrim = str1.trim();
+    //判断
+    @Test
+    public void panDuan() {
+        //equals()
+        String str0 = "abc";
+        String str1 = new String("abc");
+        System.out.println(str0.equals(str1));
+        //contains
+        String str2 = "ab";
+        System.out.println(str0.contains(str2));
+        //startsWith
+        System.out.println(str0.startsWith("a"));
+        //endsWith
+        System.out.println(str0.endsWith("a"));
+    }
 
-        StringTools tools = new StringTools();
-//        tools.traverse("traverse!");
-//        tools.countChar();
-        tools.myTrim();
+    //获取
+    @Test
+    public void huoQu() {
+        String str = "abc";
+        System.out.println(str.length());
+        System.out.println(str.charAt(1));
+        System.out.println(str.indexOf("a"));
+        System.out.println(str.lastIndexOf("a"));
+        System.out.println(str.substring(1));
+        System.out.println(str.substring(0,1));
+    }
+
+    //转换
+    @Test
+    public void change() {
+        String str = "abc";
+        byte[] bs = str.getBytes();
+        char[] cs = str.toCharArray();
+        String[] ss = {"111","222"};
+        //String.valueOf()能将任意类型转为字符串，但对于非char[]和Object而言会是toString()
+        String str1 = String.valueOf(cs);
+        System.out.println(str1);       //abc
+        System.out.println(String.valueOf(bs));     //[B@520a3426
+        System.out.println(String.valueOf(cs));     //abc
+        System.out.println(String.valueOf(ss));     //[Ljava.lang.String;@18eed359
+        System.out.println(String.valueOf(new HashMap<>()));    //{}
+    }
+
+    //其他
+    @Test
+    public void other() {
+        String str = "Hello";
+        String str1 = "World!";
+        System.out.println(str.concat(" " + str1));
+        System.out.println(str.replace("H", "HHH"));
+        System.out.println(str.trim());
+        System.out.println(str.compareTo("hello")); //当前编码的字典顺序挨个比较每个char，输出差值，如果两个字符串是子串的关系，那么输出length的差值，总之若相同结果为0
+        System.out.println(str.compareToIgnoreCase("hello"));
+    }
+
+    //常见操作
+    @Test
+    public void doSomething() {
+        String str = "1234567";
+        String trimStr = " trim  ";
+        String upStr = "upperCase";
+        String bigStr = "123 68876 123 98987987 123 98797 123";
+        int[] intArr = {1,2,3,4,5};
+        //遍历输出
+        StringTools.getAll(str);
+        //统计每个字符分别出现的次数
+        StringTools.countChar(str);
+        //手写trim()
+        StringTools.myTrim(trimStr);
+        //String首字母变大写
+        StringTools.changeFirstLetter(upStr);
+        //数组转为一个{...}字符串
+        StringTools.changeArrToString(intArr);
+        //反转字符串 StringBuffer的reverse()
+        StringTools.reverseString(str);
+        //大串中字串的个数  StringBuffer
+        StringTools.searchString(bigStr,"123");
     }
 }
 
 
 //操作
 class StringTools {
-    //遍历    方法一，通过length()判断，charAt()遍历（这种方法最直接简单）
-    public void traverse(String str) {
+    //遍历    思路：length()和charAt()循环遍历
+    public static void getAll(String str) {
         if (!str.isEmpty()) {
             for (int i = 0; i < str.length() - 1; i++) {
                 System.out.print(str.charAt(i) + " ");
@@ -166,38 +240,21 @@ class StringTools {
             System.out.println(str.charAt(str.length() - 1));
         }
     }
-    //统计    方法一：转为char[]，用HashMap存储统计结果；注意点：计数map指定泛型
-    public void countChar() {
-        Scanner sc = new Scanner(System.in);
-        System.out.println("请输入任意字符串，按回车结束");
-        String str = sc.nextLine();
-        HashMap<Character, Integer> countMap = new HashMap<Character, Integer>();//养成给定泛型的好习惯，否则下面通过key取value时会取出Object类型
-
-        //直接遍历str
-//        if (!str.isEmpty()) {
-//            for (int i = 0; i < str.length(); i++) {
-//                if (countMap.containsKey(str.charAt(i))) {
-//                    int countTemp = countMap.get(str.charAt(i)) + 1;
-//                    countMap.put(str.charAt(i), countTemp);
-//                } else {
-//                    countMap.put(str.charAt(i), 1);
-//                }
-//            }
-//        }
-        //转为数组进行遍历，代码更清晰
-        char[] chars = str.toCharArray();
-        if (chars.length != 0) {
-            for (char charTemp : chars) {
-                if (countMap.containsKey(charTemp)) {
-                    int countTemp = countMap.get(charTemp) + 1;
-                    countMap.put(charTemp, countTemp);
+    //统计    思路：转为char[]，用HashMap存储统计结果；注意点：计数map泛型，对象判空
+    public static void countChar(String str) {
+        if (!str.isEmpty()) {
+            HashMap<Character, Integer> countMap = new HashMap();
+            char[] chars = str.toCharArray();
+            for (char ch: chars) {
+                if (countMap.containsKey(ch)) {
+                    countMap.put(ch, countMap.get(ch) +1);
                 } else {
-                    countMap.put(charTemp, 1);
+                    countMap.put(ch,1);
                 }
             }
-        }
-        if (countMap.size() != 0) {
-            System.out.println(countMap);//hashMap重写了toString()方法，输出{key=value...}
+            if (countMap.size()!=0) {
+                System.out.println(countMap.toString());
+            }
         }
     }
 
@@ -207,23 +264,18 @@ class StringTools {
     //举例：对于'   '三个空格的字符串，0-1-2，start循环找到2以后仍然为空格，start变为3发现start>end,中止，end循环此时也不满足条件，则最终取subString(3,3)不越界
     //API决定substring方法是可以写成"sss".substring(3,3)，这样并不越界，但是"sss".substring(4,4)就越界了
     //注意：subString()左闭右开;最终的start,end是首尾不为空格的index,都要被subString()取到，所以右标要取到end+1处
-    public void myTrim() {
-        Scanner sc = new Scanner(System.in);
-        System.out.println("请输入任意字符串，按回车结束");
-        String str = sc.nextLine();
-
+    public static void myTrim(String str) {
         if (!str.isEmpty()) {
             int start = 0;
-            int end = str.length() - 1;
+            int end = str.length() -1;
             while (start <= end && str.charAt(start) == ' ') {
-                start++;//为空格则继续看下一个字符
+                start ++;
             }
             while (start <= end && str.charAt(end) == ' ') {
-                end--;//为空则继续看前一个字符
+                end--;
             }
-            //API决定substring方法是可以写成"sss".substring(3,3)，这样并不越界，但是"sss".substring(4,4)就越界了
-            //左闭右开，end + 1
-            System.out.println(str.substring(start, end + 1));
+
+            System.out.println(str.substring(start,++end));
         }
     }
 
@@ -240,12 +292,13 @@ class StringTools {
     //循环数组按要求存入StringBuffer
     public static void changeArrToString(int[] arr) {
         if (arr.length>0) {
-            StringBuffer sbTemp = new StringBuffer("{");
+            StringBuffer sb = new StringBuffer();
+            sb.append("{");
             for (int i : arr) {
-                sbTemp.append(i).append(",");
+                sb.append(i + ",");
             }
-            sbTemp.deleteCharAt(sbTemp.length()-1).append("}");
-            System.out.println(sbTemp.toString());
+            sb.deleteCharAt(sb.length()-1).append("}");
+            System.out.println(sb.toString());
         }
     }
 
@@ -253,31 +306,22 @@ class StringTools {
     //传入StringBuffer直接调用stringBuffer()的reverse()方法；变为数组，反向遍历存入StringBuffer()
     public static void reverseString(String str) {
         if (!str.isEmpty()) {
-//            StringBuffer sb = new StringBuffer(str);
-//            System.out.println(sb.reverse().toString());
+            StringBuffer sb = new StringBuffer(str);
+            System.out.println(sb.reverse().toString());
 
-            //数组反向遍历存入StringBuffer()
-            char[] chars = str.toCharArray();
-            StringBuffer sb = new StringBuffer();
-            for (int i = chars.length - 1; i >= 0; i--) {
-                sb.append(chars[i]);
-            }
-            System.out.println(sb.toString());
+            //手写，数组反向遍历存入StringBuffer()
+//            char[] chars = str.toCharArray();
+//            StringBuffer sb = new StringBuffer();
+//            for (int i = chars.length - 1; i >= 0; i--) {
+//                sb.append(chars[i]);
+//            }
+//            System.out.println(sb.toString());
         }
     }
 
     //大串中小串出现的次数
     public static void searchString(String bigStr, String smallStr) {
-        if (bigStr.length() > smallStr.length()) {
-            int count = 0;
-            while (bigStr.indexOf(smallStr) != -1) {
-                count++;
-                bigStr = bigStr.substring(bigStr.indexOf(smallStr) + smallStr.length());
-            }
-            System.out.println(count);
-        }
-
-        //原则上，循环中要用StringBuffer操作字符串，否则会产生很多无用的String常量
+        //循环中要用StringBuffer操作字符串，否则会产生很多无用的String常量
         if (bigStr.length() > smallStr.length()) {
             int count = 0;
             StringBuffer sb = new StringBuffer(bigStr);
