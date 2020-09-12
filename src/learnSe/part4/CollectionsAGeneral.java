@@ -5,6 +5,7 @@ package learnSe.part4;
 //    1.集合体系  List和Set，有无索引-是否有序-能否重复
 //    2.数组和链表的特点
 //    3.Collection基本功能    add remove contains--底层依赖equals() size toArray containsAll retainAll
+//    4.集合遍历的三种方式   转为数组toArray()   迭代器     增强for
 //了解
 //    1.迭代器 获取集合中的数据    其实还可以toArray()再获取，开发中我们通常使用增强for
 //1.集合概述  数组长度固定，超过长度需要重新定义数组（System.arraycopy()）
@@ -68,48 +69,70 @@ package learnSe.part4;
 //                System.out.println(it.next());
 //            }
 
+import org.junit.Test;
+
+import java.util.ArrayList;
+import java.util.ListIterator;
+
 public class CollectionsAGeneral {
     public static void main(String[] args) {
-//        ArrayList<Integer> c1 = new ArrayList();
-//        ArrayList<Integer> c2 = new ArrayList();
-//        //Collection基本功能
-//        c1.add(1);
-//        c1.remove(new Integer(1));
-//        c1.add(1);
-//        c1.remove(0);
-//        c1.clear();
-//        //是否包含
-//        boolean bo1 = c1.contains(new Integer(1));
-//        //判空
-//        boolean bo2 = c1.isEmpty();
-//        //元素个数
-//        int size = c1.size();
-//
-//        c1.addAll(c2);
-//        c1.removeAll(c2);
-//        boolean bo3 = c1.retainAll(c2);
-//
-//        //Collection遍历
-//        c1.add(1);
-//        c1.add(2);
-//        c1.add(3);
-        //toArray()转为数组进行遍历
-//        Object[] objArr = c1.toArray();
-//        for (Object obj : objArr) {
-//            System.out.println((Integer)obj);
-//        }
-        //迭代器
-//        Iterator it = c1.iterator();
-//        while(it.hasNext()) {
-//            System.out.println(it.next());
-//        }
-        //增强for循环，需要判空
-//        if (!c1.isEmpty()) {
-//            for (Integer integer : c1) {
-//                System.out.println(integer);
-//            }
-//        }
+    }
 
+    //
+    @Test
+    public void crud() {
+        ArrayList<Integer> c1 = new ArrayList();
+        ArrayList<Integer> c2 = new ArrayList();
+        //Collection基本功能
+        c1.add(1);
+        c1.remove(new Integer(1));
+        c1.add(1);
+        c1.remove(0);
+        c1.clear();
+        //是否包含
+        boolean bo1 = c1.contains(new Integer(1));
+        //判空
+        boolean bo2 = c1.isEmpty();
+        //元素个数
+        int size = c1.size();
+
+        c1.addAll(c2);
+        c1.removeAll(c2);
+        boolean bo3 = c1.retainAll(c2);
+    }
+
+    @Test
+    public void getAll() {
+        ArrayList<Integer> arrayList = new ArrayList();
+        arrayList.add(1);
+        arrayList.add(2);
+        arrayList.add(3);
+
+        //索引直接遍历
+        for (int i = 0; i < arrayList.size(); i++) {
+            System.out.println(arrayList.get(i).intValue());
+        }
+
+        //toArray()
+        Object[] arr = arrayList.toArray();
+        //toArray()可以给定参数限制生成Array存的数据类型
+        Integer[] arr1 = arrayList.toArray(new Integer[1]);
+        for (Integer integer : arr1) {
+            System.out.println(integer.intValue());
+        }
+
+        //迭代器
+        ListIterator<Integer> listIt = arrayList.listIterator();
+        while (listIt.hasNext()) {
+            System.out.println(listIt.next());
+        }
+
+        //增强for，注意判空
+        if (arrayList != null) {
+            for (Integer integer : arrayList) {
+                System.out.println(integer.intValue());
+            }
+        }
     }
 }
 

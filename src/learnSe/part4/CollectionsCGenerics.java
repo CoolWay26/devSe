@@ -18,7 +18,7 @@ package learnSe.part4;
 //    2.好处
 //        1.将运行期的错误转换到编译期，更安全
 //            迭代强转的时候，可能会出现ClassCaseException
-//        2.不再需要强转
+//        2.不再需要强转，更方便
 //            向集合中存入数据时，会自动提升为Object，加上泛型后取出就是泛型的类型，不再是Object类型
 //    3.注意
 //        1.<>中放的必须是引用数据类型，定义成Object是无意义的（因为集合中存的一定是引用型变量）
@@ -43,8 +43,9 @@ package learnSe.part4;
 //        简化数组和Collection集合的遍历（底层是迭代器实现），所以一般不使用迭代器进行遍历（读取的操作）
 //    2.注意
 //        由于底层是迭代器，所以不能对集合进行结构性变化的操作（增删）
-//        已知遍历List集合的三种方式
+//        已知遍历List集合的四种方式
 //            一般循环遍历，通过索引遍历，遍历过程中可以通过操作索引进行增删
+//            toArray(Class class)然后遍历
 //            迭代器遍历，只能通过ListIterator迭代器的add，remove方法在当前索引处进行增删
 //            增强for循环，不能进行增删，但遍历起来简单直接
 //7.静态导入
@@ -55,9 +56,9 @@ package learnSe.part4;
 //        2.意义不大，知道就行
 //8.可变参数
 //    1.格式
-//        1.修饰符 返回值类型 方法名(数据类型…  变量名){}       定义方法的时候不知道该定义多少个参数
+//        1.修饰符 返回值类型 方法名(数据类型…  变量名){}       可变参数体现在方法定义的时候，定义方法的时候不知道该定义多少个参数就采用这种形式定义方法
 //    2.注意
-//        1.可变参数其实是一个数组
+//        1.可变参数其实是一个数组，用操作数组的方式操作它
 //        2.如果一个方法有多个参数，那么可变参数放在最后，否则前面的参数可能会被可变参数接收
 //9.Arrays.asList()
 //    1.概述
@@ -67,44 +68,57 @@ package learnSe.part4;
 //        4.这样生成的List集合，实际上只是获取了List集合的结构，不能进行add,remove的操作，但可以进行其他的集合相关的操作，如迭代器遍历
 //10.Collection的非静态方法toArray(T[] a)
 //    给参数定义了泛型，从而可以在调用时限制生成数组的元素类型
-//        参数即是将要生成的数组，且该数组长度要<=目标集合的size()，否则多余的元素会默认赋值null
+//        参数即是将要生成的类型数组，且该数组长度要<=目标集合的size()，否则多余的元素会默认赋值null
 //        String[] arr = list.toArray(new String[0]);
 //    没有参数的toArray()会默认成Object
 //        Object[] arr1 = list.toArray();
 
 
+import org.junit.Test;
+
+import java.util.ArrayList;
 import java.util.LinkedList;
 
 public class CollectionsCGenerics {
     public static void main (String[] args) {
-        //泛型类
-//        GenericsClass<Integer> gc = new GenericsClass<>();
-//        gc.setGen(1);
-//        gc.getGen();
-//        gc.getInteger(2);
-        //增强for
-//        ArrayList<String> list = new ArrayList<String>();
-//        list.add("A");
-//        list.add("B");
-//        list.add("C");
-//        for (String str : list) {
-//            System.out.println(str);
-//        }
-//
-//        String[] arr = list.toArray(new String[0]);
-//        String[] arr1 = list.toArray();//报错
-//        Object[] arr2 = list.toArray();
-        colToArr();
+    }
+
+
+    //泛型，类泛型，方法泛型
+    @Test
+    public void fanXingClass() {
+        GenericsClass<Integer> gc = new GenericsClass<>();
+        gc.setGen(1);
+        gc.getGen();
+        gc.showGen(2);
+        gc.getInteger(3);
     }
 
     //可变参数
-    public static void varPar(int... arr) {
+    @Test
+    public void varParTest() {
+        canChange(1,2,3,4);
+    }
+    private void canChange(int... arr) {
+        System.out.println(arr);
         for (int i : arr) {
-            System.out.println(i);
+            System.out.print(i + " ");
         }
     }
-    //Collection的非静态方法toArray(T[] arr)
 
+    //Collection的非静态方法toArray(T[] arr)
+    @Test
+    public void toArrayTest() {
+        ArrayList<String> list = new ArrayList();
+        list.add("I");
+        list.add("like");
+        list.add("study");
+
+        String[] strArr = list.toArray(new String[0]);
+        for (String str: strArr) {
+            System.out.print(str  + " ");
+        }
+    }
     public static void colToArr() {
         LinkedList<Integer> list = new LinkedList();
         list.addLast(1);
@@ -116,40 +130,42 @@ public class CollectionsCGenerics {
 
 }
 
-
 //泛型类
-//class GenericsClass<Generics> {
-//    Generics gen;
-//
-//    public void getGen () {
-//        System.out.println(gen.toString());
-//    }
-//
-//    public void setGen (Generics gen) {
-//        this.gen = gen;
-//    }
-//
-//    //泛型方法
-//    public<Inte> Inte getInteger (Inte inte) {
-//        System.out.println(inte.toString());
-//        return inte;
-//    }
-//}
+class GenericsClass<Generics> {
+    Generics gen;
+
+    public void setGen (Generics gen) {
+        this.gen = gen;
+    }
+
+    public void getGen () {
+        System.out.println(gen.toString() + "泛型类");
+    }
+
+    //泛型方法
+    //使用类的泛型
+    public void showGen(Generics gen) {
+        System.out.println(gen.toString() + "类泛型");
+    }
+    //使用独立的泛型
+    public<Inte> Inte getInteger (Inte inte) {
+        System.out.println(inte.toString() + "独立方法泛型");
+        return inte;
+    }
+}
 
 //泛型接口
-//interface GenInte<Inte> {
-//    public static final String INTE_VALUE = "INTE";
-//    int INTE_NUM = 1;
-//    void getInteger(Inte inte);
-//}
-//
-//class GenInteImpl implements GenInte<Integer> {
-//
-//    @Override
-//    public void getInteger(Integer integer) {
-//
-//    }
-//}
+interface GenInte<Inte> {
+    public static final String INTE_VALUE = "INTE";
+    int INTE_NUM = 1;
+    void getInteger(Inte inte);
+}
+
+class GenInteImpl implements GenInte<Integer> {
+    @Override
+    public void getInteger(Integer integer) {
+    }
+}
 
 
 

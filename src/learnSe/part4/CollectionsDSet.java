@@ -9,7 +9,7 @@ package learnSe.part4;
 //      利用Set集合进行去重
 //        对于非集合的目标，可以遍历，存进set，再输出
 //        对于集合，可以直接addAll()
-//      生成10个1-20的随机数
+//      生成10个1-20不重复的随机数
 //        Random()  nextInt(20)+1
 //      字符串中的字符去重
 //        toCharArray() LinkedHashSet StringBuilder
@@ -88,15 +88,8 @@ import org.junit.Test;
 
 import java.util.*;
 public class CollectionsDSet {
-    //遍历Set
-    public<OneSet extends Set> void getAllSetE(OneSet set) {
-        for (Object obj : set) {
-            System.out.println(obj);
-        }
-    }
-
     //利用Set去重
-    //对存储一般元素的集合去重
+    //如下是针对一般集合的去重，如果是存储自定义对象的集合去重，该对象的类一定要重写hashCode()和equals()方法（通常是由开发工具自动生成--右键Generate选项）
     @Test
     public void getSingleTest() {
         ArrayList list = new ArrayList();
@@ -104,35 +97,13 @@ public class CollectionsDSet {
         list.add("a");
         getSingle(list);
     }
-
-    //如果是存储自定义对象的集合去重，该对象的类一定要重写hashCode()和equals()方法
-    @Test
-    public void getSingleObjTest() {
-        ArrayList<Student> list = new ArrayList();
-        Student stu1 = new Student();
-        Student stu2 = new Student();
-        Student stu3 = new Student();
-        stu1.setAge(1);
-        stu1.setName("学生一");
-        stu2.setAge(1);
-        stu2.setName("学生一");
-        stu3.setAge(3);
-        stu3.setName("学生三");
-        list.add(stu1);
-        list.add(stu2);
-        list.add(stu3);
-        System.out.println(list.size());
-        getSingle(list);
-    }
-    //对给定集合去重，通过泛型extends限制给定目标必须是集合
-    public<Gen extends Collection> void getSingle(Gen list) {
+    private <T extends Collection> void getSingle(T list) {    //通过泛型extends限制给定目标必须是集合
         if (list.size() > 0) {
             HashSet hashSet = new HashSet();
             hashSet.addAll(list);
             System.out.println(hashSet);
         }
     }
-
     //对给定字符串中的字符去重
     @Test
     public void getSingleChar() {
@@ -149,9 +120,7 @@ public class CollectionsDSet {
         System.out.println(sb);
     }
 
-
-
-    //生成1-20的10个随机数int类型
+    //生成1-20的10个随机数，int类型，不重复
     @Test
     public void randomSetTest() {
         Random rd = new Random();
@@ -162,203 +131,81 @@ public class CollectionsDSet {
         System.out.println(set);
     }
 
-
     //LinkedHashSet有序
-    public void linkedHashSetDemo () {
+    @Test
+    public void linkedHashSetTest() {
         LinkedHashSet linkedHashSet = new LinkedHashSet();
         linkedHashSet.add("a");
         linkedHashSet.add("b");
         linkedHashSet.add("c");
-        HashSet hashSet = new HashSet();
-        hashSet.add("a");
-        System.out.println(hashSet);
-        hashSet.add("b");
-        System.out.println(hashSet);
-        hashSet.add("c");
-        System.out.println(hashSet);
         System.out.println(linkedHashSet);
-        System.out.println(linkedHashSet);
-        System.out.println(linkedHashSet);
-        System.out.println(hashSet);
-        System.out.println(hashSet);
-        System.out.println(hashSet);
     }
 
-    //TreeSet       implements Comparable，重写compareTo()
-    //一般类已经重写了comparaTo()，按字典顺序比较
-    public void treeSetDemo () {
-        TreeSet<Integer> treeSet = new TreeSet<>(new ComparatorImpl());
-        treeSet.add(2);
-        treeSet.add(3);
-        treeSet.add(1);
-        System.out.println(treeSet);    //[1, 2, 3]
-    }
-
-    //自定义类 方法一：自然顺序比较implements Comparable并重写comparaTo()    方法二：比较器比较
+    //TreeSet   比较器
     @Test
-    public void treeSetTestObj() {
-        Student st1 = new Student("学生一", 18);
-        Student st11 = new Student("学生一", 18);
-        Student st2 = new Student("学生二", 19);
-        Student st3 = new Student("学生二", 18);
-        Student st4 = new Student("学生三", 20);
-        //自然顺序
-//        TreeSet ts = new TreeSet();
-//        ts.add(st1);
-//        ts.add(st11);
-//        ts.add(st2);
-//        ts.add(st3);
-//        ts.add(st4);
+    public void treeSetTest() {
+        //方式一   implements Comparable，重写compareTo()，常见类都已经做了这个事情，只需要注意自定义类要自行编写
+        TreeSet<Integer> integerTreeSet = new TreeSet<>();  //Integer已经implements Comparable，并重写了compareTo()
+        integerTreeSet.add(3);
+        integerTreeSet.add(1);
+        integerTreeSet.add(2);
+        System.out.println(integerTreeSet);
 
-        //比较器
-        TreeSet<Student> ts2 = new TreeSet(new ComTest());
-        ts2.add(st1);
-        ts2.add(st11);
-        ts2.add(st2);
-        ts2.add(st3);
-        ts2.add(st4);
-        getAllSetE(ts2);
+        //方式二   创建ComparatorImpl implements comparator，重写compare()；在创建TreeSet集合时给定comparatorImpl
+        TreeSet<Integer> integerTreeSet1 = new TreeSet<>(new ComparatorImplForInteger());
+        integerTreeSet1.add(3);
+        integerTreeSet1.add(1);
+        integerTreeSet1.add(2);
+        System.out.println(integerTreeSet1);
     }
 
-    //定义一个新的类implements Comparator，重写compara()
-    class ComTest implements Comparator<Student> {
-        @Override
-        public int compare(Student stu1, Student stu2) {
-            int nameNum = stu1.name.compareTo(stu2.name);
-            int ageNum = stu1.age - stu2.age;
-            if (nameNum == 0) {
-                return ageNum;
-            } else {
-                return nameNum;
-            }
-        }
-    }
-
-    //练习    List<String>排序，不去重  通过比较器，当相同时返回非0即可
+    //排序但不去重
     @Test
-    public void getAllString() {
+    public void sortStringTest() {
         ArrayList<String> list = new ArrayList<>();
         list.add("333");
         list.add("222");
         list.add("111");
         list.add("222");
         list.add("111");
-        TreeSet ts = new TreeSet(new ComForString());
-        ts.addAll(list);
-        getAllSetE(ts);
+        TreeSet<String> treeSet = new TreeSet<>(new Comparator<String>() {  //需要重复使用应当抽取为一个新的实现类而不是用匿名内部类
+            @Override
+            public int compare(String o1, String o2) {
+                if (o1.compareTo(o2) > 0) {
+                    return o1.compareTo(o2);
+                } else {
+                    return -1;
+                }
+            }
+        });
+        treeSet.addAll(list);
+        System.out.println(treeSet);
     }
 
-    //练习    List<String>排序，不去重，倒序输出     理解this.xxx - obj.xxx
+    //倒序排序
     @Test
-    public void getAllChar() {
-        Integer[] arr = {1,2,2,3,4,5,5,6,6};
-        TreeSet ts = new TreeSet(new ComForInteger());
-        ts.addAll(Arrays.asList(arr));
-        getAllSetE(ts);
-    }
-
-}
-
-//Set集合存储自定义对象Student类
-class Student implements Comparable{
-    String name;
-    int age;
-    public Student() {
-
-    }
-
-    public Student(String name, int age) {
-        this.name = name;
-        this.age = age;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public int getAge() {
-        return age;
-    }
-
-    public void setAge(int age) {
-        this.age = age;
-    }
-
-    @Override
-    public String toString() {
-        return "Student{" +
-                "name='" + name + '\'' +
-                ", age=" + age +
-                '}';
-    }
-
-    //自动生成hashCode()和equals()
-    @Override
-    public boolean equals(Object o) {
-        System.out.println("执行啦吗");
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        Student student = (Student) o;
-        return age == student.age &&
-                Objects.equals(name, student.name);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(name, age);
-    }
-
-    //重写ComparaTo
-    @Override
-    public int compareTo(Object o) {
-        //按姓名排序
-        Student stu = (Student)o;
-        int nameNum = this.name.compareTo(stu.name);
-        //按年龄排序
-        int ageNum = this.age - stu.age;
-        //先按姓名，再按年龄
-        if (nameNum == 0) {
-            return ageNum;
-        } else {
-            return nameNum;
-        }
+    public void sortIntegerTest() {
+        Integer[] arr = {1, 2, 2, 3, 4, 5, 5, 6, 6};
+        TreeSet<Integer> treeSet = new TreeSet<>(new Comparator<Integer>() {
+            @Override
+            public int compare(Integer int1, Integer int2) {
+                int num = int2.compareTo(int1); //注意这里是用第二个参数调用方法compareTo()，结果为[6, 6, 5, 5, 4, 3, 2, 2, 1]，即为倒序
+                if (num == 0) {
+                    return 1;
+                } else {
+                    return num;
+                }
+            }
+        });
+        treeSet.addAll(Arrays.asList(arr));
+        System.out.println(treeSet);
     }
 }
 
-class ComparatorImpl implements Comparator {
-
+class ComparatorImplForInteger implements Comparator<Integer> { //可以给定泛型，否则重写compare()时参数为Object
     @Override
-    public int compare(Object o1, Object o2) {
-        int sub = (int)o1 - (int)o2;
-        return sub;
-    }
-}
-
-class ComForString implements Comparator<String>{
-    @Override
-    public int compare(String str1, String str2) {
-        int num = str1.compareTo(str2);
-        if (num == 0) {
-            return 1;
-        } else {
-            return num;
-        }
-    }
-}
-
-class ComForInteger implements Comparator<Integer>{
-    @Override
-    public int compare(Integer int1, Integer int2) {
-        int num = int2.compareTo(int1);
-        if (num == 0) {
-            return 1;
-        } else {
-            return num;
-        }
+    public int compare(Integer integer1, Integer integer2) {
+        return integer1-integer2;
     }
 }
 

@@ -5,10 +5,11 @@ package learnSe.part4;
 //记忆
 //    1.List特有成员方法  指定索引处add remove get set
 //    2.并发修改异常    通常不在迭代过程中增删元素 ListIterator
-//    3.LinkedList特有  addFirst addLast removeFirst removeLast getFirst getLast
-//    4.练习  List集合遍历    对ArraysList去重   用LinkedList模拟栈结构
+//    3.ArrayList和LinkedList区别  数组查询快，链表增删快
+//    4.LinkedList特有  addFirst addLast removeFirst removeLast getFirst getLast
+//    5.练习  List集合遍历（）    对ArraysList去重   用LinkedList模拟栈结构
 //了解
-//    1.ListIterator  hasPrevious previous 当前索引处set add remove
+//    1.ListIterator  hasPrevious() previous() 当前索引处set add remove
 //6.List  围绕索引拓展功能  特点：有索引、有序、可重复
 //    1.List特有功能
 //        void add(int index,E element)    指定索引位置添加元素
@@ -66,132 +67,126 @@ package learnSe.part4;
 //        2.LinkedList模拟栈
 
 
+import org.junit.Test;
+
+import java.util.ArrayList;
+import java.util.LinkedList;
+import java.util.ListIterator;
+
 public class CollectionsBList {
     public static void main(String[] args) {
-//        ArrayList arrList = new ArrayList();
-//        //基本功能
-//        arrList.add(1);
-//        arrList.add(2);
-//        //指定位置插入指定元素
-//        arrList.add(0, 0);
-//        //删除某元素，返回是否存在这个元素
-//        arrList.remove(new Integer(3));
-//        //删除某索引下的元素，返回该元素
-//        arrList.remove(0);
-//        arrList.add(0, 0);
-//        arrList.get(0);
-//        arrList.set(0, 0);
-
-        //并发修改异常
-        //将集合中xx元素替换成java
-//        ArrayList listCME = new ArrayList();
-//        listCME.add("I");
-//        listCME.add("love");
-//        listCME.add("xx");
-//        listCME.add("!");
-//        listCME.add("!");
-        //迭代器要写在一般的集合操作之后，因为获取的是当前list的迭代器，不会跟随list的操作刷新
-//        Iterator itCME = listCME.iterator();
-//        while (itCME.hasNext()) {
-//            String str = (String) itCME.next(); //这里会抛出ConcurrentModificationException并发修改异常
-//            if (str.equals("xx")) {
-//                listCME.add("java");
-//            }
-//        }
-        //如果想在遍历的过程中增删改元素,可以用ListIterator
-//        ListIterator listIt = listCME.listIterator();
-//        while (listIt.hasNext()) {
-//            if (((String)listIt.next()).equals("xx")) {
-//            listIt.set("java");
-//            listIt.remove();
-//            listIt.add("java");
-//            }
-//        }
-//        System.out.println(listCME.toString());
-
-        //ArrayList迭代器去重
-//        ArrayList list = new ArrayList();
-//        list.add("a");
-//        list.add("a");
-//        list.add("b");
-//        list.add("b");
-//        list.add("b");
-//        list.add("c");
-//        list.add("c");
-//        list.add("c");
-//        list.add("c");
-//        System.out.println(list);
-//        ArrayList newList = getSingle(list);
-//        System.out.println(newList);
-
-       //LinkedList模拟栈结构，先进后出
-//        Stack stack = new Stack();
-//        stack.in("a");
-//        stack.in("b");
-//        while (!stack.isEmpty()) {
-//            System.out.println(stack.out());
-//        }
 
     }
 
-    //遍历使用索引遍历，迭代器遍历，增强for循环遍历
-//    public void getAllElement(List list) {
-//        if (list != null && list.size() != 0) {
-//            //        索引遍历
-//            for (int i = 0; i<list.size();i++) {
-//                System.out.println(list.get(i));
-//            }
-//
-//            //迭代器遍历
-//            ListIterator lit = list.listIterator();
-//            while (lit.hasNext()) {
-//                System.out.println(lit.next());
-//            }
-//
-//            //增强for
-//            for (Object obj : list) {
-//                System.out.println(obj);
+    //crud
+    @Test
+    public void crud() {
+        ArrayList<Integer> list = new ArrayList();
+        list.add(1);
+        list.add(2);
+        list.add(3);
+        //有序,crud时关注一下返回值
+        System.out.println(list);
+        list.add(0,111);
+        System.out.println(list);
+        list.remove(0);     //删除某索引下的元素，返回该元素
+        list.remove(new Integer(444));  //删除某元素，返回是否存在这个元素
+        System.out.println(list);
+        list.set(0,222);        //修改某索引下元素，返回oldElement
+        System.out.println(list);
+        System.out.println(list.get(0));
+    }
+
+    //List集合如何规避并发修改异常
+    @Test
+    public void modException() {
+        ArrayList<String> list = new ArrayList();
+        list.add("i");
+        list.add("like");
+        list.add("study");
+
+        //如下操作会产生并发修改异常
+        //迭代器要写在一般的集合操作之后，因为获取的是当前list的迭代器，不会跟随list的操作刷新
+//        Iterator<String> it = list.iterator();
+//        while (it.hasNext()) {
+//            String strTemp = it.next();   //这里会抛出ConcurrentModificationException并发修改异常
+//            if (strTemp.equals("study")) {
+//                list.add(1,"dont");
 //            }
 //        }
-//
-//    }
 
-    //迭代器去重方法
-//    private static ArrayList getSingle(ArrayList list) {
-//        ArrayList newList = new ArrayList();
-//        ListIterator listIt = list.listIterator();
-//        while (listIt.hasNext()) {
-//            String thisVal = (String)listIt.next();
-//            if (!newList.contains(thisVal)) { //由于contains底层依赖着equals方法，假如List集合中存的是自定义的对象，那么要重写该对象类的equals()方法
-//                newList.add(thisVal);
-//            }
-//        }
-//        return newList;
-//    }
+        //应该如下操作，使用List特有的迭代器操作list，而不是直接使用list操作，这样迭代器就会知道list产生的变化
+        ListIterator<String> listIt = list.listIterator();
+        while (listIt.hasNext()) {
+            String strTemp = listIt.next();
+            if (strTemp.equals("like")) {
+                listIt.add("!!!");      //注意这里的add()是在当前index后面add,结果是[i, like, !!!, study]
+            }
+        }
+        System.out.println(list.toString());
+    }
 
-    //重写equals()方法的示例
-//    public boolean equals(Object obj) {
-//        Student newStu = (Student)obj;
-//        return this.name == newStu.name;
-//    }
+    //ArrayList去重
+    @Test
+    public void getSingle() {
+        ArrayList<String> list = new ArrayList();
+        list.add("a");
+        list.add("a");
+        list.add("b");
+        list.add("b");
+        list.add("b");
+        list.add("c");
+        list.add("c");
+        list.add("c");
+        list.add("c");
+        System.out.println(list);
 
+        ArrayList<String> newList = new ArrayList();
+        ListIterator<String> listIt = list.listIterator();
+        while (listIt.hasNext()) {
+            String strTemp = listIt.next();
+            if (!newList.contains(strTemp)) {       //由于contains底层依赖着equals方法，假如List集合中存的是自定义的对象，那么要重写该对象类的equals()方法
+                newList.add(strTemp);
+            }
+        }
+        if (newList.size() > 0) {
+            System.out.println(newList.toString());
+        }
+    }
 
+    //LinkedList特有方法模拟堆栈
+    @Test
+    public void linkedListStack() {
+        Stack stack = new Stack();
+        stack.in(1);
+        stack.in(2);
+        stack.in(3);
+        stack.show();
+        stack.out();
+        stack.show();
+        stack.out();
+        stack.show();
+        stack.out();
+        stack.show();
+    }
 }
 
-
 //LinkedList模拟栈结构
-//class Stack {
-//    //创建一个LinkedList对象
-//    private LinkedList linkedList = new LinkedList();
-//
-//    //封装方法
-//    public void in(Object obj) {
-//        linkedList.addLast(obj);                            //封装addLast()方法
-//    }
-//    public Object out() {
-//        return linkedList.removeLast();                    //封装removeLast()方法
-//    }
-//    public boolean isEmpty() {
-//        return linkedList.isEmpty();                        //封装isEmpty()方法
-//    }
-//}
+class Stack {
+    //创建一个LinkedList对象
+    private LinkedList linkedList = new LinkedList();
+
+    //封装方法
+    public void in(Object obj) {
+        linkedList.addLast(obj);                            //封装addLast()方法
+    }
+    public Object out() {
+        return linkedList.removeLast();                    //封装removeLast()方法
+    }
+    public boolean isEmpty() {
+        return linkedList.isEmpty();                        //封装isEmpty()方法
+    }
+    public void show() {
+        System.out.println(linkedList.toString());
+    }
+}

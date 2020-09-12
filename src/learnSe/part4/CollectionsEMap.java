@@ -73,6 +73,28 @@ public class CollectionsEMap {
         System.out.println(str);
     }
 
+    //crud
+    @Test
+    public void crud() {
+        HashMap<Integer, String> hashMap = new HashMap();
+        //增
+        hashMap.put(1, "I");
+        hashMap.put(2, "like");
+        hashMap.put(3, "study");
+        //改
+        hashMap.put(3, "study!!!");
+        System.out.println(hashMap.toString());
+        //删
+        hashMap.remove(1);
+//        hashMap.clear();
+        //判断
+        if (!hashMap.isEmpty() && hashMap.containsKey(1) && hashMap.containsValue("I")) {
+            //获取
+            System.out.println("size is " + hashMap.size());
+        }
+    }
+
+    //遍历
     @Test
     public void traverseMap() {
         HashMap<String, Integer> hashMap = new HashMap<>();
@@ -81,13 +103,13 @@ public class CollectionsEMap {
         hashMap.put("三",3);
         hashMap.put("四",4);
 
-        //键找值
+        //方式一   键找值
         Set<String> keySet = hashMap.keySet();
-        Iterator<String> it = keySet.iterator();
-        while (it.hasNext()) {
-            String keyTemp = it.next();
-            System.out.println(keyTemp + ":" + hashMap.get(keyTemp));
-        }
+//        Iterator<String> it = keySet.iterator();
+//        while (it.hasNext()) {
+//            String keyTemp = it.next();
+//            System.out.println(keyTemp + ":" + hashMap.get(keyTemp));
+//        }
         for (String keyTemp : keySet ) {
             System.out.println(keyTemp + ":" + hashMap.get(keyTemp));
         }
@@ -112,6 +134,7 @@ public class CollectionsEMap {
     }
 
     //统计字符串中每个字符的出现频率
+    @Test
     public void countChar() {
         String str = "aaaabbbcccccccccc";
         char[] chars = str.toCharArray();
@@ -126,12 +149,4 @@ public class CollectionsEMap {
         }
         System.out.println(hashMap);
     }
-
-    @Test
-    public void mapDemoTest() {
-//        mapDemo();
-//        traverseMap();
-        countChar();
-    }
-
 }
