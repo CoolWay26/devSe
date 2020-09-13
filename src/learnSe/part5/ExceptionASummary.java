@@ -9,7 +9,7 @@ package learnSe.part5;
 //        异常处理机制  优先在方法内处理，否则向调用者寻求解决方法   JVM默认的处理方式printStackTrace
 //            方法内处理的两种方式
 //                try catch finally
-//                throw   throws   向上抛出，交给上一级调用者处理
+//                throw throws   向上抛出，交给上一级调用者处理
 //    3.编译时和运行时异常的区别 编译时异常必须处理才能通过编译；运行时异常可以不处理，但可能导致程序运行出现问题
 //了解
 //    1.异常父类Throwable的常用方法 getMessage toString printStackTrace

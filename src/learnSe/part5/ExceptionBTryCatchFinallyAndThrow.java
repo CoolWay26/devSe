@@ -15,7 +15,7 @@ package learnSe.part5;
 //        try		检测异常
 //                    try部分的代码，只要遇到第一个异常以后，就会寻求异常处理
 //                    处理异常以后，try部分剩余的代码将不会执行，但会继续执行try以外其他部分的代码
-//        catch	捕获异常
+//        catch     捕获异常
 //                    并在catch方法体内进行对应的处理操作
 //                    catch可以有多个，针对不同异常进行不同处理，但通常，我们用多态的形式，通过Exception对象捕获异常
 //                    如果一定要跟多个catch，那么小范围的异常在前面，否则会被大范围的隐藏掉
@@ -31,7 +31,9 @@ package learnSe.part5;
 //            抛出一个异常对象名，后续代码不再继续执行（是剩下的所有代码都不会执行，不是某一块）
 //        throws通知调用者
 //            可以跟多个异常类名，用逗号隔开，表示抛出异常，由该方法的调用者来处理
+//            对于RuntimeException，可以不throws
 //    2.对于编译时异常，方法中throw，那么方法上一定要throws；对于运行时异常，方法上不强制需要throws
+//    3.其实throw，throws以后最后的处理结果就是jvm的默认处理，即打印出异常的名称、信息、异常出现的位置
 //3.自定义异常
 //    1.作用    现有异常类不足以满足特定需要时，使用自定义异常，比如：人的年龄超过理论值
 //    2.概述
@@ -44,6 +46,7 @@ package learnSe.part5;
 //        方法内不知道如何处理，或者后续代码不需要继续执行，使用throw
 import org.junit.Test;
 public class ExceptionBTryCatchFinallyAndThrow {
+    //try catch finally处理异常
     @Test
     public void tryCatchTest() {
         try {
@@ -59,6 +62,7 @@ public class ExceptionBTryCatchFinallyAndThrow {
         System.out.println("try之外的代码！");    //try中捕获异常后，try之外剩余的代码仍将执行
     }
 
+    //finally注意事项
     @Test
     public void finallyTest() {
         //finally在return前执行
@@ -68,14 +72,41 @@ public class ExceptionBTryCatchFinallyAndThrow {
     private int finallyMethod() {
         int[] arr = {1,2,3,4,5};
         try {
+            System.out.println(arr[100]);
             return arr[0];
         } catch (Exception e) {
-
+            return arr[4];
         } finally {
             arr[0] = 2;
             return arr[0];
         }
 //        return -1;
+    }
+
+
+    //throw，throws处理异常
+    @Test
+    public void throwsTest() throws Exception {     //调用者也要throws，要一直向上throws
+        throwTest1(-1, "xiaoming");      //这里如果调用者不进行throws，那么就要通过try..catch去处理
+//        try {
+//            throwTest1(-1, "xiaoming");
+//        } catch (Exception) {
+//            System.out.println("Exception");
+//        } finally {
+//            System.out.println("finally");
+//        }
+        throwTest2();
+    }
+    private void throwTest1(int age, String name) throws NoSuchMethodException, NumberFormatException,Exception{    //可以throws多个
+        if (age >0 &&name.length()>0) {
+            System.out.println(name + " " + age);
+        } else {
+            throw new Exception("信息有误！");
+        }
+        System.out.println("剩下的代码！");   //throw以后剩下的所有代码都不会再继续执行
+    }
+    private void throwTest2() {
+        throw new RuntimeException("RuntimeException");       //throw RuntimeException时接收此异常的方法不需要向上throws，因为runtimeException是不需要处理的
     }
 
     //自定义异常例子
@@ -87,14 +118,10 @@ public class ExceptionBTryCatchFinallyAndThrow {
         }
         System.out.println(age);
     }
-
-
-
 }
 
-class AgeOutOfBoundsException extends RuntimeException {
+class AgeOutOfBoundsException extends RuntimeException {    //继承Exception或者其子类RuntimeException
     public AgeOutOfBoundsException () {
-
     }
     public AgeOutOfBoundsException (String msg) {
         super(msg);
