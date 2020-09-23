@@ -42,7 +42,7 @@ import java.io.*;
 //    1.方法
 //      1.getLineNumber()   获取当前行号，默认从0开始，每调用一次readLine()只要读的不是null,那么LineNumber+1（所以看起来是从1开始）
 //      2.setLineNumber()   设置当前行号，不会更改流中实际的位置，只是更改getLineNumber()的返回值
-//7.使用不同码表读取数据
+//7.使用不同码表读取数据，转换流InputStreamReader，OutputStreamWriter
 //    1.通过InputStreamReader，OutputStreamWriter      属于字符流
 //    2.适用于BufferedReader和BufferedWriter    缓冲字符流
 //8.练习：递归的思想
@@ -120,13 +120,21 @@ public class IODCharStream {
         InputStreamReader isr = new InputStreamReader(new FileInputStream(""), "UTF-8");
         OutputStreamWriter osw = new OutputStreamWriter(new FileOutputStream(""), "GBK");
 
-        int ch;
-        while ((ch = isr.read()) != -1) {
-            osw.write(ch);
-        }
+//        int ch;
+//        while ((ch = isr.read()) != -1) {
+//            osw.write(ch);
+//        }
+//        isr.close();
+//        osw.close();
 
-        isr.close();
-        osw.close();
+        BufferedReader br = new BufferedReader(isr);
+        BufferedWriter bw = new BufferedWriter(osw);
+        int ch;
+        if ((ch = br.read()) != -1) {
+            bw.write(ch);
+        }
+        br.close();
+        bw.close();
     }
 
     //练习：打印给定文件夹路径下所有.java文件

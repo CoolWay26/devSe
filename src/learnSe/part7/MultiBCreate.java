@@ -29,8 +29,8 @@ import java.util.concurrent.*;
 //  3.实现Callable接口  因为代码复杂，所以一般不用，好处是可以有返回值，可以抛出异常
 //      1.创建Callable接口的实现类，重写call()，该方法是线程执行体
 //      2.使用FutureTask对象包装Callable对象，futureTask对象封装了callable.call()执行的返回值
-//      3.启动线程：用Thread对象包装Future对象，thread.start()
-//      4.如何获取线程执行返回值：future.get();注意父类返回值是泛型，可以自行指定，但必须是引用型
+//      3.启动线程：用Thread对象包装FutureTask对象，thread.start()
+//      4.如何获取线程执行返回值：futureTask.get();注意父类返回值是泛型，可以自行指定，但必须是引用型
 //  4.匿名内部类实现（这只是换一种形式，并不是第四种实现线程的方式）
 //  5.线程池的方式实现多线程
 //      1.场景：启动一个新线程成本较高，使用线程池可以从此方面提高性能，尤其是程序需要大量生存周期很短的线程时

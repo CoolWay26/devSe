@@ -14,7 +14,14 @@ package learnSe.part6;
 //9.对象操作流ObjecOutputStream&&ObjectInputStream
 //  1.作用：该流可以将一个对象写出, 或者读取一个对象到程序中. 也就是执行了序列化和反序列化的操作（操作的对象必须能被序列化和反序列化---实现Serializable）
 //10.打印流PrintStream
-//  1.作用：该流可以很方便的将对象的toString()结果输出, 并且自动加上换行, 而且可以使用自动刷出的模式
+//  1.作用：
+//      可以方便将对象的toString()结果输出, 并且可以选择自动换行，自动刷出
+//  2.System.out就是一个PrintStream, 其默认向控制台输出信息
+//      println()会将能转为字符串的数据转为字符串，其他的toString()，底层其实是String.valueOf()
+//      write()会参考当前编码表，以字节的形式去转为字符串
+//  4.针对PrintStream,PrintWriter,,PrintWriter(OutputStream out, boolean autoFlush)
+//      1.print(),println()是直接转为String，write()是查找码表输出对应String（针对字节流）
+//      2.自动刷出,只针对的是println方法，执行println()方法时会刷新一次缓冲区，但这没什么意义，可以不用纠结
 //11.标准输入输出流
 //12.随机访问流RandomAccessFile（不属于流）
 //13.数据输入输出流DataInputStream&&DataOutputStream
@@ -29,15 +36,35 @@ package learnSe.part6;
 //
 //      void load(流对象)  将配置文件键值对载入Properties对象
 //      void store(流对象)   将Properties对象的键值对写入目标中
-import org.junit.Test;
 
-import java.io.FileReader;
-import java.io.FileWriter;
-import java.io.IOException;
+import org.junit.Test;
+import java.io.*;
 import java.util.Properties;
 import java.util.Set;
 
 public class IOEothers {
+
+    //打印流
+    @Test
+    public void printTest() throws IOException {
+        //System.out
+//        PrintStream ps = System.out;
+//        ps.println(97);			//底层是String.valueOf()，输出就是97
+//        ps.write(97);       //输出是a
+//        ps.close();
+
+        //PrintStream字节流
+        PrintStream pss = new PrintStream(new FileOutputStream("src\\learnSe\\part6\\OutoutTest.txt", true));
+        pss.println("测试打印流1");
+        pss.write("测试打印流11".getBytes());
+        pss.close();
+
+//        //PrintWriter字符流
+//        PrintWriter pw = new PrintWriter(new FileOutputStream("src\\learnSe\\part6\\OutoutTest.txt", true),true);
+//        pw.println("测试打印流2");
+//        pw.write("测试打印流22");
+//        pw.close();
+    }
 
 
     //properties特有方法
