@@ -111,7 +111,7 @@ package learnSe.part2;
 //        public	Y		          Y						Y				Y
 //    private:本类中可以调用（访问，使用）
 //    default:本包中可以调用（访问，使用）
-//    projected:
+//    protected:
 //        本包中，不同包的子类中通过super或者（this）访问，其实super和this访问的是同一个对象
 //        要明确的是，实际上并不是直接访问父类，而是访问继承而来的成员（其实还是访问子类对象）
 //        并不能通过父类对象直接访问projected成员，可以理解成projected修饰的变量可以被子类继承并访问
