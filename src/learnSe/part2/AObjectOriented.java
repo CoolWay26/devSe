@@ -196,7 +196,6 @@ package learnSe.part2;
 //                class Son extends Father {
 //                    public int age = 20;
 //                    public Son() {
-//                        super();
 //                        super.getAge();
 //                        getAge();
 //                    }
